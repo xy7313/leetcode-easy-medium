@@ -20,5 +20,4 @@ public class Solution {
 arraylist这里要用add方法
 set get方法会报outofindex
 因为初始化的arrlist没有长度
-
 */
