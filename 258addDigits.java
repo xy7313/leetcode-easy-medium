@@ -16,6 +16,13 @@ public class Solution {
         }
         return num;
     }
+    //进阶版方法，来源未知，不好想，注释里的方法好想一点
+    public int addDigits(int num) {
+        // if(num==0) return num;
+        // if(num%9==0) return 9;
+        // return (num)%9;
+        return (num-1)%9+1;
+    }
 }
 
 /*
@@ -25,4 +32,5 @@ public class Solution {
 然后又用了%10的方法，发现好简单啊，我不需要把数字完全拆开啊
 嗯，老衲涨姿势了
 
+进阶版：不用loop/recursive
 */

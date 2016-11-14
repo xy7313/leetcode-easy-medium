@@ -19,11 +19,11 @@ public int singleNumber(int[] nums) {
                 m.put(Integer.valueOf(nums[i]),false);
             }
         }
-                for(int i = 0; i <nums.length;i++){
-                    if(m.get(Integer.valueOf(nums[i]))){
-                        return nums[i];
-                    }
-                }
+        for(int i = 0; i <nums.length;i++){
+            if(m.get(Integer.valueOf(nums[i]))){
+                return nums[i];
+            }
+        }
         return nums[nums.length-1];
     }
 
