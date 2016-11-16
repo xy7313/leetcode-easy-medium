@@ -1,6 +1,6 @@
 public class Solution {
-    //自己想的很麻烦的方法，审题有个问题，要计数的，并不是简单的哪个字母出现过哪个没出现过，而且每个字母出现的次数也得算，不一致的字母被返回
-//比如 ab aab 返回a
+    //mark这题，审题有个问题，要计数的，并不是简单的哪个字母出现过哪个没出现过，而且每个字母出现的次数也得算，不一致的字母被返回
+    //比如 ab aab 返回a，下面是hashmap实现的比较麻烦的方法
     public char findTheDifference(String s, String t) {
         Map<Character, Integer> m = new HashMap<Character, Integer>();
         for(int i = 0; i <s.length();i++){
