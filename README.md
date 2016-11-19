@@ -51,8 +51,12 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 ##237 linked list
 ##100 tree
 
-####171excelColumnNumber
+####171. excelColumnNumber
 `re+=(sc[i]-'A'+1)*Math.pow(26,sc.length-i-1);`
 
 
-##169
+####169. Majority Element
+####409. Longest Palindrome
+####217. Contains Duplicate
+####350. Intersection of Two Arrays II
+
