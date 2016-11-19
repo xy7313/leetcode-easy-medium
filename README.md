@@ -30,7 +30,7 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 都是很类似题
 第一种解法：哈希表（key：character，value：次数或者index）
 389findDifference：第一次遍历向hashmap中存string1，key-character，value-出现次数，第二次遍历key出现1次value-1，value<0说明是different的char
-387UniqueCharacter：第一次遍历向hashmap中存string1，key-character，value-出现次数，第二次通过key-char找最小index（s.indexOf()）
+387UniqueCharacter：第一次遍历向hashmap中存string1，key-character，value-出现次数，第二次通过key-char找最小index`s.indexOf()`
 383ransomNote：和finddifference方法（hashmap）一样，只不过string的位置换了一下，谁包含谁换了
 
 第二种解法：char转成int，来做index
@@ -56,7 +56,7 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 
 
 ####169. Majority Element
-有种取巧的写法，可以说得通但是想不到，传统解法还是hashmap再mark一下这个`Integer k: m.keySet()`
+有种取巧的写法，可以说得通但是想不到，传统解法还是hashmap再mark一下这个`for(Integer k: m.keySet())`
 ####409. Longest Palindrome
 ####217. Contains Duplicate
 用set是比较简单的方法，通过set.contains的方法来判断，for in 来遍历nums
