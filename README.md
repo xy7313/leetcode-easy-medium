@@ -56,7 +56,9 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 
 
 ####169. Majority Element
+有种取巧的写法，可以说得通但是想不到，传统解法还是hashmap再mark一下这个`Integer k: m.keySet()`
 ####409. Longest Palindrome
 ####217. Contains Duplicate
+用set是比较简单的方法，通过set.contains的方法来判断，for in 来遍历nums
 ####350. Intersection of Two Arrays II
 
