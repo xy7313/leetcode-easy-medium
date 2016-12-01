@@ -62,9 +62,14 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 ####217. Contains Duplicate
 用set是比较简单的方法，通过set.contains的方法来判断，for in 来遍历nums
 ####350. Intersection of Two Arrays II
+现在用的是类似指针的思路，先排序（一般用指针都要排序），然后就一步一步往后挪，如果上下相等了，那就一起后移，不相等就小的后移，找大数来跟另外一个数组中的数匹配
+更好的方法应该是hashmap吧
 ##206 linked list
 ####13 roman to integer
 
+####401 binary watch
+强行倒着解，把所有可能的小时和分钟列出来，那一时刻刚好对应二进制的1的个数跟num 相等，就输出这个时间，性能不好，也不太好想但好写的一种方法
+标准写法应该是backtracking
 
 ##倒着刷了两道easy
 ####atoi
