@@ -16,4 +16,19 @@ public class Solution {
         }
         return (int)y;
     }
+     public int reverse(int x) {
+        /*
+        想用int的方法，还得注意10>Integer.MAX_VALUE/y这里，必须这么写，写成y*10<max不行，*10直接就出错了，应该也是上面需要用long的原因
+        */
+        int y = 0;
+        while(x!=0){
+            if(y!=0&&10>Integer.MAX_VALUE/y&&-10 < Integer.MAX_VALUE/y){
+                return 0;
+            }
+            y= y * 10 + x%10;
+            System.out.println(x%10);
+            x=x/10;
+        }
+        return y;
+    }
 }

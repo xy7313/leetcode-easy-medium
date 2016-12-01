@@ -1,0 +1,1 @@
+golang solution for leetcode. click [here](https://gist.github.com/search?utf8=%E2%9C%93&q=user%3Axy7313+%23.go)
