@@ -62,6 +62,8 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 ####217. Contains Duplicate
 用set是比较简单的方法，通过set.contains的方法来判断，for in 来遍历nums
 ####350. Intersection of Two Arrays II
+##206 linked list
+####13 roman to integer
 
 
 ##倒着刷了两道easy
