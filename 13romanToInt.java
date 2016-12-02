@@ -25,10 +25,10 @@ public class Solution {
     }
 }
 /*
- 这个题的难点好像在在于for里判断的时候要i+1个元素个i个元素比较，所以for循环很难遍历全整个数组，所以会一开始的时候就把遍历不到，
+ 1. 这个题的难点好像在在于for里判断的时候要i+1个元素个i个元素比较，所以for循环很难遍历全整个数组，所以会一开始的时候就把遍历不到，
  而且刚好也需要加上的最后一位直接赋值给result
- 跟之前写这题用了一样的思路，不一样的方法，之前看答案的那种更简单一点
- 最近总是想到用true fale这种方式判断，并不简单
+ 2. 最近总是想到用true fale这种方式判断，并不简单，而且切记boolean这个值是需要不停改变的，
+ for循环里最后一句重新minus=false忘记加找了半天问题
 */
 public class Solution {
     public int romanToInt(String s) {
