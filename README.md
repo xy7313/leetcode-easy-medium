@@ -101,8 +101,14 @@ int x=len1<0?0:num1.charAt(len1)-'0';
 （想不到）
 ####419. Battleships in a Board
 有一点点类似上面那个island perimeter，题目意思其实是以battleships的左上角的X来代表一个battleship，所以算有几个X是top-left
-
-
+####343. Integer break
+1. n % 3 == 0 时，分为n个3的乘积
+n % 3 == 1 时，分为n-1个3和两个2的乘积
+n % 3 == 2 时，分为n个3和一个2的乘积
+2. DP：Let dp[i] to be the max production value for breaking the number i. Since dp[i+j] can be i*j.`dp[i+j]=Math.max(Math.max(dp[i],i)*Math.max(dp[j],j), dp[i+j]);`
+####413. Arithmetic Slices
+若序列S为等差数列，其长度为N，则其等差数列切片的个数SUM = 1 + 2 + ... + (N - 2), 例如，等差数列[1, 2, 3, 4, 5, 6]的切片个数为1+2+3+4 = 10
+`if(A[i+1]-A[i]==A[i+2]-A[i+1]) cur += 1;`
 
 
 
