@@ -1,7 +1,6 @@
 public class Solution {
     public boolean isHappy(int n) {
         if (n <= 0) return false;
-
         while(n>=10){
             int sum = 0;
             //确保算了每一位的平方

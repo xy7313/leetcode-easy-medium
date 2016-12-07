@@ -146,6 +146,24 @@ public boolean isHappy(int n) {
         return n == 1 || n == 7; 
     }
 ```
+####231. Power of Two
+power of 2 only contains one 1, (power of 2)-1 is only consist of 1(ex:8=1000,7=111),one line code: `return n>0 && (n&(n-1))==0;`
+
+####326. Power of Three
+ 任何一个3的x次方一定能被int型里最大的3的x次方整除，1162261467 is 3^19,  3^20 is bigger than int,`return ( n>0 && 1162261467%n==0);`  
+
+####405. Convert a Number to Hexadecimal
+1. 首先负数这里需要在去掉符号之后-1，-1-->0，-2-->1以此类推，因为-1=‘ffffffff’,然后-2=‘fffffffe'
+2. 之后是num % 16<6 用abcdef剩下用0-9.其他位（前面的位）保留f
+
+####459. Repeated Substring Pattern
+
+####70. Climbing Stairs
+
+
+
+
+
 
 
 
