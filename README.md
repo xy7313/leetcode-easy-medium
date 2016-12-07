@@ -68,18 +68,20 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 现在用的是类似指针的思路，用while循环（避免for循环会出现的各种index问题）先排序（一般用指针都要排序），然后就一步一步往后挪，如果上下相等了，那就一起后移，不相等就小的后移，找大数来跟另外一个数组中的数匹配
 更好的方法应该是hashmap吧
 ##206 linked list
-####13 roman to integer
 
 ####401 binary watch
 强行倒着解，把所有可能的小时和分钟列出来，那一时刻刚好对应二进制的1的个数跟num 相等，就输出这个时间，性能不好，也不太好想但好写的一种方法
 标准写法应该是backtracking
+
 ####13 roman to int
  1. 这个题对我来说的难点好像在于for里判断的时候要i+1个元素个i个元素比较，所以for循环很难遍历全整个数组，方法是：会一开始的时候就把遍历不到，
  而且刚好也需要加上的最后一位直接赋值给result
  2. 最近总是想到用true fale这种方式判断，并不简单，而且切记boolean这个值是需要不停改变的，for循环里最后一句重新minus=false忘记加找了半天问题
+
 ####453 minMove
 1. 自己的思路是按照题目里说的，数组里除了最大元素都++，然后判断符不符合标准，复杂度太高，不能accepted
 2. 大神的思路，把上面那种 除最大值外都+1 做n次这种操作达到数组元素全部相等 转换成 每个非min的元素每次-1需要的操作数
+
 ####447. Number of Boomerangs
 1. 暴力解，取每个点当基准点并给他一个hashmap存距离，看有没有两点到他距离相等，
 2. 注意两点，首先是map每次外层for都新建一个，然后是count，到基准点距离相等的两点可以互换，所以又一次匹配就有两种形式
@@ -91,30 +93,38 @@ int x=len1<0?0:num1.charAt(len1)-'0';
 int y=len2<0?0:num2.charAt(len2)-'0';
 ```
 2. carry 
+
 ####268. Missing Number
 1. 方法1，排序，然后用数组中的元素跟索引比较，索引有，元素没有的（其实就是i!=nums[i]）直接返回i，复杂度略高
 2. 方法2，求和，已知我们有的是[0,n]之间distinct的数字，可以直接把[0,n]这些全部相加再-数组中所有元素和
+
 ####463. Island Perimeter
 1. 会有问题的想法，每个0格上下左右是否有1，有的话计数器+1，但是要求所有1格得是连着的， 我猜是这个原因报错的
 2. 直接用1的格子，每个格子四条边，每和一个左边的1（遍历过的1）相邻，两个格子各少1，所以是-2
 3. 程序开始的if判断，没有作用，可以表示一下思路吧，没实质性作用
+
 ####384. Shuffle an Arrays
 从0-i 之间选一个随机位置，把original[i]插入，把原位置的值放在后面（也就是shuffled[i]）位置，存着，直到把所有original中每个值都插入一遍
 （想不到）
+
 ####419. Battleships in a Board
 有一点点类似上面那个island perimeter，题目意思其实是以battleships的左上角的X来代表一个battleship，所以算有几个X是top-left
+
 ####343. Integer break
 1. 根据regularity
 >n % 3 == 0 时，分为n个3的乘积
 n % 3 == 1 时，分为n-1个3和两个2的乘积
 n % 3 == 2 时，分为n个3和一个2的乘积
 2. DP：Let dp[i] to be the max production value for breaking the number i. Since dp[i+j] can be i*j.`dp[i+j]=Math.max(Math.max(dp[i],i)*Math.max(dp[j],j), dp[i+j]);`
+
 ####413. Arithmetic Slices
 若序列S为等差数列，其长度为N，则其等差数列切片的个数SUM = 1 + 2 + ... + (N - 2), 例如，等差数列[1, 2, 3, 4, 5, 6]的切片个数为1+2+3+4 = 10`if(A[i+1]-A[i]==A[i+2]-A[i+1]) cur += 1;`
+
 ####434. Number of Segments in a String
 这类题都不要变换思路，要求什么就用什么，求有几个words，就算有几个words，把判定情况写全，这里是两种情况，
 1. 第一个words，`i==0 && charAt(i)!=' '；`
 2. 后面的words，`charAt(i-1)==' ' && charAt(i)!=' ';`
+
 ####202 Happy Number
 看起来很简单，写起来很麻烦
 1. 首先要确定需要两层循环，外层循环直到得到的 和<10，内层循环确保 每一位都平方并sum了，
@@ -142,13 +152,16 @@ public boolean isHappy(int n) {
 
 
 ##倒着刷了两道easy
+
 ####atoi
 1. 清除空格的方法`str = str.trim();`
 2. 一位一位加`int digit = str.charAt(i) - 48;sum = sum*10-digit;`
+
 ####165 compare version
 长度不相等的时候很麻烦
 1. 注意以 . perioud 为分隔符时候的写法`version1.split("[.]");version2.split("\\.");`
 2. 注意每次while中才给temp赋值，即，如果s1比s2多一位，那s2的当前temp=0，然后判断
+
 ####7 reverse integer
 1. int不行，long才可以,int放不下
 2. 不需要取绝对值单独判断符号，%10的时候得到的结果是带-的
