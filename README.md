@@ -152,14 +152,22 @@ power of 2 only contains one 1, (power of 2)-1 is only consist of 1(ex:8=1000,7=
 ####326. Power of Three
  任何一个3的x次方一定能被int型里最大的3的x次方整除，1162261467 is 3^19,  3^20 is bigger than int,`return ( n>0 && 1162261467%n==0);`  
 
+####342. Power of Four
+1. 方法1: 4^0 = 1, 4^1 = 100, 4^2 = 10000.所以4的二进制只有一个1且在odd位; 另外Integer.toString(int i, int radix)这个方法是把前面的数按后面数的进制转换，这里相当于4进制，既3=3，4=10，5=11，15=33，16=100`return Integer.toString(num, 4).matches("10*");`
+2. 方法2：`return num > 0 && (num&(num-1)) == 0 && (num & 0x55555555) != 0;//make sure that 1 bit always appears at the odd position `
+3. 方法3：这个比较数学，一个数既是2的幂，又等于3的倍数+1，就是power of 4`return (num&(num-1))==0 && num>0 && (num-1)%3==0;`
+
 ####405. Convert a Number to Hexadecimal
 1. 首先负数这里需要在去掉符号之后-1，-1-->0，-2-->1以此类推，因为-1=‘ffffffff’,然后-2=‘fffffffe'
 2. 之后是num % 16<6 用abcdef剩下用0-9.其他位（前面的位）保留f
 
 ####459. Repeated Substring Pattern
+1. substring的长度肯定是str的约数(str%substring==0), 
+2. 遍历所有可能的substring(outer for),可以从str.length()/2开始，到1
+3. check(inner for): 从头-依次-取长度为str约���数的substring，然后通过叠加(str.length()/substring.length())个substring，看结果是不是str
 
 ####70. Climbing Stairs
-
+一个很简单的动态规划问题，居然写出来了一个动态规划，一颗老心都快活过来了，还是只有一句核心代码，`step[i] = (step[i-1])+(step[i-2]);`
 
 
 
