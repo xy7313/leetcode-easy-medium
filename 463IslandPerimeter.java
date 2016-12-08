@@ -15,3 +15,35 @@ public class Solution {
         return result;
     }
 }
+ //！！
+ //由于leetcode太蠢会因为system.out.println而提交超时的缘故，这个问题我之前的代码其实也是work的，以下
+public class Solution {
+    public int islandPerimeter(int[][] grid) {
+        int count = 0;
+        for(int i = 0; i <grid.length; i++){
+            for(int j = 0; j<grid[0].length;j++){
+                if(grid[i][j]==1){
+                    if(i==0) count++; 
+                    if(j==0) count++;
+                    if(i==grid.length-1) count++;
+                    if(j==grid[0].length-1) count++;
+                }
+                if(grid[i][j]==0){
+                    if((i+1)<grid.length&&grid[i+1][j]==1){
+                        count++;
+                    }
+                    if((j+1)<grid[0].length&&grid[i][j+1]==1){
+                        count++;
+                    }
+                    if((i-1)>=0&&grid[i-1][j]==1){
+                        count++;
+                    }
+                    if((j-1)>=0&&grid[i][j-1]==1){
+                        count++;
+                    }
+                }
+            }
+        }
+    return count;
+    }
+}

@@ -60,3 +60,37 @@ public class Solution {
 	    return re;
     }
 }
+
+//！！
+//由于leetcode太蠢会因为system.out.println而提交超时的缘故，这个问题我之前的代码其实也是work的，以下
+//也是醉了，当时还百思不得其家，本来就是一毛一样的方法嘛，怎么就一直超时，，，
+public class Solution {
+    public int romanToInt(String s) {
+        if(s.length()==0||s==null){
+            return 0;
+        }
+        Map<Character, Integer> m = new HashMap<Character, Integer>();
+	    m.put('I', 1);
+	    m.put('V', 5);
+	    m.put('X', 10);
+	    m.put('L', 50);
+	    m.put('C', 100);
+	    m.put('D', 500);
+	    m.put('M', 1000);
+	    int re = m.get(s.charAt(s.length()-1));
+	   boolean minus = false;
+	    for(int i = s.length()-2;i>=0;i--){
+	        if(m.get(s.charAt(i+1))>m.get(s.charAt(i))){
+	            minus = true;
+	        }else{
+	            minus = false;
+	        }
+	        if(minus==true){
+	            re-=m.get(s.charAt(i));
+	        }else{
+	           	re += m.get(s.charAt(i));
+	        }
+	    }
+	    return re;
+    }
+}

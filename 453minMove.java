@@ -21,9 +21,7 @@ public class Solution {
             if(notEqu==false) return re;
             Arrays.sort(nums);
             for(int j = 0; j<nums.length-1;j++){
-                // if (nums[j]<nums[nums.length-1]){
                     nums[j]++;
-                // }
             }
             re++;
         }
