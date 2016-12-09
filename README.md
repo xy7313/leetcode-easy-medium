@@ -148,6 +148,7 @@ public boolean isHappy(int n) {
         return n == 1 || n == 7; 
     }
 ```
+
 ####231. Power of Two
 power of 2 only contains one 1, (power of 2)-1 is only consist of 1(ex:8=1000,7=111),one line code: `return n>0 && (n&(n-1))==0;`
 
@@ -158,6 +159,18 @@ power of 2 only contains one 1, (power of 2)-1 is only consist of 1(ex:8=1000,7=
 1. 方法1: 4^0 = 1, 4^1 = 100, 4^2 = 10000.所以4的二进制只有一个1且在odd位; 另外Integer.toString(int i, int radix)这个方法是把前面的数按后面数的进制转换，这里相当于4进制，既3=3，4=10，5=11，15=33，16=100`return Integer.toString(num, 4).matches("10*");`
 2. 方法2：`return num > 0 && (num&(num-1)) == 0 && (num & 0x55555555) != 0;//make sure that 1 bit always appears at the odd position `
 3. 方法3：这个比较数学讨论区大神有解释，一个数既是2的幂，又等于3的倍数+1，`x^n-1=(x-1)(x^(n-1)+...+x^1+1)右边乘法展开是可以得到左边的，所以 4^n=3*(...)+1`就是power of 4`return (num&(num-1))==0 && num>0 && (num-1)%3==0;`
+
+####191. Number of 1 Bits
+还是看到就头疼的题，估计再看点这类题就会好点了，，，
+1. 方法1：比较直接，判断最右1位是不是1，n&1 如果是，计数器+1，右移，判断下一位，这里有两种代码写法，前面这种比后面的快1倍`count = count + (n & 1);`,`if((n&1)==1) count++;`
+2. 方法2：用到了类似power of two中n&(n-1)的方法,n & (n-1)!=0说明n不是2的power，肯定还有不止一个1，但为什么n=n & (n-1)不太懂
+```
+while(n != 0){
+    n = n & (n-1);
+    count++;
+}
+```
+
 
 ####405. Convert a Number to Hexadecimal
 1. 首先负数这里需要在去掉符号之后-1，-1-->0，-2-->1以此类推，因为-1=‘ffffffff’,然后-2=‘fffffffe'
@@ -174,6 +187,10 @@ power of 2 only contains one 1, (power of 2)-1 is only consist of 1(ex:8=1000,7=
 ####441. Arranging Coins
 也是一个很简单的题，给n个硬币，在第k行放k个硬币，能放到第几行，不完整的一行不算
 用了while循环，略慢
+
+####263. Ugly Number
+Ugly numbers are positive numbers whose prime factors only include 2, 3, 5。1 is ugly number
+所以就拿一个数，只要能被2整除就一直除以2，然后，只要能被3整除就一直除以3，然后，只要能被5整除就一直除以5，如果剩下的不是1，那就不是ugly number
 
 
 
