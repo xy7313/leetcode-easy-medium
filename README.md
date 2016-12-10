@@ -184,6 +184,11 @@ while(n != 0){
 ####70. Climbing Stairs
 一个很简单的动态规划问题，居然写出来了一个动态规划，一颗老心都快活过来了，还是只有一句核心代码，`step[i] = (step[i-1])+(step[i-2]);`
 
+####198. House Robber
+还是DP，连续rob两个房子就会alert
+1. 首先，输入nums.length<2时，分两种情况，输入==0，返回0；输入==1，返回nums[0]
+2. for循环中也要单列i=0,i=1时的情况，之后就是通用情况，money[i]表示max value rob ith house， money= max(money[i-1],money[i-2]+nums[i])前者是ith不rob，后者是ith rob
+
 ####441. Arranging Coins
 也是一个很简单的题，给n个硬币，在第k行放k个硬币，能放到第几行，不完整的一行不算
 用了while循环，略慢
@@ -195,12 +200,20 @@ Ugly numbers are positive numbers whose prime factors only include 2, 3, 5。1 i
 ####27. Remove Element
 if(nums[i]!=val) {nums[newLength]=nums[i];newLength++;}
 
+####26. Remove Duplicates from Sorted Array
+需要直接改变原数组，加一个新的计数器顺便当做index，这种方法好多array都用了，比如上面的27，这俩代码几乎一模一样就是移除的东西不同
+```
+ int n = 1;
+        for(int i = 1;i<nums.length;i++){
+           if(nums[i]!=nums[i-1]){
+               nums[n]=nums[i];
+               n++;
+           }
+       }
+```
 
-
-
-
-
-
+####66. Plus One
+从最末位开始，+1，如果<=9直接返回，>9继续下一位+1，如果整个数（数组）遍历完都没返回，说明发生了这种情况9+1=10，需要在最前面多加1位
 
 ##倒着刷了两道easy
 
