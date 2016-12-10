@@ -236,7 +236,43 @@ if(nums[i]!=val) {nums[newLength]=nums[i];newLength++;}
         return (rex==x||x==rex/10);
 ```
 
+####36. Valid Sudoku
+横竖的判断就是ij互换一下，需要哪个坐标变就把内层循环的int放过去，比如列的时候需要x坐标变，就把内层循环的j放过去
+横竖都好判断，每个cube不好判断，坐标不好想，discuss里发现了一种很好的方法.类似用一次循环画一个cube或者二维数组的意思，i/3=x,i%3=y,x,y标明一个点
+```
+if(board[3*(i/3) + j/3][3*(i%3) + j%3]!='.' && !cube.add(board[3*(i/3) + j/3][3*(i%3)  + j%3])) return false;
+```
 
+####205. Isomorphic Strings
+论坛里看到的解题思路，感觉现在不适合刷题，想到hashmap但是不知道isomorphic的两个词到底什么关系
+思路：本题的核心点在于，如果不是isomorphic strings，s相同的char在t中会对应不同的char，t中相同的char会对应不同的char。check两者相互对应的关系，不难想到2个hashmap。我这里的做法是1个hashmap和1个set，在遍历s,t的过程中，以s的char做key，t对应的char做value，如果相同key出现了2个value，必然会错。同时set记录t已经用过的char，如果不同的key使用相同的char，必定也不是。（本题易忽略的就是后者）
+ `for(int i:hashmap.values()){...}`
+注意，hm.put()这个方法，官方api写的是：the previous value associated with key, or null if there was no mapping for key.
+discuss里找到的代码，实现方法很简单，但是含义丰富，所以贴全部代码，又多了一道要背的题
+```
+ public boolean isIsomorphic(String s, String t) {
+        Map<Character, Integer> m1 = new HashMap<>();
+        Map<Character, Integer> m2 = new HashMap<>();
+        for(Integer i = 0; i < s.length(); i++) {
+            //hm.put() returns  it's the previous value associated to this key
+            System.out.println("i:"+i+"-1:"+m1.put(s.charAt(i), i)+"-2:"+m2.put(t.charAt(i), i));
+            if(m1.put(s.charAt(i), i) != m2.put(t.charAt(i), i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+/*
+注意，hm.put()这个方法，官方api写的是：the previous value associated with key, or null if there was no mapping for key.
+test case:
+    "aba" "baa"
+stdout:
+    i:0-1:null-2:null
+    i:1-1:null-2:null
+    i:2-1:0-2:1
+根据输出可以看出，如果映射已经存在，会输出对应的value，在这里就是以char为key对应的value（index）
+*/
+```
 
 
 
