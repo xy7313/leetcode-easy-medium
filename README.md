@@ -224,7 +224,17 @@ if(nums[i]!=val) {nums[newLength]=nums[i];newLength++;}
 }
 ```
 
-
+####9. palindromeNumber
+不能转换string，所以首先想到 不停的取原数字%10得到新数字首位，然后对比新数字和原数字
+代码也是这个思路，不过有很多细节需要注意,比如while的循环条件，不需要x一直到0，rex的组成方式，rex*10那里一开始没想到的，后面返回的时候也需要注意，看起来很简单的题，写起来全是坑，就这样
+```
+ while(x>rex){
+            rex = rex*10+x%10;
+            x/=10;
+        }
+        //位数是偶数||位数是奇数
+        return (rex==x||x==rex/10);
+```
 
 
 
