@@ -47,8 +47,13 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 ##404 tree
 ##453
 
-####349.intersaction
+####349.Intersection
 嵌套for-loop找相同元素，把未出现过的相同元素存入ArrayList`re.contains();re.add();` ArrayList再转回int[]很麻烦`for(int i : IntegerList)`
+
+####350. Intersection of Two Arrays II
+现在用的是类似指针的思路，用while循环（避免for循环会出现的各种index问题）先排序（一般用指针都要排序），然后就一步一步往后挪，如果上下相等了，那就一起后移，不相等就小的后移，找大数来跟另外一个数组中的数匹配
+更好的方法应该是hashmap吧
+
 
 ##237 linked list
 ##100 tree
@@ -88,6 +93,21 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 ####453 minMove
 1. 自己的思路是按照题目里说的，数组里除了最大元素都++，然后判断符不符合标准，复杂度太高，不能accepted
 2. 大神的思路，把上面那种 除最大值外都+1 做n次这种操作达到数组元素全部相等 转换成 每个非min的元素每次-1需要的操作数
+```
+for(int n:nums){
+    re+=(n-min);
+}
+```
+
+####462. Minimum Moves to Equal Array Elements II
+跟上面453思路类似,都是先排序，因为这个是小的数可以+1，大的数可以-1，所以排序后是两边都可以操作，每次操作次数等于两边差值
+```
+while(i < j){
+    count += nums[j]-nums[i];
+    i++;
+    j--;
+}
+```
 
 ####447. Number of Boomerangs
 1. 暴力解，取每个点当基准点并给他一个hashmap存距离，看有没有两点到他距离相等，
@@ -290,12 +310,19 @@ for(int i = 0;i<rowIndex+1;i++) {
 }
 ```
 
+####400. Nth digit
+表示不会做，想了一下但是没想到怎么实现，有一个稍微好理解一点的例子，For example given n is 1000, we first -9（9个数，每个数len=1） and then -180（90个数，每个数len=2）. The left is 811. The number is 100+810/3=370.（注意这里是100+，前面都是-99，所以这里811-1） The digit is the (810%3=0)th. Therefore, the digit is 3
+
+####58. Length of Last Word
+一句话ac `return s.trim().length()-s.trim().lastIndexOf(" ")-1;`
+
+####462. Minimum Moves to Equal Array Elements II
 
 
 
 
 
-
+####189.Rotate Array  
 
 
 
