@@ -274,8 +274,21 @@ stdout:
 */
 ```
 
+####118. Pascal's Triangle
+又是杨辉三角，这种题看要求返回的类型立刻想到用嵌套的list， 实现的时候需要注意第一行自己放好，后面每行的第一个和最后一个肯定都是1，其他没了
+注意用list.add，核心就这句`inner.add(tri.get(i-1).get(j-1)+tri.get(i-1).get(j));`
 
-
+####119. Pascal's Triangle II
+改了一下上面的题（两处：1. 外层for i<rowIndex+1; 2. 返回tri.(rowIndex);），秒ac，不过应该有更简单的方法
+```
+List<Integer> res = new ArrayList<Integer>();
+for(int i = 0;i<rowIndex+1;i++) {
+    res.add(1);
+    for(int j=i-1;j>0;j--) {
+        res.set(j, res.get(j-1)+res.get(j));
+    }
+}
+```
 
 
 
