@@ -294,6 +294,12 @@ stdout:
 */
 ```
 
+####290. Word Pattern
+基本就是复用了上面的代码
+注意两点：
+1. 如果两者长度不同，pattern肯定不同，所以直接返回
+2. for循环是通用的核心代码，就是看映射关系是否一致，比如pattern存入map的时候，如果key已存在，会返回key对应的value，即pattern中key-Character对应的value-index；同理parts存入map时，如果key-parts[i]已存在，会返回对应value-i
+
 ####118. Pascal's Triangle
 又是杨辉三角，这种题看要求返回的类型立刻想到用嵌套的list， 实现的时候需要注意第一行自己放好，后面每行的第一个和最后一个肯定都是1，其他没了
 注意用list.add，核心就这句`inner.add(tri.get(i-1).get(j-1)+tri.get(i-1).get(j));`
@@ -316,9 +322,14 @@ for(int i = 0;i<rowIndex+1;i++) {
 ####58. Length of Last Word
 一句话ac `return s.trim().length()-s.trim().lastIndexOf(" ")-1;`
 
-####462. Minimum Moves to Equal Array Elements II
-
-
+####299. Bulls and Cows
+算cows的时候用了创建新的长度=10的数组来表示每个string中数字出现情况, secret+1， guess-1 判断secret中ith char是否<0,如果小了说明guess中猜对了ith char，b++，就是cow++
+```
+if (numbers[secret.charAt(i)-'0'] <0) b++;
+    numbers[secret.charAt(i)-'0']++;
+if (numbers[guess.charAt(i)-'0'] >0) b++;
+    numbers[guess.charAt(i)-'0']--;
+```
 
 
 
