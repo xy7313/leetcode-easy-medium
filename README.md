@@ -1,6 +1,6 @@
 # leetEM(start from easy)
 
-
+from easy ac
  
 
 ####412. fizzbuzz
@@ -70,6 +70,9 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 
 ####217. Contains Duplicate
 用set是比较简单的方法，通过set.contains的方法来判断，for in 来遍历nums
+
+####219. Contains Duplicate II
+刷过一边的题果然ac率大大大幅提升，用hashmap，value存index以便判断distance<k
 
 ####455 assign cookies
 跟下面一题的思路一样，用while循环，把两个数组排序，第二个数组中对应元素不小于第一个数组中对应元素，output++，两个元素都向后移，如果第二个数组中元素比第一个数组中对应元素小，说明饼干不够，要往后找更多饼干，所以第二个数组j++
@@ -331,7 +334,19 @@ if (numbers[guess.charAt(i)-'0'] >0) b++;
     numbers[guess.charAt(i)-'0']--;
 ```
 
-
+####14. Longest Common Prefix
+每种语言string的各种操作都很风骚，这个题用了两个string的方法，见下面，思路就是取strs[0]当做pre，去比较看是不是strs[1-->len]的prefix，所以需要两层循环，外层遍历数组中每个元素，内层不停剪短pre直到pre是strs[i]的prefix，内层：`while(strs[i].indexOf(pre) != 0){pre = pre.substring(0,pre.length()-1);}`
+```
+/*string.indexOf(String str): 
+        Returns the index within this string of the first occurrence of the specified substring.
+        If no such value of k exists, then -1 is returned.
+      public String substring(int beginIndex,int endIndex)
+        Returns a new string that is a substring of this string. 
+        The substring begins at the specified beginIndex and extends to the character at index endIndex - 1. 
+        Thus the length of the substring is endIndex-beginIndex.
+        --JAVA API
+    */
+```
 
 ####189.Rotate Array  
 
