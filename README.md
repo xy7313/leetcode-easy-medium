@@ -362,6 +362,10 @@ while(n>0){
 }
 ```
 
+####438. Find All Anagrams in a String
+[Here is a 10-line template that can solve most 'substring' problems](https://discuss.leetcode.com/topic/30941/here-is-a-10-line-template-that-can-solve-most-substring-problems)
+discuss里找了个高大上的方法，只能看懂，并不能想到，下次但愿能背会。。。还有自己想的一个方法，最直接但是很慢，反正过了
+
 ####278. 
 
 ####189.Rotate Array  
