@@ -348,6 +348,22 @@ if (numbers[guess.charAt(i)-'0'] >0) b++;
     */
 ```
 
+####88. Merge Sorted Array
+看起来很简单的题，discuss里有很多3行代码1行代码什么的，我还是找了个最容易看懂的, 题目中有说明nums1的长度是存的下m+n的，既然是向nums1中插入，那为了避免懂前面已有元素，我们从后面操作，两个数组都是sort好的，所以秩序比较两个数组最右的元素，大的即为全场最大，可以直接放，后面也都是一样的思路，nums[n--]这种形式还玩不转，先不用
+```
+while(n>0){
+    if(m>0&&nums1[m-1]>nums2[n-1]){
+        nums1[m-1+n]=nums1[m-1];
+        m--;
+    }else{
+        nums1[m-1+n]=nums2[n-1];
+        n--; 
+    }
+}
+```
+
+####278. 
+
 ####189.Rotate Array  
 
 
@@ -369,3 +385,8 @@ if (numbers[guess.charAt(i)-'0'] >0) b++;
 1. int不行，long才可以,int放不下
 2. 不需要取绝对值单独判断符号，%10的时候得到的结果是带-的
 3. y是long，但需要的结果是int，所以需要判断y能不能转int，就是在最大值和最小值之间
+
+
+算是目标吧，easy-->mediam,ac高到低排，到这里应该200道
+####92. Reverse Linked List II 
+ 
