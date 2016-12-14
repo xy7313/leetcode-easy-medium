@@ -374,6 +374,8 @@ int bottom = Math.max(B,F), top = Math.max(Math.min(D,H), bottom);
 return (C-A)*(D-B)+(G-E)*(H-F)-(right-left)*(top-bottom);
 ```
 
+####1. Two Sum
+这类题可以算是刷题的动力吧，看过一次下一次居然真的会了，改了一个；错误提交居然过了，hashmap
 
 ####278. 
 
