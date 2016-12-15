@@ -378,11 +378,13 @@ return (C-A)*(D-B)+(G-E)*(H-F)-(right-left)*(top-bottom);
 这类题可以算是刷题的动力吧，看过一次下一次居然真的会了，改了一个；错误提交居然过了，hashmap
 
 ####125. Valid Palindrome
-string的问题用string的方法来解决，replaceAll, 前面通过正则去掉所有非字母字符，之后equal方法，但注意要new一个stringbuffer对象
+1. 方法1：string的问题用string的方法来解决，replaceAll, 前面通过正则去掉所有非字母字符，之后equal方法，但注意要new一个stringbuffer对象
 ```
 String actual = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
 return actual.equals(new StringBuffer(actual).reverse().toString());
 ```
+2. 操作数组，类似双指针的方法，一种神奇的for方式， 从数组前后，i，j一起for：`for(int i = 0, j = s.length() - 1; i < j; ++i, --j) {`
+还有char奇奇怪怪的方法，`!Character.isLetterOrDigit(s.charAt(i))` 返回true的时候说明不是letter，还有`character.toLowerCase`
 
 ####278. 
 
