@@ -390,8 +390,6 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 根据hint采用这个方法：Sieve of Eratosthenes\-ˌer-ə-ˈtäs-thə-ˌnēz\
 遍历的时候是i*i<n, `j+=i`相当于遍历所有j的倍数
 
-####278. 
-
 ####189.Rotate Array  
 1. 数组直接赋值是浅拷贝，int[] a = ...; int[] b = a;这种情况下，a改了b也会改动！！所以用array.clone();这个方法
 2. k>nums.length的时候需要处理的，明显是%
@@ -400,6 +398,7 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 ####396. Rotate Function
 笨方法就是按照题目给的强行算，自己能写出来但是跑巨慢，大神的方法在[这里](https://discuss.leetcode.com/topic/58459/java-o-n-solution-with-explanation), 一句两句的也说不清楚，算法太神奇了
 
+####278. 
 
 
 ##倒着刷了两道easy
