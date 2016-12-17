@@ -386,6 +386,10 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 2. 操作数组，类似双指针的方法，一种神奇的for方式， 从数组前后，i，j一起for：`for(int i = 0, j = s.length() - 1; i < j; ++i, --j) {`
 还有char奇奇怪怪的方法，`!Character.isLetterOrDigit(s.charAt(i))` 返回true的时候说明不是letter，还有`character.toLowerCase`
 
+####204 count primes
+根据hint采用这个方法：Sieve of Eratosthenes\-ˌer-ə-ˈtäs-thə-ˌnēz\
+遍历的时候是i*i<n, `j+=i`相当于遍历所有j的倍数
+
 ####278. 
 
 ####189.Rotate Array  
