@@ -393,8 +393,12 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 ####278. 
 
 ####189.Rotate Array  
+1. 数组直接赋值是浅拷贝，int[] a = ...; int[] b = a;这种情况下，a改了b也会改动！！所以用array.clone();这个方法
+2. k>nums.length的时候需要处理的，明显是%
+3. k=0的时候不需要操作，所以操作前判断一下
 
-
+####396. Rotate Function
+笨方法就是按照题目给的强行算，自己能写出来但是跑巨慢，大神的方法在[这里](https://discuss.leetcode.com/topic/58459/java-o-n-solution-with-explanation), 一句两句的也说不清楚，算法太神奇了
 
 
 
