@@ -398,6 +398,31 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 ####396. Rotate Function
 笨方法就是按照题目给的强行算，自己能写出来但是跑巨慢，大神的方法在[这里](https://discuss.leetcode.com/topic/58459/java-o-n-solution-with-explanation), 一句两句的也说不清楚，算法太神奇了
 
+####414. Third Maximum Number
+    看起来越是简单的题坑越多，按发现问题的顺序
+    1. 最大值赋给first后，原first值变为second，注意别丢了
+    2. 重复元素不计数，所以遇到重复元素直接跳过，不然影响结果
+    3. 根据测试用例来看，需要long
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ####278. 
 
 
