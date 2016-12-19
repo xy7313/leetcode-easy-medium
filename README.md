@@ -402,7 +402,7 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
     看起来越是简单的题坑越多，按发现问题的顺序
     1. 最大值赋给first后，原first值变为second，注意别丢了
     2. 重复元素不计数，所以遇到重复元素直接跳过，不然影响结果
-    3. 根据测试用例来看，需要long
+    3. 根据测试用例来看，需要long,其实就是处理数据极值的问题，大部分题都要考虑这点
 
 
 
