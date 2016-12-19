@@ -404,6 +404,8 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
     2. 重复元素不计数，所以遇到重复元素直接跳过，不然影响结果
     3. 根据测试用例来看，需要long,其实就是处理数据极值的问题，大部分题都要考虑这点
 
+####28. Implement strStr()
+看起来是个很简单的题，花了很长时间，心塞
 
 
 
