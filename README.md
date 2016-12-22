@@ -345,7 +345,7 @@ if (numbers[guess.charAt(i)-'0'] >0) b++;
         The substring begins at the specified beginIndex and extends to the character at index endIndex - 1. 
         Thus the length of the substring is endIndex-beginIndex.
         --JAVA API
-    */
+*/
 ```
 
 ####88. Merge Sorted Array
