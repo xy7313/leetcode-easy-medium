@@ -410,8 +410,17 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 ####303. Range Sum Query - Immutable
 这个也是可以自己写的，就是写出来的比较慢，有个蜜汁答案，想的很新奇，复杂度很低，很好懂，太牛了。思路是，在构造方法中直接创建一个数组，每个元素=该元素和之前所有元素和，之后调用sumRange的时候就返回类属性这个数组的i j 元素差就可以了，棒
 
+####67. Add binary
+从末尾起遍历两个string，
+1. 如果当前计数>长度，该位为1
+2. sum= A当前位+B当前位+carry（可能=1 or 0）+之前求得的sum，拼接在后面
+    (curIntA+curIntB+c)%2==curIntA ^ curIntB ^ c
+3. 计算carry位
 
-
+####461. Hamming Distance
+字符串中不相同的字符有几个，hamming distance就是几，题目看起来好像很难很陌生的样子，其实看懂例子之后还挺简单的。居然自己写的一遍过，真真的一遍过了都没语法错误。
+思路：题目的意思就是给两个int，这两个int的二进制表示方式中有几位是不一样的
+很简单，%2之后作比较是否一样，然后这两个数/=2往下一位算
 
 
 
