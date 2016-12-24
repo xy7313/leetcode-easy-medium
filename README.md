@@ -422,7 +422,8 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 思路：题目的意思就是给两个int，这两个int的二进制表示方式中有几位是不一样的
 很简单，%2之后作比较是否一样，然后这两个数/=2往下一位算
 
-
+####6. ZigZag Conversio
+discuss中看到的方法，思路是给rownumber， 然后就在row1放一个char，row=row+1放一个，+1和-1分别对应两种情况，其实可以理解为拐弯，比如row=0的时候，说明要往下走，row=row+1，row=rownumber-1的时候说明要往上往回走了，所以row=row-1。高端的不行
 
 
 
