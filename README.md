@@ -429,11 +429,19 @@ discuss中看到的方法，思路是给rownumber， 然后就在row1放一个ch
 
 
 ###遇到的关于github的问题
+问题：
 12/23/2016-12/24/2016这两天刷的题的commit都没显示到账户。具体如下：
-12/23 换电脑，在新电脑上通过terminal，clone repository，开始刷题，通过vscode commit和push，push的时候vscode提示输入github帐密，我就输入了一下，然后github上不显示我原本github的用户名xy7313的commit反而显示了真实用户名提交的commit，意思是这几个commit不是xy7313做的，而事实上就是。。。
-commit 显示成了名字而不是我自己的账号xy7313
-更改了vs code 用户setting git sync false改成了true
-在终端中尝试解决，终端提示需要配置global config文件
+12/23 换电脑，在新电脑上通过terminal，clone repository，开始刷题，通过vscode commit和push，push的时候vscode提示输入github帐密，我就输入了一下，然后github上不显示我原本github的用户名xy7313的commit反而显示了真实用户名提交的commit，所以github说23号这天的contribution是0，然而并不是，是3，只不过归在了真实姓名下面而不是xy7313下面。
+解决方法：
+1. 更改了vs code 用户setting git sync false改成了true，猜测可能是vscode问题，所以在vscode中随便改了一点用户设置作为尝试，失败
+2. 想到更应该用终端解决，果然在终端中尝试commit的时候会提示committer的username，是真实姓名，根据终端提示设置修改配置，之后成功
+>终端提示内容：
+You can suppress this message by setting them explicitly:
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+After doing this, you may fix the identity used for this commit with:
+    git commit --amend --reset-author
+
 
 
 
