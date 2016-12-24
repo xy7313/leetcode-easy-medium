@@ -61,6 +61,15 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 ####171. excelColumnNumber
 `re+=(sc[i]-'A'+1)*Math.pow(26,sc.length-i-1);`
 
+####168. Excel Sheet Column Title
+n%26得到0-25之间的26个数，刚好对应A-Z,但题目中given int是从1-A开始，所以只需要把given int n=n-1 后面就可以按照0-25 分别+65去转换对应的asc码就可以了
+```
+while(n>0){
+    n=n-1;
+    re = Character.toString((char)(n%26+65))+re;
+    n/=26;
+}
+```
 
 ####169. Majority Element
 有种取巧的写法，可以说得通但是想不到，传统解法还是hashmap再mark一下这个`for(Integer k: m.keySet())`
@@ -430,7 +439,7 @@ discuss中看到的方法，思路是给rownumber， 然后就在row1放一个ch
 
 ###遇到的关于github的问题
 问题：
-12/23/2016-12/24/2016这两天刷的题的commit都没显示到账户。具体如下：
+12/23/2016刷的题的commit都没显示到账户。具体如下：
 12/23 换电脑，在新电脑上通过terminal，clone repository，开始刷题，通过vscode commit和push，push的时候vscode提示输入github帐密，我就输入了一下，然后github上不显示我原本github的用户名xy7313的commit反而显示了真实用户名提交的commit，所以github说23号这天的contribution是0，然而并不是，是3，只不过归在了真实姓名下面而不是xy7313下面。
 解决方法：
 1. 更改了vs code 用户setting git sync false改成了true，猜测可能是vscode问题，所以在vscode中随便改了一点用户设置作为尝试，失败
