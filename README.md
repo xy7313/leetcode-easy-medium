@@ -425,7 +425,7 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 ####6. ZigZag Conversio
 discuss中看到的方法，思路是给rownumber， 然后就在row1放一个char，row=row+1放一个，+1和-1分别对应两种情况，其实可以理解为拐弯，比如row=0的时候，说明要往下走，row=row+1，row=rownumber-1的时候说明要往上往回走了，所以row=row-1。高端的不行
 
-
+####
 
 
 
