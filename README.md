@@ -426,7 +426,11 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 discuss中看到的方法，思路是给rownumber， 然后就在row1放一个char，row=row+1放一个，+1和-1分别对应两种情况，其实可以理解为拐弯，比如row=0的时候，说明要往下走，row=row+1，row=rownumber-1的时候说明要往上往回走了，所以row=row-1。高端的不行
 
 ####
-push 出了问题？
+
+
+###遇到的关于github的问题
+12/23/2016-12/24/2016这两天刷的题的commit都没显示到账户。具体如下：
+12/23 换电脑，在新电脑上通过terminal，clone repository，开始刷题，通过vscode commit和push，push的时候vscode提示输入github帐密，我就输入了一下，然后github上不显示我原本github的用户名xy7313的commit反而显示了真实用户名提交的commit，意思是这几个commit不是xy7313做的，而事实上就是。。。
 commit 显示成了名字而不是我自己的账号xy7313
 更改了vs code 用户setting git sync false改成了true
 
