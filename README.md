@@ -433,7 +433,7 @@ discuss中看到的方法，思路是给rownumber， 然后就在row1放一个ch
 12/23 换电脑，在新电脑上通过terminal，clone repository，开始刷题，通过vscode commit和push，push的时候vscode提示输入github帐密，我就输入了一下，然后github上不显示我原本github的用户名xy7313的commit反而显示了真实用户名提交的commit，意思是这几个commit不是xy7313做的，而事实上就是。。。
 commit 显示成了名字而不是我自己的账号xy7313
 更改了vs code 用户setting git sync false改成了true
-
+在终端中尝试解决，终端提示需要配置global config文件
 
 
 
