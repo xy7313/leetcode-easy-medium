@@ -427,6 +427,7 @@ discuss中看到的方法，思路是给rownumber， 然后就在row1放一个ch
 
 ####
 push 出了问题？
+commit 显示成了名字而不是我自己的账号xy7313
 
 
 
