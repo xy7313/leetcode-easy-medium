@@ -450,7 +450,8 @@ while(start<end){
 ####374. Guess Number Higher or Lower
 跟上题一样，binary search 代码也几乎一样，==1说明更大，向后找，所以start=mid+1；==-1说明更小，向前找，返回start。可以背个模板了。
 
-
+####475. Heaters
+还是tag：binary search
 
 
 
