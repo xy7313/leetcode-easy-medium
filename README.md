@@ -433,7 +433,23 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 ####6. ZigZag Conversio
 discuss中看到的方法，思路是给rownumber， 然后就在row1放一个char，row=row+1放一个，+1和-1分别对应两种情况，其实可以理解为拐弯，比如row=0的时候，说明要往下走，row=row+1，row=rownumber-1的时候说明要往上往回走了，所以row=row-1。高端的不行
 
-####
+####278. First Bad version
+看题应该会立刻想到二分查找，另外这个思想和和438中sliding window的思路有有一点类似.
+这个题需要搞清楚两点：
+1. 如果mid不是，那mid前都不是，查找mid后面，如果mid是，查找mid前
+2. 返回谁，我是举了个例子试了一下，不过从if这句可以看出，返回start
+```
+while(start<end){
+    int mid = start+(end-start)/2;
+    //all the versions after a bad version are also bad，所以如果mid没有，mid前肯定都没有，查找后一半
+    if(!isBadVersion(mid)) start = mid+1;
+    else end = mid;
+}
+```
+
+
+
+
 
 
 ###遇到的关于github的问题
