@@ -457,6 +457,12 @@ while(start<end){
 但愿是easy的最后一题了，总觉得easy要刷完了，结果就会出一道新题。。。
 这个也是看起来简单，一开始的思路非常奇葩，看数组中的数+1和-1的数是不是存在，如果不存在就标记一下大概这样，实现了一下发现不行，应该是标记的问题，后来在discuss看到了一个不错的方法：
 >The basic idea is that we iterate through the input array and mark elements as negative using nums[nums[i] -1] = -nums[nums[i]-1]. In this way all the numbers that we have seen will be marked as negative. In the second iteration, if a value is not marked as negative, it implies we have never seen that index before, so just add it to the return list.
+另外这个题有点bug，原题给的example是：
+>Input:
+[4,3,2,7,8,2,3,1]
+Output:
+[5,6]
+我看到discuss的代码的时候会想，what if nums[i]>nums.length，我就改动了下原有example,删掉了后面的2，3，1，expected answer也是报错的，但是，注意审题”Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.“
 
 ###遇到的关于github的问题
 问题：
