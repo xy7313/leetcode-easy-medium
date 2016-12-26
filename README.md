@@ -486,7 +486,7 @@ Output:
 ####190. Reverse Bits
 result左移，空出一位放n的最右位，n右移，看见位运算还是懵逼，心塞
 
-
+easy除tree和linkedList问题外全部过一遍
 
 
 
