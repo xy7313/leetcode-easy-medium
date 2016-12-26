@@ -451,7 +451,26 @@ while(start<end){
 跟上题一样，binary search 代码也几乎一样，==1说明更大，向后找，所以start=mid+1；==-1说明更小，向前找，返回start。可以背个模板了。
 
 ####475. Heaters
-还是tag：binary search
+还是tag：binary search, 看题并没有很好的思路，discuss
+```
+public int findRadius(int[] houses, int[] heaters) {
+    //用binary search前需要排序，不然答案不确定
+    Arrays.sort(heaters);
+    int result = Integer.MIN_VALUE;        
+    for (int house : houses) {
+        //Arrays.bianrySearch(object[] a, object key)如果它包含在数组中，则返回搜索键的索引；否则返回 (-(插入点) - 1)。插入点被定义为将键插入数组的那一点：即第一个大于此键的元素索引。
+        int index = Arrays.binarySearch(heaters, house);
+        if (index < 0) {
+            index = -(index + 1);
+        }
+        //如果<0，说明house在最左边heater的左边，dist1=max无意义，实际算的距离是dist2，此时=heaters[index] - house
+        int dist1 = index - 1 >= 0 ? house - heaters[index - 1] : Integer.MAX_VALUE;
+        int dist2 = index < heaters.length ? heaters[index] - house : Integer.MAX_VALUE;        	
+        result = Math.max(result, Math.min(dist1, dist2));
+    }       
+    return result;
+}
+```
 
 ####448. Find All Numbers Disappeared in an Array
 但愿是easy的最后一题了，总觉得easy要刷完了，结果就会出一道新题。。。
