@@ -483,6 +483,21 @@ Output:
 [5,6]
 我看到discuss的代码的时候会想，what if nums[i]>nums.length，我就改动了下原有example,删掉了后面的2，3，1，expected answer也是报错的，但是，注意审题”Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.“
 
+####190. Reverse Bits
+result左移，空出一位放n的最右位，n右移，看见位运算还是懵逼，心塞
+
+
+
+
+
+
+
+
+
+
+
+
+
 ###遇到的关于github的问题
 问题：
 12/23/2016刷的题的commit都没显示到账户。具体如下：
