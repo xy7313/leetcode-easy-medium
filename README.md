@@ -507,6 +507,8 @@ easy除tree和linkedList问题外全部过一遍
 ##Medium
 
 ####338. Counting Bits
+Q:For num = 5 you should return [0,1,1,2,1,2].
+比如返回2-4之间的数，可以先算上2的结果，再加上后面的部分，所以核心代码`result[i] = result[i>>1] + (i&1);`
 
 
 
