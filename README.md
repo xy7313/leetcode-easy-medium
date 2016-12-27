@@ -486,15 +486,35 @@ Output:
 ####190. Reverse Bits
 result左移，空出一位放n的最右位，n右移，看见位运算还是懵逼，心塞
 
+####atoi
+1. 清除空格的方法`str = str.trim();`
+2. 一位一位加`int digit = str.charAt(i) - 48;sum = sum*10-digit;`
+
+####165 compare version
+长度不相等的时候很麻烦
+1. 注意以 . perioud 为分隔符时候的写法`version1.split("[.]");version2.split("\\.");`
+2. 注意每次while中才给temp赋值，即，如果s1比s2多一位，那s2的当前temp=0，然后判断
+
+####7 reverse integer
+1. int不行，long才可以,int放不下
+2. 不需要取绝对值单独判断符号，%10的时候得到的结果是带-的
+3. y是long，但需要的结果是int，所以需要判断y能不能转int，就是在最大值和最小值之间
+
+
+
 easy除tree和linkedList问题外全部过一遍
 
+##Medium
+
+####338. Counting Bits
 
 
 
 
 
-
-
+算是目标吧，easy-->mediam,ac高到低排，到这里应该200道
+####92. Reverse Linked List II 
+ 
 
 
 
@@ -512,35 +532,3 @@ You can suppress this message by setting them explicitly:
 After doing this, you may fix the identity used for this commit with:
     git commit --amend --reset-author
 
-
-
-
-
-
-
-
-
-
-####278. 
-
-
-##倒着刷了两道easy
-
-####atoi
-1. 清除空格的方法`str = str.trim();`
-2. 一位一位加`int digit = str.charAt(i) - 48;sum = sum*10-digit;`
-
-####165 compare version
-长度不相等的时候很麻烦
-1. 注意以 . perioud 为分隔符时候的写法`version1.split("[.]");version2.split("\\.");`
-2. 注意每次while中才给temp赋值，即，如果s1比s2多一位，那s2的当前temp=0，然后判断
-
-####7 reverse integer
-1. int不行，long才可以,int放不下
-2. 不需要取绝对值单独判断符号，%10的时候得到的结果是带-的
-3. y是long，但需要的结果是int，所以需要判断y能不能转int，就是在最大值和最小值之间
-
-
-算是目标吧，easy-->mediam,ac高到低排，到这里应该200道
-####92. Reverse Linked List II 
- 
