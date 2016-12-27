@@ -16,7 +16,7 @@ from easy ac
 1. hashmap<Integer,Boolean>
 2. array 排序的方法：（排序时间复杂度nlogn）Arrays.sort(nums); 循环的时候，判断相邻两数差==0，i+=2
 3. notice:如果有多个singlenumber，题目中没有描述清楚，应该问清楚
-##新题455. assign cookies
+
 
 ####371. sum Two Integer
 sum 得到按位异或的结果，在没有进位的情况下就是我们想要的和；如果有进位，进入while循环处理进位
@@ -510,6 +510,10 @@ easy除tree和linkedList问题外全部过一遍
 Q:For num = 5 you should return [0,1,1,2,1,2].
 比如返回2-4之间的数，可以先算上2的结果，再加上后面的部分，所以核心代码`result[i] = result[i>>1] + (i&1);`
 
+####260. Single Number3
+又是用了传统的hashmap方法，在以前代码的基础上，检测map中value==true的值部分做了很小的改动就可以了。思路还是把数组存入map，出现一次对应value=T，再出现的value=F，之后遍历map(`for(Integer a: m.keySet()){...}`)找value=true
+但隐约记得当年用go刷题的时候看到过牛逼的解法，所有数组元素进行一次位运算，得到singlenumber（只有一个的时候），或者得到两个singlenumber的位运算结果，然后再用一种黑科技把两个数分开。
+当年笔记
 
 
 
