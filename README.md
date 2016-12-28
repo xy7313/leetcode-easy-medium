@@ -536,11 +536,9 @@ int xor = nums[0];
 for (int i=1; i<nums.length; i++){
     xor ^= nums[i];
 }
-
 int bit = xor & ~(xor-1);
 int num1 = 0;
 int num2 = 0;
-
 for (int num : nums){
     if ((num & bit) > 0) num1 ^= num;
     else num2 ^= num;
