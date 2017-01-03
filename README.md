@@ -557,7 +557,40 @@ I think the easy way to understand this is that adding current number to our exi
 Let's say if we have [1, 2, 3, 4] and currently we have 3 arithmetic slices (curr is 2). We are going to add 5 to our arithmetic sequence. So that we will have curr new slices (curr is 3), which is [3, 4, 5], [2, 3, 4, 5] and [1, 2, 3, 4, 5]. Now, the total valid arithmetic slices is 3 + curr = 6. That's exactly the same as sum += curr.
 
 ####406. Queue Reconstruction by Height
+题目大意：Suppose you have a random list of people standing in a queue. Each person is described by a pair of integers (h, k), where h is the height of the person and k is the number of people in front of this person who have a height greater than or equal to h. Write an algorithm to reconstruct the queue.
+>ex:
+Input:
+[[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
+Output:
+[[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
 
+厉害了的思路（discuss）：(下面的算法就是这个思路的实现)
+1. Pick out tallest group of people and sort them in a subarray (S). Since there's no other groups of people taller than them, therefore each guy's index will be just as same as his k value.
+2. For 2nd tallest group (and the rest), insert each one of them into (S) by k value. So on and so forth.
+
+一个java语法点：（parameters）->{statements;}
+1. 只有一个参数时，可以不加（）
+2. 没有参数时 ()->{...;}
+3. statements有return时必须{}，其他情况可以不加
+```
+public class Solution {
+    public int[][] reconstructQueue(int[][] people) {
+        Arrays.sort(people, new Comparator<int[]>(){
+           @Override
+           public int compare(int[] a, int[] b){
+               //h不相等的时候大的在前面，h相等时，k小的在前面
+               return a[0]!=b[0]?-a[0]+b[0]:a[1]-b[1];
+           }
+        });
+        //        Arrays.sort(people, (a, b) -> a[0] == b[0] ? a[1] - b[1] : b[0] - a[0]);
+        List<int[]> res = new LinkedList<>();
+        for(int[] cur : people){
+            res.add(cur[1],cur);       
+        }
+        return res.toArray(new int[people.length][]);
+    }
+}
+```
 
 ####451. Sort Characters By Frequency
 
