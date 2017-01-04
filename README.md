@@ -613,14 +613,13 @@ Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array),这句话很熟
 for(int i=0;i<nums.length;i++){  
     int idx =Math.abs(nums[i]);  
     if(nums[idx-1]<0){
-        re.add(Math.abs(nums[i]));
+        re.add(idx);
     }else{
         nums[idx-1]=-nums[idx-1];
     }
 }
 return re;
 ```
-（3道）
 
 ####357. Count Numbers with Unique Digits
 
