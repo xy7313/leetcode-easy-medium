@@ -604,9 +604,10 @@ public class Solution {
 ####238. Product of Array Except Self
 注意算right的时候不能简写省去right，因为此时re已经有左边的值了，不能像上面处理左边一样直接用re[i-1]/re[i+1]
 
+####442. Find All Duplicates in an Array
+Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array),这句话很熟悉，数组中所有元素都是<n所以可以用a[a[i]]元素当下标的方式，跟一个题很类似
 
-
-
+####357. Count Numbers with Unique Digits
 
 
 
