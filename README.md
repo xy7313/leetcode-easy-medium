@@ -622,7 +622,7 @@ return re;
 ```
 
 ####357. Count Numbers with Unique Digits
-
+有三种方法，前两种是数学方法，第三种是DP，DP很好理解
 
 
 
