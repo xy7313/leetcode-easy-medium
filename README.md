@@ -131,6 +131,7 @@ while(i < j){
 ####268. Missing Number
 1. 方法1，排序，然后用数组中的元素跟索引比较，索引有，元素没有的（其实就是i!=nums[i]）直接返回i，复杂度略高
 2. 方法2，求和，已知我们有的是[0,n]之间distinct的数字，可以直接把[0,n]这些全部相加再-数组中所有元素和
+    1. 即1+2+。。。+（index+1）（其实也就是length）与nums[0]+nums[1]+...的差值. (we are missing only one number in [0,n], we just need to look at the difference between the sum([0,n]) = n * (n+1) / 2 and the sum of nums in our array.)
 
 ####463. Island Perimeter
 1. 首先想到的思路：每个0格上下左右是否有1，有的话计数器+1，格子是否在周围一圈上的位置，如果是，计数器+1，这个方法一开始超时跑不过，以为写错了，后来发现超时的原因是因为有system.out.println的打印语句。。。
@@ -600,7 +601,8 @@ public class Solution {
 ####167. Two Sum II - Input array is sorted
 1题改进版，双指针更快，从前和后同时查找，注意while判断条件，我写的l<=r考虑到会有【1，2，4】t=4就会需要2+2，另外遇到匹配项记得跳出循环。
 
-
+####238. Product of Array Except Self
+注意算right的时候不能简写省去right，因为此时re已经有左边的值了，不能像上面处理左边一样直接用re[i-1]/re[i+1]
 
 
 
