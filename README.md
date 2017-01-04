@@ -622,8 +622,13 @@ return re;
 ```
 
 ####357. Count Numbers with Unique Digits
-有三种方法，前两种是数学方法，第三种是DP，DP很好理解
-
+第一种是很数学方法，第二种是DP，DP很好理解，数组re[0],re[1]...re[n]分别存储n位数对应的每位不重复的数字的个数，
+ * n = 0, count = 1 --> re[0]
+ * n = 1, count = 1+9 --> re[0]+re[1]
+ * n = 2, count = 1+9 + 9*9 --> re[0]+re[1]+re[2]
+ * n = 3, count = 1+9 + 9*9 + 9*9*8
+ * ...
+ */
 
 
 

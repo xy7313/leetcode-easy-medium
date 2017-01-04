@@ -4,7 +4,7 @@
  * n = 2, count = 1+9 + 9*9
  * n = 3, count = 1+9 + 9*9 + 9*9*8
  * ...
- * 这里有三种方法，前两种是数学方法，第三种是DP，DP很好理解
+ * 第一种是很数学方法，第二种是DP，DP很好理解
  */
 
  public class Solution {
@@ -21,39 +21,17 @@
 
 public class Solution {
     public int countNumbersWithUniqueDigits(int n) {
-        n=Math.min(n,10);
-        int[] re = new int[n+1];
-        re[0]=1;
-        for(int i = 1;i<=n; i++){
-            re[1]=9;
-            for (int j = 9; j>=9-i+2; j--){
-                re[i] *=j;
+        n = Math.min(n,10);
+        int[] dp = new int[n+1];
+        dp[0] = 1;
+        for(int i = 1;i<=n;i++){
+            dp[i] = 9;
+            for(int x = 9; x >= 9 - i + 2;x--){
+                dp[i] *= x;
             }
         }
         int ans = 0;
-        for (int x = 0;x<re.length;x++){
-            System.out.println(re[x]);
-            ans+=re[x];
-        }
+        for(int i= 0;i<dp.length;i++) ans += dp[i];
         return ans;
     }
 }
-
-
-
-// public class Solution {
-//     public int countNumbersWithUniqueDigits(int n) {
-//         n = Math.min(n,10);
-//         int[] dp = new int[n+1];
-//         dp[0] = 1;
-//         for(int i = 1;i<=n;i++){
-//             dp[i] = 9;
-//             for(int x = 9; x >= 9 - i + 2;x--){
-//                 dp[i] *= x;
-//             }
-//         }
-//         int ans = 0;
-//         for(int i= 0;i<dp.length;i++) ans += dp[i];
-//         return ans;
-//     }
-// }
