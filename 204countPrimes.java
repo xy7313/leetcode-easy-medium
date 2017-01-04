@@ -1,3 +1,5 @@
+// notice！！the description of this problem: 
+//Count the number of prime numbers less than a non-negative number, n.,LESS THAN so it is different from 61B  example
 public class Solution {
     public int countPrimes(int n) {
         boolean[] isPrime = new boolean[n];

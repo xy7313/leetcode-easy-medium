@@ -396,6 +396,7 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 还有char奇奇怪怪的方法，`!Character.isLetterOrDigit(s.charAt(i))` 返回true的时候说明不是letter，还有`character.toLowerCase`
 
 ####204 count primes
+Count the number of prime numbers less than a non-negative number, n. 和61B例子不同
 根据hint采用这个方法：Sieve of Eratosthenes\-ˌer-ə-ˈtäs-thə-ˌnēz\
 遍历的时候是i*i<n,  `j+=i;` 相当于遍历所有i的倍数
 
