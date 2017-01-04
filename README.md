@@ -397,7 +397,7 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 
 ####204 count primes
 根据hint采用这个方法：Sieve of Eratosthenes\-ˌer-ə-ˈtäs-thə-ˌnēz\
-遍历的时候是i*i<n, `j+=i`相当于遍历所有j的倍数
+遍历的时候是i*i<n,  `j+=i;` 相当于遍历所有i的倍数
 
 ####189.Rotate Array  
 1. 数组直接赋值是浅拷贝，int[] a = ...; int[] b = a;这种情况下，a改了b也会改动！！所以用array.clone();这个方法
