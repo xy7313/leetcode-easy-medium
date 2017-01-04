@@ -606,6 +606,21 @@ public class Solution {
 
 ####442. Find All Duplicates in an Array
 Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array),这句话很熟悉，数组中所有元素都是<n所以可以用a[a[i]]元素当下标的方式，跟一个题很类似
+1. 遍历数组，把数组中元素值取绝对之后（确保>0）当做索引 idx
+2. 如果 nums[idx]>0 (initially all elements >0) num[idx] = -num[idx]
+3. 如果 nums[idx]<0，说明我们已经见过一次该元素了，此数即duplicate，注意这里的此数是nums[i]
+```
+for(int i=0;i<nums.length;i++){  
+    int idx =Math.abs(nums[i]);  
+    if(nums[idx-1]<0){
+        re.add(Math.abs(nums[i]));
+    }else{
+        nums[idx-1]=-nums[idx-1];
+    }
+}
+return re;
+```
+（3道）
 
 ####357. Count Numbers with Unique Digits
 
