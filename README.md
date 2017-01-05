@@ -736,7 +736,28 @@ public ListNode removeElements(ListNode head, int val) {
     }
 ```
 
-
+####21. Merge Two Sorted Lists
+还是iteration和recursion,iteration代码太长了，由此可见递归的好处，代码简介易懂
+iteration注意 l1,l2挨个merge的时候为了方便，l1,l2在merge后指向自己next，即后移，同时head即新链表的当前node也后移，另外这里也是head不确定的情况，所以用dummy
+```
+//dummy
+    ListNode dummy = new ListNode(0);
+    ListNode head = dummy;
+    ...
+    return dummy.next;
+//recursion
+public ListNode mergeTwoLists(ListNode l1, ListNode l2){
+    if(l1 == null) return l2;
+    if(l2 == null) return l1;
+    if(l1.val < l2.val){
+        l1.next = mergeTwoLists(l1.next, l2);
+        return l1;
+    } else{
+        l2.next = mergeTwoLists(l1, l2.next);
+        return l2;
+    }
+}
+```
 
 
 
