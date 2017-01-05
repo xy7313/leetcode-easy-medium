@@ -707,7 +707,21 @@ public class Solution {
 }
 ```
 
-
+####203. Remove Linked List Elements
+删除指定element，看起来很简单，写错了两点
+```
+public ListNode removeElements(ListNode head, int val) {
+    //1. while，不用if，test case：[1,1] 1,如果head一直是val，那就一直向后取，直到head.val!=val
+    while(head!=null&&head.val==val) head= head.next;
+    ListNode next = head;
+    while(next!=null&&next.next!=null){
+        if(next.next.val==val) next.next = next.next.next;
+        //2. else 提交出错，忘了写else了。。。test case:[1,2,2,1] 2
+        else next = next.next;
+    }
+    return head;
+}
+```
 
 
 

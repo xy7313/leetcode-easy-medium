@@ -8,7 +8,6 @@
  */
 public class Solution {
     public ListNode removeElements(ListNode head, int val) {
-        if(head==null) return head;
         //while，不用if，test case：[1,1] 1
         while(head!=null&&head.val==val) head= head.next;
         ListNode next = head;
