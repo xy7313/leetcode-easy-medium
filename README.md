@@ -680,7 +680,7 @@ public class Solution {
 ```
 
 ####83. Remove Duplicates from Sorted List
-还是一种iteration一种recursion
+还是一种iteration一种recursion,这个题可以不用dummy，删除第二个重复元素，确保head不会改动
 ```
 public class Solution {
     public ListNode deleteDuplicates(ListNode head) {
@@ -708,7 +708,8 @@ public class Solution {
 ```
 
 ####203. Remove Linked List Elements
-删除指定element，看起来很简单，写错了两点
+删除指定element，看起来很简单，写错了两点,第二个方法，dummy-哑节点，的使用多针对单链表没有向前指针的问题，保证链表的head不会在删除操作中丢失，或者用来删除head
+所以当链表head可能有变化时就用dummy，`ListNode dummy = New ListNode(0);dummy.next=head;`最后返回dummy.head
 ```
 public ListNode removeElements(ListNode head, int val) {
     //1. while，不用if，test case：[1,1] 1,如果head一直是val，那就一直向后取，直到head.val!=val
@@ -721,6 +722,18 @@ public ListNode removeElements(ListNode head, int val) {
     }
     return head;
 }
+//dummy, 给加个head，这样之前的head就可以当做普通node来处理了，很好的方法
+ public ListNode removeElements(ListNode head, int val) {
+        ListNode dummy = New ListNode(0);
+        dummy.next=head;
+        head = dummy;
+        //现在head.next才是之前的head
+        while(head.next!=null){
+            if(head.next.val==val) head.next = head.next.next;
+            else head = head.next;
+        }
+        return dummy.next;
+    }
 ```
 
 

@@ -18,4 +18,15 @@ public class Solution {
         }
         return head;
     }
+    //dummy什么鬼的
+     public ListNode removeElements(ListNode head, int val) {
+        ListNode dummy = New ListNode(0);
+        dummy.next=head;
+        head = dummy;
+        while(head.next!=null){
+            if(head.next.val==val) head.next = head.next.next;
+            else head = head.next;
+        }
+        return dummy.next;
+    }
 }
