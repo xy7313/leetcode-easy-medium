@@ -759,6 +759,49 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2){
 }
 ```
 
+####328. Odd Even Linked List
+拼接链表，可通过多个dummy实现，注意  和value无关，只和第几个node有关
+```
+public ListNode oddEvenList(ListNode head) {
+    ListNode OddDummy = new ListNode(0);
+    ListNode EvenDummy = new ListNode(0);
+    ListNode odd = OddDummy;
+    ListNode even = EvenDummy;
+    boolean isodd = true;
+    while(head!=null){
+        if(!isodd){
+            even.next = head;
+            even = even.next;
+        }else{
+            odd.next = head;
+            odd = odd.next;
+        }
+        head = head.next;
+        isodd = !isodd;
+    }
+    even.next = null;
+    odd.next = EvenDummy.next;
+    return OddDummy.next;       
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
