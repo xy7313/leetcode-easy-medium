@@ -679,7 +679,33 @@ public class Solution {
 }
 ```
 
-
+####83. Remove Duplicates from Sorted List
+还是一种iteration一种recursion
+```
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        //改动list不改动head，最后返回dead
+        ListNode list = head;
+        while(list!=null){
+            if(list.next==null){
+                return head;
+            }else if(list.next.val == list.val){
+                //这里跟237那道delete一个意思
+                list.next = list.next.next;
+            } else{
+                list = list.next;
+            }
+        }
+        return head;
+    }
+    //recursive
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null)return head;
+        head.next = deleteDuplicates(head.next);
+        return head.val == head.next.val ? head.next : head;
+    }
+}
+```
 
 
 
