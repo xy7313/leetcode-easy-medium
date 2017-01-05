@@ -630,7 +630,7 @@ return re;
  * ...
  */
 
-61B刚好看到LinkedList 所以把之前空的链表题都补一下
+##61B刚好看到LinkedList 所以把之前空的链表题都补一下
 ####237. Delete Node in a Linked List
 代码很简单，道理也都懂，思路也没错，但居然写成了注释里那种形式，有一点被注释里的class definition 影响了，还有是对构造函数的不熟悉，总之这个主意吧。
 思路是最后一个node的值付给当前，当前的.next置成next.next
@@ -647,6 +647,46 @@ node.val=node.next.val;
         // node.ListNode(node.next.val);不能这么用，构造方法，new的时候才能用
 node.next=node.next.next;
 ```
+
+####206. Reverse LinkedList
+没做过一上来感觉不太好想，有个视频，看到一半恍然大悟：https://www.youtube.com/watch?v=sYcOK51hl-A
+这类题都开始要求用iteration写一次再用recursive写一个
+```
+ //假设1->2->3->4,先从head=1开始，要翻转，最后一个会变成head，所以head一步一步向后挪，每一步也一起翻转指向
+public class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        while(head!=null){
+            ListNode nextHead = head.next;
+            head.next = prev;
+            prev=head;
+            //这里得到的prev即下一个head前面的数，也就是下一个head要指向的数，当head=最后一个node（tail）时，prev=tail，循环结束
+            head = nextHead;
+        } 
+        return prev;
+    }
+    //recursive
+     public ListNode reverseList(ListNode head) {
+        return reverseRecursive(head,null);
+    }
+    public ListNode reverseRecursive(ListNode head,ListNode prev){
+        if(head==null) return prev;
+        ListNode nextHead = head.next;
+        head.next=prev;
+        //下面传参其实就相当于这两句：prev=head;head = nextHead;
+        return reverseRecursive(nextHead,head);
+    }
+}
+```
+
+
+
+
+
+
+
+
+
 
 算是目标吧，easy-->mediam,ac高到低排，到这里应该200道
 ####92. Reverse Linked List II 
