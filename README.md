@@ -630,7 +630,23 @@ return re;
  * ...
  */
 
-
+61B刚好看到LinkedList 所以把之前空的链表题都补一下
+####237. Delete Node in a Linked List
+代码很简单，道理也都懂，思路也没错，但居然写成了注释里那种形式，有一点被注释里的class definition 影响了，还有是对构造函数的不熟悉，总之这个主意吧。
+思路是最后一个node的值付给当前，当前的.next置成next.next
+```
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x;  }
+ * }
+ */
+node.val=node.next.val;
+        // node.ListNode(node.next.val);不能这么用，构造方法，new的时候才能用
+node.next=node.next.next;
+```
 
 算是目标吧，easy-->mediam,ac高到低排，到这里应该200道
 ####92. Reverse Linked List II 
