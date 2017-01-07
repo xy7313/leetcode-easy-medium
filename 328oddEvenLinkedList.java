@@ -29,7 +29,6 @@ public class Solution {
         even.next = null;
         odd.next = EvenDummy.next;
         
-        return OddDummy.next;
-        
+        return OddDummy.next;       
     }
 }

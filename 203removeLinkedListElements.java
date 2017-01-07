@@ -20,7 +20,7 @@ public class Solution {
     }
     //dummy什么鬼的
      public ListNode removeElements(ListNode head, int val) {
-        ListNode dummy = New ListNode(0);
+        ListNode dummy = new ListNode(0);
         dummy.next=head;
         head = dummy;
         while(head.next!=null){
