@@ -785,6 +785,24 @@ public ListNode oddEvenList(ListNode head) {
 }
 ```
 
+####24. Swap Nodes in Pairs
+看起来很简单的题和思路，但是很容易想乱，比如哪个是真正的node，哪个是为了保存出来的node。这里current.next是1，current.next.next是2，这里要搞清楚。因为后面是要把1，2付给别人，所以，在复制之前不能改变他俩本身的值，，我也不知道我在说什么了，总之很容易乱，画个图就都清楚了
+```
+public ListNode swapPairs(ListNode head) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode current = dummy;
+    while (current.next != null && current.next.next != null) {
+        ListNode first = current.next;
+        ListNode second = current.next.next;
+        first.next = second.next;
+        current.next = second;
+        current.next.next = first;
+        current = current.next.next;
+    }
+    return dummy.next;
+}
+```
 
 
 
