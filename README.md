@@ -711,6 +711,12 @@ public class Solution {
 }
 ```
 
+####82. Remove Duplicates from Sorted List II
+```
+
+```
+
+
 ####203. Remove Linked List Elements
 删除指定element，看起来很简单，写错了两点,第二个方法，dummy-哑节点，的使用多针对单链表没有向前指针的问题，保证链表的head不会在删除操作中丢失，或者用来删除head
 所以当链表head可能有变化时就用dummy，`ListNode dummy = New ListNode(0);dummy.next=head;`最后返回dummy.head
