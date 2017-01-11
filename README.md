@@ -712,8 +712,27 @@ public class Solution {
 ```
 
 ####82. Remove Duplicates from Sorted List II
+这个题不会做！！第一个方法还稍微好懂一点，拿[1,1,1,2,3]的例子来说，第一个内层while结束，slow.next=head=1, fast=最后一个1， 进入if(注意并不是比较val)，之后就，代码肯定能看懂，但是dummy.next的变化一直想不通，fast slow都满满指向最后面去了，dummy.next是怎么移动到2，又是怎么不移动了的。。。
 ```
-
+public ListNode deleteDuplicates(ListNode head) {
+	//use two pointers, slow - track the node before the dup nodes, 
+	// fast - to find the last node of dups.
+    ListNode dummy = new ListNode(0), fast = head, slow = dummy;
+    slow.next = fast;
+    while(fast != null) {
+    	while (fast.next != null && fast.val == fast.next.val) {
+     		fast = fast.next;    //while loop to find the last node of the dups.
+    	}
+    	if (slow.next != fast) { //duplicates detected.
+    		slow.next = fast.next; //remove the dups.
+    		fast = slow.next;     //reposition the fast pointer.
+    	} else { //no dup, move down both pointer.
+    		slow = slow.next;
+    		fast = fast.next;
+    	}
+    }
+    return dummy.next;
+}
 ```
 
 
@@ -733,38 +752,38 @@ public ListNode removeElements(ListNode head, int val) {
     return head;
 }
 //dummy, 给加个head，这样之前的head就可以当做普通node来处理了，很好的方法
- public ListNode removeElements(ListNode head, int val) {
-        ListNode dummy = New ListNode(0);
-        dummy.next=head;
-        head = dummy;
-        //现在head.next才是之前的head
-        while(head.next!=null){
-            if(head.next.val==val) head.next = head.next.next;
-            else head = head.next;
-        }
-        return dummy.next;
+public ListNode removeElements(ListNode head, int val) {
+    ListNode dummy = New ListNode(0);
+    dummy.next=head;
+    head = dummy;
+    //现在head.next才是之前的head
+    while(head.next!=null){
+        if(head.next.val==val) head.next = head.next.next;
+        else head = head.next;
     }
+    return dummy.next;
+}
 ```
 
 ####19. Remove Nth Node From End of List
 walker and runner, init walker,runner both as dummy, move runner n steps, so that the gap between runner and walker =n, then move runner and walker together, when runner get to the end of List, walker is before the nth from the end node, walker.next=walke.next.next， skip original walker.next
 ```
 public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode walker = dummy;
-        ListNode runner = dummy;
-        // after for loop, gap between runner and walker =n
-        for(int i = 1; i <= n; i++){
-            runner = runner.next;
-        }
-        while(runner.next!=null){
-            runner = runner.next;
-            walker = walker.next;
-        }
-        walker.next=walker.next.next;//skip nth node
-        return dummy.next;
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode walker = dummy;
+    ListNode runner = dummy;
+    // after for loop, gap between runner and walker =n
+    for(int i = 1; i <= n; i++){
+        runner = runner.next;
     }
+    while(runner.next!=null){
+        runner = runner.next;
+        walker = walker.next;
+    }
+    walker.next=walker.next.next;//skip nth node
+    return dummy.next;
+}
 ```
 
 ####21. Merge Two Sorted Lists
@@ -885,7 +904,72 @@ public ListNode detectCycle(ListNode head) {
 }
 ```
 
-####19. Remove Nth Node From End of List
+####2. Add Two Numbers
+简单版：Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+这种题对我来说的难点都在 创建sentinel，和d，不停在d后面添加node这些地方，这两种方法其实思路一样，实现上稍有区别
+```
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {     
+    ListNode cur1 = l1,cur2 = l2;
+    ListNode sentinel = new ListNode(0);
+    ListNode d = sentinel;
+    int carry = 0,sum=0;
+    while(cur1!=null||cur2!=null||carry!=0){
+        sum = (cur1 != null ? cur1.val : 0) + (cur2 != null ? cur2.val : 0) +carry;
+        carry = sum / 10;
+        d.next = new ListNode(sum % 10);
+        d = d.next;
+        cur1 = (cur1!=null?cur1.next:null);
+        cur2 = (cur2!=null?cur2.next:null);    
+    }
+    return sentinel.next;
+}
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    ListNode c1 = l1;
+    ListNode c2 = l2;
+    ListNode sentinel = new ListNode(0);
+    ListNode d = sentinel;
+    int sum = 0;
+    while (c1 != null || c2 != null||sum/10!=0) {
+        sum /= 10;//sum means carry here
+        if (c1 != null) {
+            sum += c1.val;
+            c1 = c1.next;
+        }
+        if (c2 != null) {
+            sum += c2.val;
+            c2 = c2.next;
+        }
+        d.next = new ListNode(sum % 10);
+        d = d.next;
+    }
+    return sentinel.next;
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
