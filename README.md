@@ -72,7 +72,7 @@ while(n>0){
 ```
 discuss推送了一个one line code，用了递归，很厉害
 ```
-       return n == 0 ? "" : convertToTitle(--n / 26) + (char)('A' + (n % 26));
+return n == 0 ? "" : convertToTitle(--n / 26) + (char)('A' + (n % 26));
 ```
 
 ####169. Majority Element
@@ -172,17 +172,17 @@ n % 3 == 2 时，分为n个3和一个2的乘积
 代码不多，直接贴了，
 ```
 public boolean isHappy(int n) {
-        if (n <= 0) return false;
-        while(n>=10){
-            int sum = 0;      
-            while(n!=0){
-                sum +=(n%10)*(n%10);
-                n/=10;   //确保算了每一位的平方
-            }            
-            n=sum;  //sum是每一位的平方的和
-        }
-        return n == 1 || n == 7; 
+    if (n <= 0) return false;
+    while(n>=10){
+        int sum = 0;      
+        while(n!=0){
+            sum +=(n%10)*(n%10);
+            n/=10;   //确保算了每一位的平方
+        }            
+        n=sum;  //sum是每一位的平方的和
     }
+    return n == 1 || n == 7; 
+}
 ```
 
 ####231. Power of Two
@@ -240,12 +240,12 @@ if(nums[i]!=val) {nums[newLength]=nums[i];newLength++;}
 需要直接改变原数组，加一个新的计数器顺便当做index，这种方法好多array都用了，比如上面的27，这俩代码几乎一模一样就是移除的东西不同
 ```
  int n = 1;
-        for(int i = 1;i<nums.length;i++){
-           if(nums[i]!=nums[i-1]){
-               nums[n]=nums[i];
-               n++;
-           }
-       }
+for(int i = 1;i<nums.length;i++){
+    if(nums[i]!=nums[i-1]){
+        nums[n]=nums[i];
+        n++;
+    }
+}
 ```
 
 ####66. Plus One
@@ -265,11 +265,11 @@ if(nums[i]!=val) {nums[newLength]=nums[i];newLength++;}
 代码也是这个思路，不过有很多细节需要注意,比如while的循环条件，不需要x一直到0，rex的组成方式，rex*10那里一开始没想到的，后面返回的时候也需要注意，看起来很简单的题，写起来全是坑，就这样
 ```
  while(x>rex){
-            rex = rex*10+x%10;
-            x/=10;
-        }
-        //位数是偶数||位数是奇数
-        return (rex==x||x==rex/10);
+    rex = rex*10+x%10;
+    x/=10;
+}
+//位数是偶数||位数是奇数
+return (rex==x||x==rex/10);
 ```
 
 ####36. Valid Sudoku
@@ -287,17 +287,17 @@ if(board[3*(i/3) + j/3][3*(i%3) + j%3]!='.' && !cube.add(board[3*(i/3) + j/3][3*
 discuss里找到的代码，实现方法很简单，但是含义丰富，所以贴全部代码，又多了一道要背的题
 ```
  public boolean isIsomorphic(String s, String t) {
-        Map<Character, Integer> m1 = new HashMap<>();
-        Map<Character, Integer> m2 = new HashMap<>();
-        for(Integer i = 0; i < s.length(); i++) {
-            //hm.put() returns  it's the previous value associated to this key
-            System.out.println("i:"+i+"-1:"+m1.put(s.charAt(i), i)+"-2:"+m2.put(t.charAt(i), i));
-            if(m1.put(s.charAt(i), i) != m2.put(t.charAt(i), i)) {
-                return false;
-            }
+    Map<Character, Integer> m1 = new HashMap<>();
+    Map<Character, Integer> m2 = new HashMap<>();
+    for(Integer i = 0; i < s.length(); i++) {
+        //hm.put() returns  it's the previous value associated to this key
+        System.out.println("i:"+i+"-1:"+m1.put(s.charAt(i), i)+"-2:"+m2.put(t.charAt(i), i));
+        if(m1.put(s.charAt(i), i) != m2.put(t.charAt(i), i)) {
+            return false;
         }
-        return true;
     }
+    return true;
+}
 /*
 注意，hm.put()这个方法，官方api写的是：the previous value associated with key, or null if there was no mapping for key.
 test case:
@@ -889,6 +889,7 @@ Distance(slow) = C + S, Distance(fast) = 2 * Distance(slow) = 2 * (C + S). To le
 public ListNode detectCycle(ListNode head) {
     ListNode walker = head;
     ListNode runner = head;
+    //这里不加runner.next.next!=null也ac
     while(runner!=null&&runner.next!=null&&runner.next.next!=null){
         runner = runner.next.next;
         walker = walker.next;
@@ -947,7 +948,69 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 }
 ```
 
-
+####234. Palindrome Linked List
+假设是odd长（even同理）
+一开始的思路是，分成前后相等两部分，中间点可以不管，把后半部分reverse一下，然后和前半部分比较看是否完全相同，看了好几个gitbook的实现都是这样的，有个[YouTube视频](https://www.youtube.com/watch?v=Os5FM4KQtxw&index=14&list=PLNmW52ef0uwsjnM06LweaYEZr-wjPKBnj)，讲这道题，用的是stack，个人觉得用在这里很适合，把前半部分压栈，过中点之后依次pop出来跟后半截比较。
+另一个技巧：用都指向 head 的快慢指针可以判断链表长度奇偶，最后 fast == null 的时候为偶，slow 指向后半单第一个节点;fast.next == null 的时候链表长度为奇数，slow 指向中间节点
+```
+ public boolean isPalindrome(ListNode head) {
+    ListNode walker = head, runner = head;
+    Stack<Integer> s = new Stack<>();
+    //runner==null, if list.size is even, runner.next==null,when list.size is odd
+    while(runner!=null&&runner.next!=null){
+        s.push(walker.val);
+        walker = walker.next;
+        runner = runner.next.next;
+    }
+    //if the list size is odd, we should skip the middle node
+    if(runner!=null) walker = walker.next;
+    while(walker!=null){
+        if(s.pop().intValue()!=walker.val) return false;
+        walker = walker.next;
+    }
+    return true;    
+}
+```
+但是，题目有要求O(1) space complexity,可以用一开始的思路实现，主体部分跟上面的思路很像，都用到了fast==null来判断长度是odd还是even这点，单独写了compare方法，默认了传入的两个list长度相同的，另一个reverse方法之前写过，reverse每次看都懵逼
+```
+public boolean isPalindrome(ListNode head) {
+    if(head == null || head.next == null) return true;
+    ListNode slow = head;
+    ListNode fast = head;
+    while(fast != null && fast.next != null){
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    if(fast == null){
+        ListNode headB = reverse(slow);
+        return compare(head, headB);
+    } else {
+        ListNode headB = slow.next;
+        slow = null;
+        headB = reverse(headB);
+        return compare(head, headB);
+    }             
+}
+ //这里默认传入的两个list长度一定相同，调用前做的处理
+private boolean compare(ListNode headA, ListNode headB){
+    while(headA != null && headB != null){
+        if(headA.val != headB.val) return false;
+        headA = headA.next;
+        headB = headB.next;
+    }
+    return true;
+}
+private ListNode reverse(ListNode head){
+    ListNode prev = null;
+    while(head != null){
+        ListNode next = head.next;
+        head.next = prev;
+        prev = head;
+        head = next;
+    }
+    return prev;
+}
+```
 
 
 
