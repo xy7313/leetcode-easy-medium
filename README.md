@@ -810,11 +810,53 @@ public ListNode swapPairs(ListNode head) {
 
 ####141. Linked List Cycle
 用双指针的思路，walker moves step by step. runner moves two steps at time. if the Linked List has a cycle walker and runner will meet at some
-point.
-
+point. 解法代码下一题中其实是包含的，但我还是把这个代码贴出来了，因为判定条件那里需要注意，这道题的写法是，先判断了head==null，之后while中判断runner.next和runner.next.next，个人理解是runner跑的快，需要注意判断runner而不是walker。但是下一题的写法我又重新懵逼了，下一题没有单独的判断head，而是直接while种判断了runner和runner.next，我个人的理解是还需要再判断runner.next.next的，但是没判断也ac了，这里不太懂。。
+```
+public boolean hasCycle(ListNode head) {
+    if(head==null) return false;
+    ListNode walker = head;
+    ListNode runner = head;
+    // runner跑的快，在前面，所以判断runner.next, runner.next.next
+    while(runner.next!=null&&runner.next.next!=null){
+        walker = walker.next;
+        runner = runner.next.next;
+        if(walker==runner) return true;
+    }
+    return false;
+}
+```
 
 ####142. Linked List Cycle2
-
+关于判定条件的一个问题上道题中解释了
+这个题目的思路不太好想，discuss中有一个很好的解释，贴过来，其中关键的两点是，walker走过的距离和cycle长度的关系，以及walker,runner相遇之后再通过head和walker一齐走，相遇点是cycle起点这层关系
+>[Explanations](https://discuss.leetcode.com/topic/27868/concise-java-solution-based-on-slow-fast-pointers)
+Definitions:
+Cycle = length of the cycle, if exists.
+C is the beginning of Cycle, S is the distance of slow pointer from C when slow pointer meets fast pointer.
+Distance(slow) = C + S, Distance(fast) = 2 * Distance(slow) = 2 * (C + S). To let slow poiner meets fast pointer, only if fast pointer run 1 cycle more than slow pointer. Distance(fast) - Distance(slow) = Cycle
+=> 2 * (C + S) - (C + S)	= Cycle
+=>	C + S = Cycle
+=>	C = Cycle - S
+=> This means if slow pointer runs (Cycle - S) more, it will reaches C. So at this time, if there's another point2(we use head Here) running from head
+=> After C distance, point2 will meet slow pointer at C, where is the beginning of the cycle.
+```
+public ListNode detectCycle(ListNode head) {
+    ListNode walker = head;
+    ListNode runner = head;
+    while(runner!=null&&runner.next!=null&&runner.next.next!=null){
+        runner = runner.next.next;
+        walker = walker.next;
+        if(runner==walker){
+            while(head!=walker){
+                head = head.next;
+                walker = walker.next;
+            }
+            return walker;
+        }
+    }
+    return null;
+}
+```
 
 ####19. Remove Nth Node From End of List
 
