@@ -746,6 +746,27 @@ public ListNode removeElements(ListNode head, int val) {
     }
 ```
 
+####19. Remove Nth Node From End of List
+walker and runner, init walker,runner both as dummy, move runner n steps, so that the gap between runner and walker =n, then move runner and walker together, when runner get to the end of List, walker is before the nth from the end node, walker.next=walke.next.next， skip original walker.next
+```
+public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode walker = dummy;
+        ListNode runner = dummy;
+        // after for loop, gap between runner and walker =n
+        for(int i = 1; i <= n; i++){
+            runner = runner.next;
+        }
+        while(runner.next!=null){
+            runner = runner.next;
+            walker = walker.next;
+        }
+        walker.next=walker.next.next;//skip nth node
+        return dummy.next;
+    }
+```
+
 ####21. Merge Two Sorted Lists
 还是iteration和recursion,iteration代码太长了，由此可见递归的好处，代码简介易懂
 iteration注意 l1,l2挨个merge的时候为了方便，l1,l2在merge后指向自己next，即后移，同时head即新链表的当前node也后移，另外这里也是head不确定的情况，所以用dummy
