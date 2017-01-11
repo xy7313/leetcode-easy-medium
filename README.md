@@ -70,6 +70,10 @@ while(n>0){
     n/=26;
 }
 ```
+discuss推送了一个one line code，用了递归，很厉害
+```
+       return n == 0 ? "" : convertToTitle(--n / 26) + (char)('A' + (n % 26));
+```
 
 ####169. Majority Element
 有种取巧的写法，可以说得通但是想不到，传统解法还是hashmap再mark一下这个`for(Integer k: m.keySet())`
