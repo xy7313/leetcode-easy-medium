@@ -1117,8 +1117,45 @@ Notice：只贴一下第二个方法，第一个方法很简单，分别遍历�
 }
  ``` 
 
+####147. Insertion Sort List
+目前看来打算写的最后一道linked list题
+看题的时候在discuss发现了很多有意思的东西，比如这个
+>Thoughts from google interviewer
+For God's sake, don't try sorting a linked list during the interviewer
 
-
+and
+>sort array or sort linkedlist[here](http://stackoverflow.com/questions/1525117/whats-the-fastest-algorithm-for-sorting-a-linked-list/1525419#1525419)
+Depending on a number of factors, it may actually be faster to copy the list to an array and then use a Quicksort.
+The reason this might be faster is that an array has much better cache performance than a linked list. If the nodes in the list are dispersed in memory, you may be generating cache misses all over the place. Then again, if the array is large you will get cache misses anyway.
+Mergesort parallelises better, so it may be a better choice if that is what you want. It is also much faster if you perform it directly on the linked list.
+Since both algorithms run in O(n * log n), making an informed decision would involve profiling them both on the machine you would like to run them on.
+这个题表示不会做，简化算法if判断的原因： Before insert, the prev is at the last node of the sorted list. Only the last node's value is larger than the current inserting node should we move the temp back to the head
+```
+public ListNode insertionSortList(ListNode head) {
+    if( head == null ){
+        return head;
+    }
+    ListNode dummy = new ListNode(0); //new starter of the sorted list
+    ListNode cur = head; //the node will be inserted
+    ListNode pre = dummy; //insert node between pre and pre.next
+    ListNode next = null; //the next node will be inserted
+    //not the end of input list
+    while( cur != null ){
+        next = cur.next;
+        //find the right place to insert
+        while( pre.next != null && pre.next.val < cur.val ){
+            pre = pre.next;
+        }
+        //insert between pre and pre.next
+        cur.next = pre.next;
+        pre.next = cur;
+        //reset，还有一种简化的方法，这里pre不重置到dummy，下次近inner while前判断一下if (prev.val >= head.val) prev = dummy;
+        pre = dummy;
+        cur = next;
+    }
+    return dummy.next;
+}
+```
 
 
 
