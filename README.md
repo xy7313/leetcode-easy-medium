@@ -683,6 +683,56 @@ public class Solution {
 }
 ```
 
+####92. Reverse Linked List II
+For example:
+Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+return 1->4->3->2->5->NULL.
+>根据题中的例子，第二个for循环开始
+loop1:
+1 --> 2 --> 3 --> 4 --> 5 --> NULL
+p     c     n
+cur.next = next.next;
+2 --> 4
+next.next = prev.next;
+3 --> 2
+prev.next = next;
+1 --> 3
+==> 1 --> 3 --> 2 --> 4 --> 5 --> NULL
+    p          c      n
+loop2:
+cur.next = next.next;
+2 --> 5
+next.next = prev.next;
+4 --> 3
+prev.next = next;
+1 --> 4
+==> 1 --> 4 --> 3 --> 2 --> 5 --> NULL
+```
+public ListNode reverseBetween(ListNode head, int m, int n) {
+    if(m == n) return head;
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode prev = dummy;
+    ListNode cur = head;
+    //在reverse之前的部分平移
+    for(int i = 0; i < m - 1; i++){
+        prev = prev.next;
+        cur = cur.next;
+    }
+    for(int i = 0; i < n - m; i++){
+        ListNode next = cur.next;
+        cur.next = next.next;
+        next.next = prev.next;
+        prev.next = next;
+    }
+    return dummy.next;
+}
+```
+
+
+
+
+
 ####83. Remove Duplicates from Sorted List
 还是一种iteration一种recursion,这个题可以不用dummy，删除第二个重复元素，确保head不会改动
 ```
