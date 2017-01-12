@@ -885,6 +885,10 @@ public ListNode oddEvenList(ListNode head) {
 }
 ```
 
+####86. Partition List
+和上题类似的思路，大于x和小于x的部分分别用两个dummy连起来
+代码也基本和上面一样，就是isodd换成和x大小的比较。加深了对dummy的理解。一开始的odd，even初始化那里，意思是odd和odddummy， even和evendummy分别指向同一个node，所以odd，even next改变的时候对应的dummy.next也改变了，但之后odd，even指向下一个node了，不和dummy指向同一个node了，所以改变都不影响到dummy
+
 ####24. Swap Nodes in Pairs
 看起来很简单的题和思路，但是很容易想乱，比如哪个是真正的node，哪个是为了保存出来的node。这里current.next是1，current.next.next是2，这里要搞清楚。因为后面是要把1，2付给别人，所以，在复制之前不能改变他俩本身的值，，我也不知道我在说什么了，总之很容易乱，画个图就都清楚了
 ```
