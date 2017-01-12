@@ -948,6 +948,35 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 }
 ```
 
+####445. Add Two Numbers II
+跟上面那题很类似，但是Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4) Output: 7 -> 8 -> 0 -> 7
+代码用stack实现，一开始是用了三个stack，后来发现可以通过改变新链表的拼接方式生一个stack
+```
+//stack3
+ListNode dummy = new ListNode(0);
+ListNode d = dummy;
+while(!s.empty()||!s2.empty()||carry!=0){
+    sum = (s.empty()?0:s.pop().intValue())+(s2.empty()?0:s2.pop().intValue())+carry;
+    carry = sum/10;
+    s3.push(sum%10);
+}
+while(!s3.empty()){
+    d.next = new ListNode(s3.pop().intValue());
+    d=d.next;
+}
+//without stack3, 在dummy前面一步一步加node
+ListNode dummy = new ListNode(0);
+while(!s.empty()||!s2.empty()||carry!=0){
+    sum = (s.empty()?0:s.pop().intValue())+(s2.empty()?0:s2.pop().intValue())+carry;
+    carry = sum/10;
+    dummy.val = sum%10;
+    ListNode d = new ListNode(sum%10);
+    d.next = dummy;
+    dummy=d; 
+}
+```
+
+
 ####234. Palindrome Linked List
 假设是odd长（even同理）
 一开始的思路是，分成前后相等两部分，中间点可以不管，把后半部分reverse一下，然后和前半部分比较看是否完全相同，看了好几个gitbook的实现都是这样的，有个[YouTube视频](https://www.youtube.com/watch?v=Os5FM4KQtxw&index=14&list=PLNmW52ef0uwsjnM06LweaYEZr-wjPKBnj)，讲这道题，用的是stack，个人觉得用在这里很适合，把前半部分压栈，过中点之后依次pop出来跟后半截比较。
