@@ -17,17 +17,17 @@
     */
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-    //boundary check
-    if(headA == null || headB == null) return null;
-    ListNode a = headA;
-    ListNode b = headB;
-    // if a & b have different len, then we will stop the loop after second iteration
-    while( a != b){
-    	//for the end of first iteration, we just reset the pointer to the head of another linkedlist
-        a = a == null? headB : a.next;
-        b = b == null? headA : b.next;    
-    }
-    return a;
+        //boundary check
+        if(headA == null || headB == null) return null;
+        ListNode a = headA;
+        ListNode b = headB;
+        // if a & b have different len, then we will stop the loop after second iteration
+        while( a != b){
+            //for the end of first iteration, we just reset the pointer to the head of another linkedlist
+            a = a == null? headB : a.next;
+            b = b == null? headA : b.next;    
+        }
+        return a;
     }
 
     //这里是一个更general的方法, 一开始在想相交之后还会不会分开，比如一开始就相交，那长度不等情况下先向后移就说不过去了，但是这里应该是利用了链表特性，每个node都指向另一个node，所以相交之后就一定都一样了。

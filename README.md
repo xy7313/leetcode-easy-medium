@@ -1,7 +1,7 @@
 # leetEM(start from easy)
 
 from easy ac
- 
+这个有点像流水账，前面还是知识点总结，后面题目不会的多了，就加入了大部分的代码，回头还是做成gitbook这种带个目录的比较方便，不然一长篇不太方便阅读。
 
 ####412. fizzbuzz
 最简单的数学题，注意if判断顺序或者就都单列出来总不会错
@@ -1091,8 +1091,27 @@ private ListNode reverse(ListNode head){
 }
 ```
 
+####160. Intersection of Two Linked Lists
+1. 一个general的方法, 比较两个linked list的长度，把较长的一个链表后移几位，从长度和另一链表相等处开始比较node是否相同。
+一开始在想相交之后还会不会分开，比如一开始就相交，那长度不等情况下先向后移就说不过去了，但是这里应该是利用了链表特性，每个node都指向另一个node，所以相交之后就一定都一样了。
+2. 一个很机智的方法，感觉用到了类似single linked list中判断是否有cycle时候用的runner 和walker双指针的方法，这个题中的“双指针”总会在intersection处相遇或者没有intersection在最后的null相遇.
+disscuss区大神的分析:
+>use two iterations here. In the first iteration, we will reset the pointer of one linkedlist to the head of another linkedlist after it reaches the tail node. In the second iteration, we will move two pointers until they points to the same node. Our operations in first iteration will help us counteract the difference.
+So if two linkedlist intersects, the meeting point in second iteration must be the intersection point. If the two linked lists have no intersection at all, then the meeting pointer in second iteration must be the tail node of both lists, which is null
 
-
+Notice：只贴一下第二个方法，第一个方法很简单，分别遍历链表直到空，通过counter获取长度，然后通过两个长度差值移动指向较长链表的node的位置，在等长之后比较node是否相同，是就返回该node。
+ ```
+ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    if(headA == null || headB == null) return null;
+    ListNode a = headA;
+    ListNode b = headB;
+    while( a != b){
+        a = a == null? headB : a.next;
+        b = b == null? headA : b.next;    
+    }
+    return a;
+}
+ ``` 
 
 
 
