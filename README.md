@@ -420,7 +420,29 @@ Count the number of prime numbers less than a non-negative number, n. 和61B例�
 3. 根据测试用例来看，需要long,其实就是处理数据极值的问题，大部分题都要考虑这点
 
 ####28. Implement strStr()
-看起来是个很简单的题，花了很长时间，心塞. 自己是用了类似双指针的方法，haystack中有needle首字符时，记index of hayxtack，然后比对needle，haystack不够长就直接返回-1，如果重合元素==needle.length,说明是包含的，返回此时记的index。另外一种大牛的方法看起来很简介，但是有一句j+i不太懂，考试略忙也没有仔细想，mark一下回头看
+看起来是个很简单的题，花了很长时间，心塞. 自己是用了类似双指针的方法，haystack中有needle首字符时，记index of haystack，然后比对needle，haystack不够长就直接返回-1，如果重合元素==needle.length,说明是包含的，返回此时记的index。另外一种大牛的方法看起来很简介，但是有一句j+i不太懂，考试略忙也没有仔细想，mark一下回头看
+//postscript
+又遇到了一次这个题，还是花了很久，最后还是看了之前这里的答案。。。心塞，再细细记一下思路：
+1. 边界值，如果needle==“”那么所有的haystack都可以包含，needle出现在haystack第0位，所以直接返回0；如果target或haystack为null，haystack==“”,那么一定是返回-1的。
+2. 实现，
+    1. 首先要遍历haystack。可以用for循环；
+    2. 之后从每个h开始，看是否对应在needle中，这里为了标记 相同元素的起点，所以把h值存在tmp中，一会儿操作tmp，还有每次新的h都要从头在needle找对应；
+    3. 下一步是如果n==tmp了，注意这里用while，只要n==tmp，两者一起自增，直到不相等，
+    4. 这个while中有三个操作，第一，如果n==needle.length()-1 说明全都匹配上了，返回之前保存的h即可；第二，如果tmp>haystack.length()-1，说明needle中出现了更多haystack中没有的元素，肯定返回-1；第三，正在朝着1，2两种情况进行。
+    5. 还需要注意这三种情况的顺序，先判断 n 中元素遍历完了没，完了就可以返回了。
+    ```
+    for(int n = 0;n<haystack.length();n++){
+        int i = n;
+        int j = 0;
+        while(haystack.charAt(i)==needle.charAt(j)){
+            if(j==(needle.length()-1)) return n;
+            j++;
+            i++;
+            if(i>haystack.length()-1) return -1;
+        }
+    }
+    ```
+
 
 ####303. Range Sum Query - Immutable
 这个也是可以自己写的，就是写出来的比较慢，有个蜜汁答案，想的很新奇，复杂度很低，很好懂，太牛了。思路是，在构造方法中直接创建一个数组，每个元素=该元素和之前所有元素和，之后调用sumRange的时候就返回类属性这个数组的i j 元素差就可以了，棒
