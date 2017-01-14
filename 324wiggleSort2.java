@@ -1,13 +1,17 @@
 public class Solution {
+    //method1 其实呢，思路都是想通的,details: https://discuss.leetcode.com/topic/41464/step-by-step-explanation-of-index-mapping-in-java
+    /*
+    思路是：
+    (1) elements smaller than the 'median' are put into the last even slots
+    (2) elements larger than the 'median' are put into the first odd slots
+    (3) the medians are put into the remaining slots.
+    */
       public void wiggleSort(int[] nums) {
-          int len = nums.length;
+        int len = nums.length;
         int median = findKthLargest(nums,0, len-1, len/2);
         int n = nums.length;
-
         int left = 0, i = 0, right = n - 1;
-
         while (i <= right) {
-
             if (nums[newIndex(i,n)] > median) {
                 swap(nums, newIndex(left++,n), newIndex(i++,n));
             }
@@ -19,10 +23,10 @@ public class Solution {
             }
         }
     }
-
     private int newIndex(int index, int n) {
         return (1 + 2*index) % (n | 1);
     }
+
     //method2
     public void wiggleSort(int[] nums) {
         /*
