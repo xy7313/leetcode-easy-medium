@@ -1178,7 +1178,7 @@ public ListNode insertionSortList(ListNode head) {
 }
 ```
 
-##sort相关
+##sort相关(3 problems)
 ####215. Kth Largest Element in an Array
 用quicksort的思想，实现O(n)的算法。快排的思想是分治，divide and conqure。这里因为只需要找到某元素，所以分治之后的部分只有包含要查找元素的那部分需要处理，剩下的不需要处理，所以原本快排是nlogn的算法，这里不完全排序，可以达到linear。
 还有之所以看到了这题是因为下面的题用到了这个题目。
@@ -1285,7 +1285,38 @@ public void wiggleSort(int[] nums) {
 }
 ```
 
-
+####179. Largest Number
+Given a list of non negative integers, arrange them such that they form the largest number.
+For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
+代码看起来很长，第一个for循环其实不用看，int数组存成string数组，重点在sort，override compareTo方法这里，直接比较拼接后的结果，注意注释掉的是一套，现在的版本是根据拼接结果从大到小排，比如[1,2]-->[2,1]; [10,2]-->[2,10]之后判断String[]首位是不是0，如果是说明全是0，返回0即可，如果不是开始拼接，这里一直向后拼接就可以了，如果排序时候用的s1.compareTo(), 那么这里的拼接需要向前拼接，用注释里的代码。
+```
+public String largestNumber(int[] nums) {
+    if (nums == null || nums.length == 0) return "";
+    String[] strs = new String[nums.length];
+    for (int i = 0; i < nums.length; i++) {
+        strs[i] = nums[i]+"";
+    }
+    //s2.compareTo(s1) sort array 9-0, s1.compareTo(s2) sort array 0-9
+    //String.compareTo(String s) return <0 this<argument:s,
+    Arrays.sort(strs, new Comparator<String>() {
+        @Override
+        public int compare(String i, String j) {
+            String s1 = i+j;
+            String s2 = j+i;
+            // return s1.compareTo(s2);
+            return s2.compareTo(s1);
+        }
+    });
+    //if (strs[str.length-1].charAt(0) == '0') return "0";
+    if (strs[0].charAt(0) == '0') return "0";
+    String res = new String();
+    for (int i = 0; i < strs.length; i++) {
+        //res=strs[i]+res;
+        res += strs[i];
+    }
+    return res;
+}
+```
 
 
 
