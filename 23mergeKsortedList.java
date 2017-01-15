@@ -11,6 +11,7 @@ public class Solution {
         if (lists==null||lists.length==0) return null;
         PriorityQueue<ListNode> queue= new PriorityQueue<ListNode>(lists.length,new Comparator<ListNode>(){
             @Override
+            //这里compare方法可以直接return n1.val-n2.val;
             public int compare(ListNode n1, ListNode n2){
                 if(n1.val<n2.val) return -1;
                 else if(n1.val==n2.val) return 0;
@@ -26,7 +27,9 @@ public class Solution {
             tail.next = queue.poll();
             tail=tail.next;
             
-            if(tail.next!=null) queue.add(tail.next);
+            if(tail.next!=null){
+                queue.add(tail.next)；
+            } 
         }
         return dummy.next;
     }
@@ -35,8 +38,7 @@ public class Solution {
   //recursive: 1
 public class Solution{
     public ListNode mergeKLists(ListNode[] lists) {
-        if (lists == null || lists.length == 0)
-            return null;
+        if (lists == null || lists.length == 0) return null;
         return mergeKLists(lists, 0, lists.length - 1);
     }
     private ListNode mergeKLists(ListNode[] lists, int start, int end) {
@@ -53,23 +55,17 @@ public class Solution{
     }
 }
 
-//recursive: 2
+//recursive: 2这个是以前输入还是list的时候，现在已经改成array了，下面这个思路应该还是可以，不过用要用index了--来源是discuss
 /*
 I think my code's complexity is also O(nlogk) and not using heap or priority queue, n means the total elements and k means the size of list.
-
 The mergeTwoLists functiony in my code comes from the problem Merge Two Sorted Lists whose complexity obviously is O(n), n is the sum of length of l1 and l2.
-
 To put it simpler, assume the k is 2^x, So the progress of combination is like a full binary tree, from bottom to top. So on every level of tree, the combination complexity is n, beacause every level have all n numbers without repetition. The level of tree is x, ie logk. So the complexity is O(nlogk).
 
 for example, 8 ListNode, and the length of every ListNode is x1, x2,
 x3, x4, x5, x6, x7, x8, total is n.
-
 on level 3: x1+x2, x3+x4, x5+x6, x7+x8 sum: n
-
 on level 2: x1+x2+x3+x4, x5+x6+x7+x8 sum: n
-
 on level 1: x1+x2+x3+x4+x5+x6+x7+x8 sum: n
-
 total 3n, nlog8
 */
 public class Solution {
