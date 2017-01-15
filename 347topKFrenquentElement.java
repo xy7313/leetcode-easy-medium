@@ -2,34 +2,35 @@
 // implement maxHeap by seting Comparator: (a,b)->(b.getValue()-a.getValue()),if we set (a,b)->(a.getValue()-b.getValue()), we get minHeap, which is priority queue.
 public class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
+        /*
         //old and long code, my code Vs. others
-        // Map<Integer, Integer> map = new HashMap<>();
-        // for(int i= 0; i<nums.length; i++){
-        //     if(map.containsKey(nums[i])){
-        //         map.put(nums[i],map.get(nums[i])+1);
-        //     }else{
-        //         map.put(nums[i],1);
-        //     }
-        // }
-        // PriorityQueue<Map.Entry<Integer, Integer>> maxHeap = 
-        //                  new PriorityQueue<>(map.size(),new Comparator<Map.Entry<Integer, Integer>>(){
-        //     @Override
-        //     public int compare(Map.Entry<Integer, Integer> a,Map.Entry<Integer, Integer> b){
-        //       return b.getValue()-a.getValue();
-        //     }
-        // });
-        // for(Map.Entry<Integer,Integer> entry: map.entrySet()){
-        //     maxHeap.add(entry);
-        // }
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i= 0; i<nums.length; i++){
+            if(map.containsKey(nums[i])){
+                map.put(nums[i],map.get(nums[i])+1);
+            }else{
+                map.put(nums[i],1);
+            }
+        }
+        PriorityQueue<Map.Entry<Integer, Integer>> maxHeap = 
+                         new PriorityQueue<>(map.size(),new Comparator<Map.Entry<Integer, Integer>>(){
+            @Override
+            public int compare(Map.Entry<Integer, Integer> a,Map.Entry<Integer, Integer> b){
+              return b.getValue()-a.getValue();
+            }
+        });
+        for(Map.Entry<Integer,Integer> entry: map.entrySet()){
+            maxHeap.add(entry);
+        }
+        */
         
         Map<Integer, Integer> map = new HashMap<>();
         for(int n: nums){
             map.put(n, map.getOrDefault(n,0)+1);
-        }
-        
+        } 
         PriorityQueue<Map.Entry<Integer, Integer>> maxHeap =  new PriorityQueue<>((a,b)->(b.getValue()-a.getValue()));  
         maxHeap.addAll(map.entrySet());
-        //
+        //this six lines == all codes in comments above
         List<Integer> res = new ArrayList<>();
         while(res.size()<k){
             Map.Entry<Integer, Integer> entry = maxHeap.poll();
