@@ -1288,7 +1288,7 @@ public void wiggleSort(int[] nums) {
 ####179. Largest Number
 Given a list of non negative integers, arrange them such that they form the largest number.
 For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
-代码看起来很长，第一个for循环其实不用看，int数组存成string数组，重点在sort，override compareTo方法这里，直接比较拼接后的结果，注意注释掉的是一套，现在的版本是根据拼接结果从大到小排，比如[1,2]-->[2,1]; [10,2]-->[2,10]之后判断String[]首位是不是0，如果是说明全是0，返回0即可，如果不是开始拼接，这里一直向后拼接就可以了，如果排序时候用的s1.compareTo(), 那么这里的拼接需要向前拼接，用注释里的代码。
+代码看起来很长，第一个for循环其实不用看，int数组存成string数组，重点在sort，override compareTo方法这里，直接比较拼接后的结果，注意注释掉的是一套，现在的版本是根据拼接结果从大到小排，比如[1,2]-->[2,1]; [10,2]-->[2,10]之后判断String[]首位是不是0，如果是说明全是0，返回0即可，如果不是开始拼接，这里一直向后拼接就可以了，如果排序时候用的s1.compareTo(), 那么这里的拼接需要向前拼接，用注释里的代码。`new Comparator<String>() {...}`注意这个的写法
 ```
 public String largestNumber(int[] nums) {
     if (nums == null || nums.length == 0) return "";
