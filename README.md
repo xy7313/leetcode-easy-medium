@@ -1179,6 +1179,42 @@ public ListNode insertionSortList(ListNode head) {
 }
 ```
 
+####23. Merge k Sorted Lists
+根据priority queue的特性，我们可以通过重写compare方法利用priority queue实现，还有dummy，从后向前拼接。
+和下面179一样，都重写了compare。一个是sort方法内，一个是priority queue
+```
+public ListNode mergeKLists(ListNode[] lists) {
+    if (lists==null||lists.length==0) return null;
+    PriorityQueue<ListNode> queue= new PriorityQueue<ListNode>(lists.length,new Comparator<ListNode>(){
+        @Override
+        /*
+        1. 这里compare方法可以直接return n1.val-n2.val;
+        */
+        public int compare(ListNode n1, ListNode n2){
+            if(n1.val<n2.val) return -1;
+            else if(n1.val==n2.val) return 0;
+            else return 1;
+        }
+    });
+    ListNode dummy = new ListNode(0);
+    ListNode tail = dummy;
+    for(ListNode n:lists){
+        if(n!=null) queue.add(n);
+    }
+    while(!queue.isEmpty()){
+        tail.next = queue.poll();
+        tail=tail.next;
+        
+        if(tail.next!=null){
+            queue.add(tail.next)；
+        } 
+    }
+    return dummy.next;
+}
+```
+
+
+
 ##sort相关(3 problems)
 ####215. Kth Largest Element in an Array
 用quicksort的思想，实现O(n)的算法。快排的思想是分治，divide and conqure。这里因为只需要找到某元素，所以分治之后的部分只有包含要查找元素的那部分需要处理，剩下的不需要处理，所以原本快排是nlogn的算法，这里不完全排序，可以达到linear。
@@ -1319,6 +1355,8 @@ public String largestNumber(int[] nums) {
 }
 ```
 
+####347. Top K Frequent Elements
+还有一个重写compare的题，当然这个题用hashmap也可以，复杂度不知道行不行
 
 
 
