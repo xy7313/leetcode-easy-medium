@@ -3,7 +3,7 @@
 public class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         /*
-        //old and long code, my code Vs. others
+        //复杂版 my code Vs. others
         Map<Integer, Integer> map = new HashMap<>();
         for(int i= 0; i<nums.length; i++){
             if(map.containsKey(nums[i])){
@@ -22,19 +22,23 @@ public class Solution {
         for(Map.Entry<Integer,Integer> entry: map.entrySet()){
             maxHeap.add(entry);
         }
+        List<Integer> res = new ArrayList<>();
+        while(res.size()<k){
+            Map.Entry<Integer, Integer> entry = maxHeap.poll();
+            res.add(entry.getKey());
+        }
         */
         
+        //简化版，for和while写到一行的话这个答案只有7lines
         Map<Integer, Integer> map = new HashMap<>();
         for(int n: nums){
             map.put(n, map.getOrDefault(n,0)+1);
         } 
         PriorityQueue<Map.Entry<Integer, Integer>> maxHeap =  new PriorityQueue<>((a,b)->(b.getValue()-a.getValue()));  
         maxHeap.addAll(map.entrySet());
-        //this six lines == all codes in comments above
         List<Integer> res = new ArrayList<>();
         while(res.size()<k){
-            Map.Entry<Integer, Integer> entry = maxHeap.poll();
-            res.add(entry.getKey());
+            res.add(maxHeap.poll().getKey());
         }
         return res;
     }
