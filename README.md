@@ -1519,6 +1519,35 @@ public List<List<String>> groupAnagrams(String[] strs) {
 } 
 ```
 
+####78. Subset
+DFS recursion 经典题，可以当做模板来背，画递归树或者按递归步骤推演程序运算过程很有利于理解
+tips: lintcode代码中必须加入排序提交才能通过
+```
+public class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> results = new ArrayList<>();
+        if(nums==null||nums.length==0) return results;
+        //subset2 add:Arrays.sort(nums);
+        ArrayList<Integer> subset = new ArrayList<>();
+        dfsHelper(0,nums,subset,results);
+        return results;
+    }
+    private void dfsHelper(int start, int[] nums, ArrayList<Integer> subset, List<List<Integer>> results){
+        results.add(new ArrayList(subset));
+        for(int i = start; i<nums.length; i++){
+            //subset2 add: if(i>start&&nums[i]==nums[i-1]) continue;
+            subset.add(nums[i]);
+            dfsHelper(i+1,nums,subset,results);
+            subset.remove(subset.size()-1);
+        }  
+    }
+}
+```
+
+####90. Subset2
+跟上题基本一样，多了两步，1 是排序数组，为了把重复元素防止一起，2 是helper里， 如果i不是start(i>start)且nums[i]和左边相邻元素相等，helper不进行，continue进入下一次forloop
+代码标注在上面了。
+
 
 
 
