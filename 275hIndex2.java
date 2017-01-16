@@ -12,3 +12,6 @@ public class Solution {
         return citations.length-start;
     }
 }
+//input: [0,1,2,4,5,6]
+//output: 3
+//最后一行的return就是为了保证这种情况能正确输出，3并不在arr中

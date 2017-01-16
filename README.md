@@ -390,6 +390,10 @@ return (C-A)*(D-B)+(G-E)*(H-F)-(right-left)*(top-bottom);
 这类题可以算是刷题的动力吧，看过一次下一次居然真的会了，改了一个；错误提交居然过了，hashmap
 （后有改进版，arr in order，用hashmap太慢，用双指针，从前和从后同时查找，167题）
 
+
+####167. Two Sum II - Input array is sorted
+1题改进版，双指针更快，从前和后同时查找，注意while判断条件，我写的l<=r考虑到会有【1，2，4】t=4就会需要2+2，另外遇到匹配项记得跳出循环。
+
 ####125. Valid Palindrome
 1. 方法1：string的问题用string的方法来解决，replaceAll, 前面通过正则去掉所有非字母字符，之后equal方法，但注意要new一个stringbuffer对象
 ```
@@ -500,6 +504,21 @@ public int findRadius(int[] houses, int[] heaters) {
     return result;
 }
 ```
+
+####275. H-Index2
+given: sorted array, require O(lgn)，搞清楚要求的话很容易想到binary search。注意有一种特殊情况：input: [0,1,2,4,5,6]，output: 3，整个while循环都不能输出正确答案，所以需要return输出的帮助
+```
+while(start<=end){
+    int mid = (start+end)/2;
+    if(citations[mid]==(citations.length-mid)) return citations.length-mid;
+    else if(citations[mid]<(citations.length-mid)) start = mid+1;
+    else end = mid-1;
+}
+return citations.length-start;
+```
+
+
+####274. H-Index
 
 ####448. Find All Numbers Disappeared in an Array
 但愿是easy的最后一题了，总觉得easy要刷完了，结果就会出一道新题。。。
@@ -619,13 +638,6 @@ public class Solution {
     }
 }
 ```
-
-####451. Sort Characters By Frequency
-
-
-
-####167. Two Sum II - Input array is sorted
-1题改进版，双指针更快，从前和后同时查找，注意while判断条件，我写的l<=r考虑到会有【1，2，4】t=4就会需要2+2，另外遇到匹配项记得跳出循环。
 
 ####238. Product of Array Except Self
 注意算right的时候不能简写省去right，因为此时re已经有左边的值了，不能像上面处理左边一样直接用re[i-1]/re[i+1]
@@ -1408,6 +1420,13 @@ List<Integer> re = new ArrayList<Integer>();
 while(re.size()<k) re.add(maxHeap.poll().getKey());
 return re;
 ```
+
+
+
+
+
+
+
 
 
 
