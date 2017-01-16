@@ -858,29 +858,6 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 }
 ```
 
-####21. Merge Two Sorted Lists
-还是iteration和recursion,iteration代码太长了，由此可见递归的好处，代码简介易懂
-iteration注意 l1,l2挨个merge的时候为了方便，l1,l2在merge后指向自己next，即后移，同时head即新链表的当前node也后移，另外这里也是head不确定的情况，所以用dummy
-```
-//dummy
-    ListNode dummy = new ListNode(0);
-    ListNode head = dummy;
-    ...
-    return dummy.next;
-//recursion
-public ListNode mergeTwoLists(ListNode l1, ListNode l2){
-    if(l1 == null) return l2;
-    if(l2 == null) return l1;
-    if(l1.val < l2.val){
-        l1.next = mergeTwoLists(l1.next, l2);
-        return l1;
-    } else{
-        l2.next = mergeTwoLists(l1, l2.next);
-        return l2;
-    }
-}
-```
-
 ####328. Odd Even Linked List
 拼接链表，可通过多个dummy实现，注意  和value无关，只和第几个node有关
 ```
@@ -1179,9 +1156,76 @@ public ListNode insertionSortList(ListNode head) {
 }
 ```
 
+####148. Sort List
+sortlist的题都很麻烦的样子，所以记得不要sortlist。。。
+这个题有特殊要求，O(1) space complexity。首先，strict O(1) auxiliary space complexity means the maximum number of memory used by the program, except the memory taken by the input data, doesn't change with the input size. 所以，strictly speaking, any solution that involves recursion can never have a strict O(1) auxiliary space complexity. Because the maximum recursion level depends on the the input size and each recursion call consumes memory on stack, thus the maximum number of memory used depends on the input size.
+简单来说，递归的都做不到O(1)，大部分是O(logn)，但我只能看懂一个递归的方法，不递归的思路看起来很简单就是merge sort，代码看起来好复杂
+```
+public class Solution {
+    public ListNode sortList(ListNode head) {
+        //这个if很棒，返回head
+        if(head==null||head.next==null) return head;
+        //split the list into 2 pieces;
+        ListNode midEnd = head;
+        ListNode walker = head;
+        ListNode runner = head;
+        while(runner != null&& runner.next!=null){
+            midEnd = walker;
+            walker = walker.next;
+            runner = runner.next.next;
+        }
+        midEnd.next=null;
+        //sort each part by divide conqure method: divide --> merge in order
+        ListNode l1 = sortList(walker);
+        ListNode l2 = sortList(head);       
+        return merge(l1,l2);
+    }
+    public ListNode merge(ListNode l1,ListNode l2){
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;   
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                cur.next = l1;
+                l1 = l1.next;
+            } else {
+                cur.next = l2;
+                l2 = l2.next;
+            }
+            cur = cur.next;
+        }       
+        if (l1 != null) cur.next = l1;    
+        if (l2 != null) cur.next = l2;
+        return dummy.next;         
+    }
+}
+```
+
+####21. Merge Two Sorted Lists
+还是iteration和recursion,iteration代码太长了，由此可见递归的好处，代码简介易懂
+iteration注意 l1,l2挨个merge的时候为了方便，l1,l2在merge后指向自己next，即后移，同时head即新链表的当前node也后移，另外这里也是head不确定的情况，所以用dummy
+```
+//dummy
+    ListNode dummy = new ListNode(0);
+    ListNode head = dummy;
+    ...
+    return dummy.next;
+//recursion
+public ListNode mergeTwoLists(ListNode l1, ListNode l2){
+    if(l1 == null) return l2;
+    if(l2 == null) return l1;
+    if(l1.val < l2.val){
+        l1.next = mergeTwoLists(l1.next, l2);
+        return l1;
+    } else{
+        l2.next = mergeTwoLists(l1, l2.next);
+        return l2;
+    }
+}
+```
+
 ####23. Merge k Sorted Lists
 根据priority queue的特性，我们可以通过重写compare方法利用priority queue实现，还有dummy，从后向前拼接。
-和下面179一样，都重写了compare。一个是sort方法内，一个是priority queue
+和下面sort里179一样，都重写了compare。一个是sort方法内，一个是priority queue
 ```
 public ListNode mergeKLists(ListNode[] lists) {
     if (lists==null||lists.length==0) return null;
@@ -1212,8 +1256,6 @@ public ListNode mergeKLists(ListNode[] lists) {
     return dummy.next;
 }
 ```
-
-
 
 ##sort相关(3 problems)
 ####215. Kth Largest Element in an Array
