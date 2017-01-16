@@ -1,3 +1,4 @@
+//O(m+n)，m和n分别是两个字符串的长度。
 public class Solution {
     public int compareVersion(String version1, String version2) {
         //注意以 . perioud 为分隔符时候的写法
@@ -21,6 +22,5 @@ public class Solution {
             i++;
         }
         return 0;
-    }
-    
+    } 
 }

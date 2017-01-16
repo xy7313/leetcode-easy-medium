@@ -560,9 +560,10 @@ result左移，空出一位放n的最右位，n右移，看见位运算还是懵
 2. 一位一位加`int digit = str.charAt(i) - 48;sum = sum*10-digit;`
 
 ####165 compare version
-长度不相等的时候很麻烦
+长度不相等的时候很麻烦:
 1. 注意以 . perioud 为分隔符时候的写法`version1.split("[.]");version2.split("\\.");`
 2. 注意每次while中才给temp赋值，即，如果s1比s2多一位，那s2的当前temp=0，然后判断
+3. time complexity: O(m+n)，m和n分别是两个字符串的长度。
 
 ####7 reverse integer
 1. int不行，long才可以,int放不下
