@@ -517,8 +517,29 @@ while(start<=end){
 return citations.length-start;
 ```
 
-
 ####274. H-Index
+new一个新array实现类似哈希表的思想，新array的下标对应input的element，新array长度比input长1，输入的数组中，比较大的数字都记在最后一位：
+比如input：[0,3，1，6，5] 
+new array:[1，1，0，1，0，2]
+      idx: 0  1 2  3  4 5
+之后从后往前计算new array element sum 当 sum>=idx 此时的idx就是我们要找的h-index
+```
+public int hIndex(int[] citations) {
+    int len = citations.length;
+    if(len==0) return 0;
+    int[] re = new int[len+1];
+    for(int i = 0; i<len; i++){
+        if(citations[i]>len) re[len]++;
+        else re[citations[i]]++;
+    }
+    int sum = 0;
+    for(int i = len; i>0; i--){
+        sum+=re[i];
+        if(sum>=i) return i;
+    }
+    return 0;
+}
+```
 
 ####448. Find All Numbers Disappeared in an Array
 但愿是easy的最后一题了，总觉得easy要刷完了，结果就会出一道新题。。。
