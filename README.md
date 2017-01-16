@@ -1356,7 +1356,7 @@ public String largestNumber(int[] nums) {
 ```
 
 ####347. Top K Frequent Elements
-还有一个重写compare的题，当然这个题用hashmap也可以，复杂度不知道行不行,在discuss区看到的maxheap实现的方法，因为要topk，所以用maxheap重写compare改变排序规则就可以实现，大牛 代码居然可以缩减到7行，有点厉害的，注意Lambda箭头函数，PriorityQueue 的 addAll(), Map 的 map.getOrDefault(n,0),map.entrySet(),map.getValue(),map.getKey()这些方法的灵活使用
+还有一个重写compare的题，当然这个题用hashmap也可以，复杂度不知道行不行,在discuss区看到的maxheap实现的方法，因为要topk，所以用maxheap重写compare改变排序规则就可以实现，大牛 代码居然可以缩减到7行，有点厉害的，注意Lambda箭头函数，PriorityQueue 的 addAll(), Map 的 map.getOrDefault(n,0),map.entrySet(),map.getValue(),map.getKey()这些方法的灵活使用，基本可以记得，要priority queue，compare(a,b){return a-b;}
 ```
 Map<Integer, Integer> map = new HashMap<>();
 for(int n: nums) map.put(n,map.getOrDefault(n,0)+1);
