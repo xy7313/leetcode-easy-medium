@@ -1493,6 +1493,30 @@ private List<Character>[] buildArray(Map<Character,Integer> map, int max){
 }
 ```
 
+####49. Group Anagrams
+自己的思路是循环拼接，判断是不是anagram以前做过，可以用char值的和的方式，然而不行，不能避免重复匹配的情况。
+discuss区不知道咋想到的排单个string的字符序，总之有可行的方法了.
+这道题代码比较好读懂，也很简短，思路大体是：
+1. 把每个string先按字符序重新排列一下，（anagrams都会得到一样的结果）
+2. 把第一次排好的string添加到map中当key，这样后面的anagrams可以通过判断key是否存在的方法找到
+3. anagrams 都存在了 key是自己字母升序排列 的 value中组成list。
+4. 输出list（每个value本身就是list）
+```
+public List<List<String>> groupAnagrams(String[] strs) {
+    HashMap<String, List<String>> hm = new HashMap<>();
+    for(int i = 0; i < strs.length; i++){
+        String currString = strs[i];
+        char[] charArr = strs[i].toCharArray();
+        Arrays.sort(charArr);
+        String sortString = new String(charArr);
+        if (!hm.containsKey(sortString)){
+            hm.put(sortString, new ArrayList<String>());
+        } 
+        hm.get(sortString).add(currString);
+    }
+    return new ArrayList<>(hm.values());
+} 
+```
 
 
 
