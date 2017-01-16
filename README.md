@@ -1442,6 +1442,56 @@ while(re.size()<k) re.add(maxHeap.poll().getKey());
 return re;
 ```
 
+####451. Sort Characters By Frequency
+自从开是刷medium的题之后，每天都是炼狱模式，各种没见过的题型，要么就是想不出解法，要么就是想出的不符合要求，每次看答案都要看好久（生无可恋脸，这个题也是，要求O(n)，所以hashmap+排序value的方法是不满足要求的
+思路：
+1. 还是hashmap，但注意除了正常的创建map之外还需要保留一个max，即最高频字符出现的次数，后面要用
+2. 构造一个array，这个array的index是array的element出现的此数，这里的array element是一个list，用来存放 出现次数相同的多个字符
+3. 拼组string。通过StringBuilder，index是几，index位置的list里的char就append几次，直到遍历完整个数组。
+还有一个细节需要注意，map存放的方式和后面 forloop的临界值要对应好，比如注释中的情况。
+```
+public String frequencySort(String s) {
+    if(s==null) return null;
+    Map<Character,Integer> m = new HashMap<>();
+    int max = 0;
+    for(char c: s.toCharArray()){
+        if(m.containsKey(c)){
+            m.put(c,m.get(c)+1);
+        }
+        else m.put(c,0);
+        // if(!m.containsKey(c)){
+        //     m.put(c,0);
+        // } 
+        // m.put(c,m.get(c)+1);
+        //如果这里的map构造形式写成上面两行注释中的代码，那下面 最外层for和最内层for也要从>=,<=变成>,<
+        //for(int i = array.length-1; i>0; i--){
+        //for(int j = 0; j<i; j++){
+        max = Math.max(max,m.get(c));
+    }
+    List<Character>[] array = buildArray(m,max);
+    StringBuilder sb = new StringBuilder();
+    for(int i = array.length-1; i>=0; i--){
+        List<Character> list = array[i];
+        if(list!=null){
+            for(Character c: list){
+                for(int j = 0; j<=i; j++){
+                    sb.append(c);
+                }
+            }
+        }
+    }
+    return sb.toString();
+}
+private List<Character>[] buildArray(Map<Character,Integer> map, int max){
+    List<Character>[] arr = new List[max+1];
+    for(Character c : map.keySet()){
+        int count = map.get(c);
+        if(arr[count]==null) arr[count] = new ArrayList<Character>();
+        arr[count].add(c);
+    }
+    return arr;
+}
+```
 
 
 
