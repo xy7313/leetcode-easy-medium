@@ -1,4 +1,4 @@
-# leetEM(start from easy)
+# leetcode-Easy/Midum(start from easy)
 
 from easy ac
 这个有点像流水账，前面还是知识点总结，后面题目不会的多了，就加入了大部分的代码，回头还是做成gitbook这种带个目录的比较方便，不然一长篇不太方便阅读。
