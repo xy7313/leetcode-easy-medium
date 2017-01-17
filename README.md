@@ -22,8 +22,6 @@ from easy ac
 sum 得到按位异或的结果，在没有进位的情况下就是我们想要的和；如果有进位，进入while循环处理进位
 [code](https://github.com/xy7313/leetEM/blob/master/371sumTwoInteger.java)
 
-##104 tree
-
 ####258. add Digits
 (num-1)%9+1
 
@@ -39,13 +37,106 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 387UniqueCharacter：char转成int当做array的索引，没出现依次，该索引位置对应值++，取所有索引位置对应值=1中最小索引，对应char
 242validAnagram：考虑到两个string可能长度不一样，用普通for容易出现outofIndex，for in形式比较好`for(char j: t.toCharArray())`
 
-##226 tree
+##substring & anagrams(上面242，共5)
+####49. Group Anagrams
+自己的思路是循环拼接，判断是不是anagram以前做过，可以用char值的和的方式，然而不行，不能避免重复匹配的情况。
+discuss区不知道咋想到的排单个string的字符序，总之有可行的方法了.
+这道题代码比较好读懂，也很简短，思路大体是：
+1. 把每个string先按字符序重新排列一下，（anagrams都会得到一样的结果）
+2. 把第一次排好的string添加到map中当key，这样后面的anagrams可以通过判断key是否存在的方法找到
+3. anagrams 都存在了 key是自己字母升序排列 的 value中组成list。
+4. 输出list（每个value本身就是list）
+```
+public List<List<String>> groupAnagrams(String[] strs) {
+    HashMap<String, List<String>> hm = new HashMap<>();
+    for(int i = 0; i < strs.length; i++){
+        String currString = strs[i];
+        char[] charArr = strs[i].toCharArray();
+        Arrays.sort(charArr);
+        String sortString = new String(charArr);
+        if (!hm.containsKey(sortString)){
+            hm.put(sortString, new ArrayList<String>());
+        } 
+        hm.get(sortString).add(currString);
+    }
+    return new ArrayList<>(hm.values());
+} 
+```
+
+####438. Find All Anagrams in a String
+[Here is a 10-line template that can solve most 'substring' problems](https://discuss.leetcode.com/topic/30941/here-is-a-10-line-template-that-can-solve-most-substring-problems)
+discuss里找了个高大上的方法，只能看懂，并不能想到，下次但愿能背会。。。还有自己想的一个方法，最直接但是很慢，反正ac了
+
+####14. Longest Common Prefix
+每种语言string的各种操作都很风骚，这个题用了两个string的方法，见下面，思路就是取strs[0]当做pre，去比较看是不是strs[1-->len]的prefix，所以需要两层循环，外层遍历数组中每个元素，内层不停剪短pre直到pre是strs[i]的prefix，内层：`while(strs[i].indexOf(pre) != 0){pre = pre.substring(0,pre.length()-1);}`
+```
+/*string.indexOf(String str): 
+        Returns the index within this string of the first occurrence of the specified substring.
+        If no such value of k exists, then -1 is returned.
+      public String substring(int beginIndex,int endIndex)
+        Returns a new string that is a substring of this string. 
+        The substring begins at the specified beginIndex and extends to the character at index endIndex - 1. 
+        Thus the length of the substring is endIndex-beginIndex.
+        --JAVA API
+*/
+```
+
+####459. Repeated Substring Pattern
+1. substring的长度肯定是str的约数(str%substring==0), 
+2. 遍历所有可能的substring(outer for),可以从str.length()/2开始，到1
+3. check(inner for): 从头-依次-取长度为str约数的substring，然后通过叠加(str.length()/substring.length())个substring，看结果是不是str
+
+####3. Longest Substring Without Repeating Characters
+思路都差不多，实现方式不同，有用hashset，hashmap和array三种，代码文件中详细都有，这里只写最简单的一种，set实现的
+start, end means start of set and end of set. we always keep a substing without repeating characters in the set, the substring's length may change, so the set.size() also changes, we keep track of this size to find the max size.
+```
+    public int lengthOfLongestSubstring(String s) {
+        int start = 0, end = 0, max = 0;
+        Set<Character> set = new HashSet<>();
+        while (end < s.length()) {
+            if (!set.contains(s.charAt(end))) {
+                set.add(s.charAt(end));
+                end++;
+                max = Math.max(max, set.size());
+            } else {
+                set.remove(s.charAt(start));
+                start++;
+            }
+        }
+        return max;
+    }
+```
+
+####28. Implement strStr()
+看起来是个很简单的题，花了很长时间，心塞. 自己是用了类似双指针的方法，haystack中有needle首字符时，记index of haystack，然后比对needle，haystack不够长就直接返回-1，如果重合元素==needle.length,说明是包含的，返回此时记的index。另外一种大牛的方法看起来很简介，但是有一句j+i不太懂，考试略忙也没有仔细想，mark一下回头看
+//postscript
+又遇到了一次这个题，还是花了很久，最后还是看了之前这里的答案。。。心塞，再细细记一下思路：
+1. 边界值，如果needle==“”那么所有的haystack都可以包含，needle出现在haystack第0位，所以直接返回0；如果target或haystack为null，haystack==“”,那么一定是返回-1的。
+2. 实现，
+    1. 首先要遍历haystack。可以用for循环；
+    2. 之后从每个h开始，看是否对应在needle中，这里为了标记 相同元素的起点，所以把h值存在tmp中，一会儿操作tmp，还有每次新的h都要从头在needle找对应；
+    3. 下一步是如果n==tmp了，注意这里用while，只要n==tmp，两者一起自增，直到不相等，
+    4. 这个while中有三个操作，第一，如果n==needle.length()-1 说明全都匹配上了，返回之前保存的h即可；第二，如果tmp>haystack.length()-1，说明needle中出现了更多haystack中没有的元素，肯定返回-1；第三，正在朝着1，2两种情况进行。
+    5. 还需要注意这三种情况的顺序，先判断 n 中元素遍历完了没，完了就可以返回了。
+    ```
+    for(int n = 0;n<haystack.length();n++){
+        int i = n;
+        int j = 0;
+        while(haystack.charAt(i)==needle.charAt(j)){
+            if(j==(needle.length()-1)) return n;
+            j++;
+            i++;
+            if(i>haystack.length()-1) return -1;
+        }
+    }
+    ```
+
+####lintcode strStr2
+
 
 ####283. move Zeroes
 设置计数器，从计数器=0开始放非零数字，剩余（length-计数器）置0
 
-##404 tree
-##453
 
 ####349.Intersection
 嵌套for-loop找相同元素，把未出现过的相同元素存入ArrayList`re.contains();re.add();` ArrayList再转回int[]很麻烦`for(int i : IntegerList)`
@@ -53,9 +144,6 @@ sum 得到按位异或的结果，在没有进位的情况下就是我们想要�
 ####350. Intersection of Two Arrays II
 现在用的是类似指针的思路，用while循环（避免for循环会出现的各种index问题）先排序（一般用指针都要排序），然后就一步一步往后挪，如果上下相等了，那就一起后移，不相等就小的后移，找大数来跟另外一个数组中的数匹配
 更好的方法应该是hashmap吧
-
-
-##100 tree
 
 ####171. excelColumnNumber
 `re+=(sc[i]-'A'+1)*Math.pow(26,sc.length-i-1);`
@@ -77,9 +165,6 @@ return n == 0 ? "" : convertToTitle(--n / 26) + (char)('A' + (n % 26));
 ####169. Majority Element
 有种取巧的写法，可以说得通但是想不到，传统解法还是hashmap再mark一下这个`for(Integer k: m.keySet())`
 
-####409. Longest Palindrome
-看上去吓一跳稍微想一下还挺简单的，就是出现奇数次数的字母和出现偶数次数的字母的判断，出现偶数次的，全+，出现奇数次的，除了%2这部分全加，最后，中间可以有一个奇数次的，所以如果有出现奇数次的字母出现，最终结果+1。我自己写的解法估计不太好，尤其a那里，accepied的时候也是忍不住笑出声
-
 ####217. Contains Duplicate
 用set是比较简单的方法，通过set.contains的方法来判断，for in 来遍历nums
 
@@ -92,8 +177,6 @@ return n == 0 ? "" : convertToTitle(--n / 26) + (char)('A' + (n % 26));
 ####350. Intersection of Two Arrays II
 现在用的是类似指针的思路，用while循环（避免for循环会出现的各种index问题）先排序（一般用指针都要排序），然后就一步一步往后挪，如果上下相等了，那就一起后移，不相等就小的后移，找大数来跟另外一个数组中的数匹配
 更好的方法应该是hashmap吧
-
-##206 linked list
 
 ####401 binary watch
 强行倒着解，把所有可能的小时和分钟列出来，那一时刻刚好对应二进制的1的个数跟num 相等，就输出这个时间，性能不好，也不太好想但好写的一种方法
@@ -206,15 +289,10 @@ while(n != 0){
 }
 ```
 
-
 ####405. Convert a Number to Hexadecimal
 1. 首先负数这里需要在去掉符号之后-1，-1-->0，-2-->1以此类推，因为-1=‘ffffffff’,然后-2=‘fffffffe'
 2. 之后是num % 16<6 用abcdef剩下用0-9.其他位（前面的位）保留f
 
-####459. Repeated Substring Pattern
-1. substring的长度肯定是str的约数(str%substring==0), 
-2. 遍历所有可能的substring(outer for),可以从str.length()/2开始，到1
-3. check(inner for): 从头-依次-取长度为str约数的substring，然后通过叠加(str.length()/substring.length())个substring，看结果是不是str
 
 ####70. Climbing Stairs
 一个很简单的动态规划问题，居然写出来了一个动态规划，一颗老心都快活过来了，还是只有一句核心代码，`step[i] = (step[i-1])+(step[i-2]);`
@@ -259,6 +337,7 @@ for(int i = 1;i<nums.length;i++){
 }
 ```
 
+##palindrome(4,还有一道链表题234)
 ####9. palindromeNumber
 不能转换string，所以首先想到 不停的取原数字%10得到新数字首位，然后对比新数字和原数字
 代码也是这个思路，不过有很多细节需要注意,比如while的循环条件，不需要x一直到0，rex的组成方式，rex*10那里一开始没想到的，后面返回的时候也需要注意，看起来很简单的题，写起来全是坑，就这样
@@ -271,12 +350,27 @@ for(int i = 1;i<nums.length;i++){
 return (rex==x||x==rex/10);
 ```
 
+####125. Valid Palindrome
+1. 方法1：string的问题用string的方法来解决，replaceAll, 前面通过正则去掉所有非字母字符，之后equal方法，但注意要new一个stringbuffer对象
+```
+String actual = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+return actual.equals(new StringBuffer(actual).reverse().toString());
+```
+2. 操作数组，类似双指针的方法，一种神奇的for方式， 从数组前后，i，j一起for：`for(int i = 0, j = s.length() - 1; i < j; ++i, --j) {`
+还有char奇奇怪怪的方法，`!Character.isLetterOrDigit(s.charAt(i))` 返回true的时候说明不是letter，还有`character.toLowerCase`
+
+####409. Longest Palindrome
+看上去吓一跳稍微想一下还挺简单的，就是出现奇数次数的字母和出现偶数次数的字母的判断，出现偶数次的，全+，出现奇数次的，除了%2这部分全加，最后，中间可以有一个奇数次的，所以如果有出现奇数次的字母出现，最终结果+1。我自己写的解法估计不太好，尤其a那里，accepied的时候也是忍不住笑出声
+
 ####36. Valid Sudoku
 横竖的判断就是ij互换一下，需要哪个坐标变就把内层循环的int放过去，比如列的时候需要x坐标变，就把内层循环的j放过去
 横竖都好判断，每个cube不好判断，坐标不好想，discuss里发现了一种很好的方法.类似用一次循环画一个cube或者二维数组的意思，i/3=x,i%3=y,x,y标明一个点
 ```
 if(board[3*(i/3) + j/3][3*(i%3) + j%3]!='.' && !cube.add(board[3*(i/3) + j/3][3*(i%3)  + j%3])) return false;
 ```
+
+####37. Sudoku Solver
+
 
 ####205. Isomorphic Strings
 论坛里看到的解题思路，感觉现在不适合刷题，想到hashmap但是不知道isomorphic的两个词到底什么关系
@@ -346,20 +440,6 @@ if (numbers[guess.charAt(i)-'0'] >0) b++;
     numbers[guess.charAt(i)-'0']--;
 ```
 
-####14. Longest Common Prefix
-每种语言string的各种操作都很风骚，这个题用了两个string的方法，见下面，思路就是取strs[0]当做pre，去比较看是不是strs[1-->len]的prefix，所以需要两层循环，外层遍历数组中每个元素，内层不停剪短pre直到pre是strs[i]的prefix，内层：`while(strs[i].indexOf(pre) != 0){pre = pre.substring(0,pre.length()-1);}`
-```
-/*string.indexOf(String str): 
-        Returns the index within this string of the first occurrence of the specified substring.
-        If no such value of k exists, then -1 is returned.
-      public String substring(int beginIndex,int endIndex)
-        Returns a new string that is a substring of this string. 
-        The substring begins at the specified beginIndex and extends to the character at index endIndex - 1. 
-        Thus the length of the substring is endIndex-beginIndex.
-        --JAVA API
-*/
-```
-
 ####88. Merge Sorted Array
 看起来很简单的题，discuss里有很多3行代码1行代码什么的，我还是找了个最容易看懂的, 题目中有说明nums1的长度是存的下m+n的，既然是向nums1中插入，那为了避免懂前面已有元素，我们从后面操作，两个数组都是sort好的，所以秩序比较两个数组最右的元素，大的即为全场最大，可以直接放，后面也都是一样的思路，nums[n--]这种形式还玩不转，先不用
 ```
@@ -373,10 +453,6 @@ while(n>0){
     }
 }
 ```
-
-####438. Find All Anagrams in a String
-[Here is a 10-line template that can solve most 'substring' problems](https://discuss.leetcode.com/topic/30941/here-is-a-10-line-template-that-can-solve-most-substring-problems)
-discuss里找了个高大上的方法，只能看懂，并不能想到，下次但愿能背会。。。还有自己想的一个方法，最直接但是很慢，反正ac了
 
 ####223. Rectangle Area
 需要判断一下overlap的各个坐标
@@ -393,15 +469,6 @@ return (C-A)*(D-B)+(G-E)*(H-F)-(right-left)*(top-bottom);
 
 ####167. Two Sum II - Input array is sorted
 1题改进版，双指针更快，从前和后同时查找，注意while判断条件，我写的l<=r考虑到会有【1，2，4】t=4就会需要2+2，另外遇到匹配项记得跳出循环。
-
-####125. Valid Palindrome
-1. 方法1：string的问题用string的方法来解决，replaceAll, 前面通过正则去掉所有非字母字符，之后equal方法，但注意要new一个stringbuffer对象
-```
-String actual = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
-return actual.equals(new StringBuffer(actual).reverse().toString());
-```
-2. 操作数组，类似双指针的方法，一种神奇的for方式， 从数组前后，i，j一起for：`for(int i = 0, j = s.length() - 1; i < j; ++i, --j) {`
-还有char奇奇怪怪的方法，`!Character.isLetterOrDigit(s.charAt(i))` 返回true的时候说明不是letter，还有`character.toLowerCase`
 
 ####204 count primes
 Count the number of prime numbers less than a non-negative number, n. 和61B例子不同
@@ -1471,52 +1538,6 @@ private List<Character>[] buildArray(Map<Character,Integer> map, int max){
 }
 ```
 
-####49. Group Anagrams
-自己的思路是循环拼接，判断是不是anagram以前做过，可以用char值的和的方式，然而不行，不能避免重复匹配的情况。
-discuss区不知道咋想到的排单个string的字符序，总之有可行的方法了.
-这道题代码比较好读懂，也很简短，思路大体是：
-1. 把每个string先按字符序重新排列一下，（anagrams都会得到一样的结果）
-2. 把第一次排好的string添加到map中当key，这样后面的anagrams可以通过判断key是否存在的方法找到
-3. anagrams 都存在了 key是自己字母升序排列 的 value中组成list。
-4. 输出list（每个value本身就是list）
-```
-public List<List<String>> groupAnagrams(String[] strs) {
-    HashMap<String, List<String>> hm = new HashMap<>();
-    for(int i = 0; i < strs.length; i++){
-        String currString = strs[i];
-        char[] charArr = strs[i].toCharArray();
-        Arrays.sort(charArr);
-        String sortString = new String(charArr);
-        if (!hm.containsKey(sortString)){
-            hm.put(sortString, new ArrayList<String>());
-        } 
-        hm.get(sortString).add(currString);
-    }
-    return new ArrayList<>(hm.values());
-} 
-```
-
-####3. Longest Substring Without Repeating Characters
-思路都差不多，实现方式不同，有用hashset，hashmap和array三种，代码文件中详细都有，这里只写最简单的一种，set实现的
-start, end means start of set and end of set. we always keep a substing without repeating characters in the set, the substring's length may change, so the set.size() also changes, we keep track of this size to find the max size.
-```
-    public int lengthOfLongestSubstring(String s) {
-        int start = 0, end = 0, max = 0;
-        Set<Character> set = new HashSet<>();
-        while (end < s.length()) {
-            if (!set.contains(s.charAt(end))) {
-                set.add(s.charAt(end));
-                end++;
-                max = Math.max(max, set.size());
-            } else {
-                set.remove(s.charAt(start));
-                start++;
-            }
-        }
-        return max;
-    }
-```
-
 ####78. Subset
 DFS recursion 经典题，可以当做模板来背，画递归树或者按递归步骤推演程序运算过程很有利于理解
 tips: lintcode代码中必须加入排序提交才能通过
@@ -1547,31 +1568,7 @@ public class Solution {
 代码标注在上面了。
 
 
-####28. Implement strStr()
-看起来是个很简单的题，花了很长时间，心塞. 自己是用了类似双指针的方法，haystack中有needle首字符时，记index of haystack，然后比对needle，haystack不够长就直接返回-1，如果重合元素==needle.length,说明是包含的，返回此时记的index。另外一种大牛的方法看起来很简介，但是有一句j+i不太懂，考试略忙也没有仔细想，mark一下回头看
-//postscript
-又遇到了一次这个题，还是花了很久，最后还是看了之前这里的答案。。。心塞，再细细记一下思路：
-1. 边界值，如果needle==“”那么所有的haystack都可以包含，needle出现在haystack第0位，所以直接返回0；如果target或haystack为null，haystack==“”,那么一定是返回-1的。
-2. 实现，
-    1. 首先要遍历haystack。可以用for循环；
-    2. 之后从每个h开始，看是否对应在needle中，这里为了标记 相同元素的起点，所以把h值存在tmp中，一会儿操作tmp，还有每次新的h都要从头在needle找对应；
-    3. 下一步是如果n==tmp了，注意这里用while，只要n==tmp，两者一起自增，直到不相等，
-    4. 这个while中有三个操作，第一，如果n==needle.length()-1 说明全都匹配上了，返回之前保存的h即可；第二，如果tmp>haystack.length()-1，说明needle中出现了更多haystack中没有的元素，肯定返回-1；第三，正在朝着1，2两种情况进行。
-    5. 还需要注意这三种情况的顺序，先判断 n 中元素遍历完了没，完了就可以返回了。
-    ```
-    for(int n = 0;n<haystack.length();n++){
-        int i = n;
-        int j = 0;
-        while(haystack.charAt(i)==needle.charAt(j)){
-            if(j==(needle.length()-1)) return n;
-            j++;
-            i++;
-            if(i>haystack.length()-1) return -1;
-        }
-    }
-    ```
 
-####lintcode strStr2
 
 ####permutation
 ####permutation2
