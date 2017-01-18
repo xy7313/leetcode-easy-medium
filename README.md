@@ -1631,6 +1631,7 @@ public class Solution {
 注意题目：A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ace" is a subsequence of "abcde" while "aec" is not).
 所以有个很简单的方法就是这样，注意转成char[]会快很多，原因还没仔细想，应该是string的操作都慢，因为string都是reference拷贝，所以慢吧，
 想了个hashmap的方法,一个存map一次比较，注意这种不行，不能保证顺序
+tag说要binary search，先留坑
 ```
 public boolean isSubsequence(String s, String t) {
         char[] ss = s.toCharArray();
