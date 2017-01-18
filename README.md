@@ -1568,6 +1568,7 @@ public class Solution {
 
 ####46. permutation
 背会了subset也不会写permutation，好烦躁。这个题可以看出和subset的区别是 拼完之后才放入result中，所以就想helper之后再results.add，但走了条错路，正确的思路是，跟以前一样开始helper的时候result.add不同的是只有当subset==nums.length才添加这个subset. 又挣扎了一会儿发现就算写在后面也可以，写在后面跑一遍发现还是添加了subset那么多东西，就想到要要等三个了在加入results，再想到判断subset大小满足条件才添加，一样可以ac。。。一直觉得递归很难想可能就在于，我怎么都想不到在helper刚进入的时候添加上一次的subset，顶多能看懂，自己想总是把添加操作想在后面，sign。。
+这题的关键就在于helper中的 if(){...}
 ```
 //按照subset的格式写的话是这样的
 public class Solution {
