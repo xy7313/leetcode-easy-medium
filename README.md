@@ -465,7 +465,6 @@ return (C-A)*(D-B)+(G-E)*(H-F)-(right-left)*(top-bottom);
 这类题可以算是刷题的动力吧，看过一次下一次居然真的会了，改了一个；错误提交居然过了，hashmap
 （后有改进版，arr in order，用hashmap太慢，用双指针，从前和从后同时查找，167题）
 
-
 ####167. Two Sum II - Input array is sorted
 1题改进版，双指针更快，从前和后同时查找，注意while判断条件，我写的l<=r考虑到会有【1，2，4】t=4就会需要2+2，另外遇到匹配项记得跳出循环。
 
@@ -1628,6 +1627,24 @@ public class Solution {
 }
 ```
 
+####392. is Subsequence
+注意题目：A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ace" is a subsequence of "abcde" while "aec" is not).
+所以有个很简单的方法就是这样，注意转成char[]会快很多，原因还没仔细想，应该是string的操作都慢，因为string都是reference拷贝，所以慢吧，
+想了个hashmap的方法,一个存map一次比较，注意这种不行，不能保证顺序
+```
+public boolean isSubsequence(String s, String t) {
+        char[] ss = s.toCharArray();
+        char[] tt = t.toCharArray();
+        int i = 0, j = 0;
+        while( i<ss.length&& j<tt.length){
+            if(ss[i]==tt[j]){
+                i++;
+            }
+            j++;
+        }
+        return i == s.length();
+    }
+```
 
 
 
