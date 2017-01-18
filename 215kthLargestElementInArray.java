@@ -26,4 +26,17 @@ public class Solution {
         n[i] = n[j];
         n[j] = tmp;
     }
+    //还有一种很好的方法
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> largeK = new PriorityQueue<Integer>(k + 1);
+
+        for(int el : nums) {
+            largeK.add(el);
+            if (largeK.size() > k) {
+                largeK.poll();
+            }
+        }
+
+        return largeK.poll();
+    }
 }

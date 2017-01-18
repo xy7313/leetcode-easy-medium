@@ -1363,6 +1363,20 @@ public void swap(int[] n, int i, int j){
     n[j] = tmp;
 }
 ```
+这个题还有个tag是queue，也可以用priority queue解决，复杂度是(nlgk),因为queue.poll()都会先推出小的，所以，当size>k,会把比kth（也就是当前 size th）largest小的数推出。这样可以确保queue中只存比kth largest 大的数，也就是存k个数，所以可以打印试试，k==queue.size()，所以最后返回queue中最小的数就是kth largest。想到这个方法的人真厉害。这个方法也好棒
+```
+public int findKthLargest(int[] nums, int k) {
+    PriorityQueue<Integer> largeK = new PriorityQueue<Integer>(k + 1);
+    for(int el : nums) {
+        largeK.add(el);
+        if (largeK.size() > k) {
+            largeK.poll();
+        }
+    }
+
+    return largeK.poll();
+}
+```
 
 ####324. Wiggle Sort II
 google面试题，到处都有跟这个题有关的讲解和介绍，我最初看的是九章的，比较好理解，后来discuss区也看到了高赞的答案，两个都写了，思路如下：
