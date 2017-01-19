@@ -109,6 +109,7 @@ start, end means start of set and end of set. we always keep a substing without 
 
 ####28. Implement strStr()
 看起来是个很简单的题，花了很长时间，心塞. 自己是用了类似双指针的方法，haystack中有needle首字符时，记index of haystack，然后比对needle，haystack不够长就直接返回-1，如果重合元素==needle.length,说明是包含的，返回此时记的index。另外一种大牛的方法看起来很简介，但是有一句j+i不太懂，考试略忙也没有仔细想，mark一下回头看
+
 //postscript
 又遇到了一次这个题，还是花了很久，最后还是看了之前这里的答案。。。心塞，再细细记一下思路：
 1. 边界值，如果needle==“”那么所有的haystack都可以包含，needle出现在haystack第0位，所以直接返回0；如果target或haystack为null，haystack==“”,那么一定是返回-1的。
@@ -506,11 +507,13 @@ Count the number of prime numbers less than a non-negative number, n. 和61B例�
 discuss中看到的方法，思路是给rownumber， 然后就在row1放一个char，row=row+1放一个，+1和-1分别对应两种情况，其实可以理解为拐弯，比如row=0的时候，说明要往下走，row=row+1，row=rownumber-1的时候说明要往上往回走了，所以row=row-1。高端的不行
 
 ##binarySearch
-####278. First Bad version
+####278. First Bad version/
+注意：和first position of target（两个题二分考点一毛一样），区别在于返回值，version或者说bad version是连续存在的，有3必有2，但target可能不存在，所以version直接返回start，target要考虑不存在的情况下返回-1，其他情况返回start
 看题应该会立刻想到二分查找，另外这个思想和和438中sliding window的思路有有一点类似.
 这个题需要搞清楚两点：
 1. 如果mid不是，那mid前都不是，查找mid后面，如果mid是，查找mid前
 2. 返回谁，我是举了个例子试了一下，不过从if这句可以看出，返回start
+3. 注意start=1，从1开始
 ```
 while(start<end){
     int mid = start+(end-start)/2;
