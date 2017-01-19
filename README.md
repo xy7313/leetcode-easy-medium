@@ -113,6 +113,7 @@ start, end means start of set and end of set. we always keep a substing without 
 
 //postscript
 又遇到了一次这个题，还是花了很久，最后还是看了之前这里的答案。。。心塞，再细细记一下思路：
+
 1. 边界值，如果needle==“”那么所有的haystack都可以包含，needle出现在haystack第0位，所以直接返回0；如果target或haystack为null，haystack==“”,那么一定是返回-1的。
 2. 实现，
     1. 首先要遍历haystack。可以用for循环；
@@ -246,6 +247,7 @@ n % 3 == 2 时，分为n个3和一个2的乘积
 
 ####434. Number of Segments in a String
 这类题都不要变换思路，要求什么就用什么，求有几个words，就算有几个words，把判定情况写全，这里是两种情况，
+
 1. 第一个words，`i==0 && charAt(i)!=' '；`
 2. 后面的words，`charAt(i-1)==' ' && charAt(i)!=' ';`
 
@@ -282,6 +284,7 @@ power of 2 only contains one 1, (power of 2)-1 is only consist of 1(ex:8=1000,7=
 
 ####191. Number of 1 Bits
 还是看到就头疼的题，估计再看点这类题就会好点了，，，
+
 1. 方法1：比较直接，判断最右1位是不是1，n&1 如果是，计数器+1，右移，判断下一位，这里有两种代码写法，前面这种比后面的快1倍`count = count + (n & 1);`,`if((n&1)==1) count++;`
 2. 方法2：用到了类似power of two中n&(n-1)的方法,n & (n-1)!=0说明n不是2的power，肯定还有不止一个1，但为什么n=n & (n-1)不太懂
 ```
@@ -300,6 +303,7 @@ while(n != 0){
 
 ####198. House Robber
 还是DP，连续rob两个房子就会alert
+
 1. 首先，输入nums.length<2时，分两种情况，输入==0，返回0；输入==1，返回nums[0]
 2. for循环中也要单列i=0,i=1时的情况，之后就是通用情况，money[i]表示max value rob ith house， money= max(money[i-1],money[i-2]+nums[i])前者是ith不rob，后者是ith rob
 
@@ -341,6 +345,7 @@ for(int i = 1;i<nums.length;i++){
 ##palindrome(4,还有一道链表题234)
 ####9. palindromeNumber
 不能转换string，所以首先想到 不停的取原数字%10得到新数字首位，然后对比新数字和原数字
+
 代码也是这个思路，不过有很多细节需要注意,比如while的循环条件，不需要x一直到0，rex的组成方式，rex*10那里一开始没想到的，后面返回的时候也需要注意，看起来很简单的题，写起来全是坑，就这样
 ```
  while(x>rex){
@@ -365,6 +370,7 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 
 ####36. Valid Sudoku
 横竖的判断就是ij互换一下，需要哪个坐标变就把内层循环的int放过去，比如列的时候需要x坐标变，就把内层循环的j放过去
+
 横竖都好判断，每个cube不好判断，坐标不好想，discuss里发现了一种很好的方法.类似用一次循环画一个cube或者二维数组的意思，i/3=x,i%3=y,x,y标明一个点
 ```
 if(board[3*(i/3) + j/3][3*(i%3) + j%3]!='.' && !cube.add(board[3*(i/3) + j/3][3*(i%3)  + j%3])) return false;
@@ -375,8 +381,10 @@ if(board[3*(i/3) + j/3][3*(i%3) + j%3]!='.' && !cube.add(board[3*(i/3) + j/3][3*
 
 ####205. Isomorphic Strings
 论坛里看到的解题思路，感觉现在不适合刷题，想到hashmap但是不知道isomorphic的两个词到底什么关系
+
 思路：本题的核心点在于，如果不是isomorphic strings，s相同的char在t中会对应不同的char，t中相同的char会对应不同的char。check两者相互对应的关系，不难想到2个hashmap。我这里的做法是1个hashmap和1个set，在遍历s,t的过程中，以s的char做key，t对应的char做value，如果相同key出现了2个value，必然会错。同时set记录t已经用过的char，如果不同的key使用相同的char，必定也不是。（本题易忽略的就是后者）
  `for(int i:hashmap.values()){...}`
+ 
 注意，hm.put()这个方法，官方api写的是：the previous value associated with key, or null if there was no mapping for key.
 discuss里找到的代码，实现方法很简单，但是含义丰富，所以贴全部代码，又多了一道要背的题
 ```
@@ -407,8 +415,9 @@ stdout:
 ####290. Word Pattern
 基本就是复用了上面的代码
 注意两点：
+
 1. 如果两者长度不同，pattern肯定不同，所以直接返回
-2. for循环是通用的核心代码，就是看映射关系是否一致，比如pattern存入map的时候，如果key已存在，会返回key对应的value，即pattern中key-Character对应的value-index；同理parts存入map时，如果key-parts[i]已存在，会返回对应value-i
+2. for循环是通用的核心代码，就是看映射关系是否一致，比如pattern存入map的时候，如果key已存在，会返回key对应的.value，即pattern中key-Character对应的value-index；同理parts存入map时，如果key-parts[i]已存在，会返回对应value-i
 
 ####118. Pascal's Triangle
 又是杨辉三角，这种题看要求返回的类型立刻想到用嵌套的list， 实现的时候需要注意第一行自己放好，后面每行的第一个和最后一个肯定都是1，其他没了
