@@ -1758,6 +1758,19 @@ public int findMin(int[] nums) {
 ```
 
 ####287. Find the Duplicate Number
+这个题超智商了，后面两种方法均看不懂，我只能想到这一种，然而不满足题目要求，改变了数组，，gg，不如挑一个背吧┑(￣Д ￣)┍。。。
+```
+public int findDuplicate(int[] nums) {
+        Arrays.sort(nums);
+        int missing = nums.length;
+        for(int i = 0;i<nums.length-1;i++){
+            if ((nums[i+1]-nums[i])==0){
+                return nums[i];
+            }
+        }
+        return missing;   
+    }
+```
 这题要求是要求是：
 
 You must not modify the array (assume the array is read only).
@@ -1784,8 +1797,30 @@ public int findDuplicate(int[] nums) {
     return low;
 }
 ```
-discuss区一个解法：O(n) time and O(1) space without modifying the array.[two pointer]
-
+discuss区一个解法：O(n) time and O(1) space without modifying the array.[two pointer](https://discuss.leetcode.com/topic/25913/my-easy-understood-solution-with-o-n-time-and-o-1-space-without-modifying-the-array-with-clear-explanation)
+```
+public int findDuplicate(int[] nums) {
+    if (nums.length > 1)
+    {
+        int slow = nums[0];
+        int fast = nums[nums[0]];
+        while (slow != fast)
+        {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }
+        System.out.println(slow+"-"+fast);
+        fast = 0;
+        while (fast != slow)
+        {
+            fast = nums[fast];
+            slow = nums[slow];
+        }
+        return slow;
+    }
+    return -1;
+}
+```
 
 
 
