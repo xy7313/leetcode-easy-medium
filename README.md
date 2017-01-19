@@ -377,7 +377,49 @@ if(board[3*(i/3) + j/3][3*(i%3) + j%3]!='.' && !cube.add(board[3*(i/3) + j/3][3*
 ```
 
 ####37. Sudoku Solver
+介个题是hard，是的，意思是不会做，再看看答案，用递归写的，更觉得不会做很正常了。。。什么时候才能会做递归啊。。。
 
+1. 最后那个isValid方法其实跟上题基本是一样的
+2. 如果该位置非空，不用填数，continue即可
+3. 确定一个非空方格后，从1-9，尝试填入，每次填入都判断填入当前数后是否valid，如果当前填入valid，继续向后填，如果每一格都试到了合适的数字，返回solution，
+4. 如果填到最后发现无解，这里最后指的是，填1-9的循环结束，1-9均尝试过都不行，返回false，说明题目无解
+
+```
+public class Solution {
+        public void solveSudoku(char[][] board) {
+        doSolve(board, 0, 0);
+    }
+    //也可以每次都只传board进去，row col都从零还是判断
+    private boolean doSolve(char[][] board, int row, int col) {
+        for (int i = row; i < 9; i++) { // note: must reset col here!
+            col = 0;
+            for (int j = col; j < 9; j++) {
+                if (board[i][j] != '.') continue;
+                for (char num = '1'; num <= '9'; num++) {
+                    if (isValid(board, i, j, num)) {
+                        board[i][j] = num;
+                        if (doSolve(board, i, j + 1))
+                            return true;
+                            //else 可以不加，因为if 里 return了，但最好加上
+                        else board[i][j] = '.';
+                    }
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private boolean isValid(char[][] board, int row, int col, char c){
+        for(int i = 0; i < 9; i++) {
+            if(board[i][col] != '.' && board[i][col] == c) return false; //check row
+            if(board[row][i] != '.' && board[row][i] == c) return false; //check column
+            if(board[3 * (row / 3) + i / 3][ 3 * (col / 3) + i % 3] != '.' && board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] == c) return false; //check 3*3 block
+        }
+        return true;
+    }
+}
+```
 
 ####205. Isomorphic Strings
 论坛里看到的解题思路，感觉现在不适合刷题，想到hashmap但是不知道isomorphic的两个词到底什么关系
