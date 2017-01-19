@@ -1242,11 +1242,15 @@ Notice：只贴一下第二个方法，第一个方法很简单，分别遍历�
 For God's sake, don't try sorting a linked list during the interviewer
 
 and
->sort array or sort linkedlist[here](http://stackoverflow.com/questions/1525117/whats-the-fastest-algorithm-for-sorting-a-linked-list/1525419#1525419)
+
+Sort array or sort linkedlist[here](http://stackoverflow.com/questions/1525117/whats-the-fastest-algorithm-for-sorting-a-linked-list/1525419#1525419)
 Depending on a number of factors, it may actually be faster to copy the list to an array and then use a Quicksort.
+       
         The reason this might be faster is that an array has much better cache performance than a linked list. If the nodes in the list are dispersed in memory, you may be generating cache misses all over the place. Then again, if the array is large you will get cache misses anyway.
 Mergesort parallelises better, so it may be a better choice if that is what you want. It is also much faster if you perform it directly on the linked list.
+    
     Since both algorithms run in O(n * log n), making an informed decision would involve profiling them both on the machine you would like to run them on.
+    
 这个题表示不会做，简化算法if判断的原因： Before insert, the prev is at the last node of the sorted list. Only the last node's value is larger than the current inserting node should we move the temp back to the head
 
 ```
