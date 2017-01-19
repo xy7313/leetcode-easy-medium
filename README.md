@@ -815,23 +815,14 @@ return 1->4->3->2->5->NULL.
 
 loop1:
 1 --> 2 --> 3 --> 4 --> 5 --> NULL
-
 p     c     n
-
 cur.next = next.next;
-
 2 --> 4
-
 next.next = prev.next;
-
 3 --> 2
-
 prev.next = next;
-
 1 --> 3
-
 ==> 1 --> 3 --> 2 --> 4 --> 5 --> NULL
-
     p          c      n
 loop2:
 cur.next = next.next;
