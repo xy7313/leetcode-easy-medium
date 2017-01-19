@@ -810,6 +810,7 @@ Given 1->2->3->4->5->NULL, m = 2 and n = 4,
 
 return 1->4->3->2->5->NULL.
 
+```
 根据题中的例子，第二个for循环开始
 
 loop1:
@@ -832,7 +833,6 @@ prev.next = next;
 ==> 1 --> 3 --> 2 --> 4 --> 5 --> NULL
 
     p          c      n
-
 loop2:
 cur.next = next.next;
 2 --> 5
@@ -841,6 +841,8 @@ next.next = prev.next;
 prev.next = next;
 1 --> 4
 ==> 1 --> 4 --> 3 --> 2 --> 5 --> NULL
+```
+
 ```
 public ListNode reverseBetween(ListNode head, int m, int n) {
     if(m == n) return head;
