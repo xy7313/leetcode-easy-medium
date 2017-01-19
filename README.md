@@ -518,9 +518,12 @@ discuss中看到的方法，思路是给rownumber， 然后就在row1放一个ch
 
 ##binarySearch
 ####278. First Bad version/
+
 注意：和first position of target（两个题二分考点一毛一样），区别在于返回值，version或者说bad version是连续存在的，有3必有2，但target可能不存在，所以version直接返回start，target要考虑不存在的情况下返回-1，其他情况返回start
+
 看题应该会立刻想到二分查找，另外这个思想和和438中sliding window的思路有有一点类似.
 这个题需要搞清楚两点：
+
 1. 如果mid不是，那mid前都不是，查找mid后面，如果mid是，查找mid前
 2. 返回谁，我是举了个例子试了一下，不过从if这句可以看出，返回start
 3. 注意start=1，从1开始
@@ -572,9 +575,11 @@ return citations.length-start;
 
 ####274. H-Index
 new一个新array实现类似哈希表的思想，新array的下标对应input的element，新array长度比input长1，输入的数组中，比较大的数字都记在最后一位：
+
 比如input：[0,3，1，6，5] 
 new array:[1，1，0，1，0，2]
       idx: 0  1 2  3  4 5
+
 之后从后往前计算new array element sum 当 sum>=idx 此时的idx就是我们要找的h-index
 ```
 public int hIndex(int[] citations) {
@@ -596,8 +601,10 @@ public int hIndex(int[] citations) {
 
 ####448. Find All Numbers Disappeared in an Array
 但愿是easy的最后一题了，总觉得easy要刷完了，结果就会出一道新题。。。
+
 这个也是看起来简单，一开始的思路非常奇葩，看数组中的数+1和-1的数是不是存在，如果不存在就标记一下大概这样，实现了一下发现不行，应该是标记的问题，后来在discuss看到了一个不错的方法：
 >The basic idea is that we iterate through the input array and mark elements as negative using nums[nums[i] -1] = -nums[nums[i]-1]. In this way all the numbers that we have seen will be marked as negative. In the second iteration, if a value is not marked as negative, it implies we have never seen that index before, so just add it to the return list.
+
 另外这个题有点bug，原题给的example是：
 >Input:
 [4,3,2,7,8,2,3,1]
@@ -614,6 +621,7 @@ result左移，空出一位放n的最右位，n右移，看见位运算还是懵
 
 ####165 compare version
 长度不相等的时候很麻烦:
+
 1. 注意以 . perioud 为分隔符时候的写法`version1.split("[.]");version2.split("\\.");`
 2. 注意每次while中才给temp赋值，即，如果s1比s2多一位，那s2的当前temp=0，然后判断
 3. time complexity: O(m+n)，m和n分别是两个字符串的长度。
@@ -637,6 +645,7 @@ Q:For num = 5 you should return [0,1,1,2,1,2].
 1. 又是用了传统的hashmap方法，在以前代码的基础上，检测map中value==true的值部分做了很小的改动就可以了。思路还是把数组存入map，出现一次对应value=T，再出现的value=F，之后遍历map(`for(Integer a: m.keySet()){...}`)找value=true
 但隐约记得当年用go刷题的时候看到过牛逼的解法，所有数组元素进行一次位运算，得到singlenumber（只有一个的时候），或者得到两个singlenumber的位运算结果，然后再用一种黑科技把两个数分开。
 2. 当年笔记，其中一只不太懂的一点，如果是3^3 Vs. 3^2^1结果都是0，。。怎么区分
+
 > n=n^val        //如果是出现两次的数，按位异或的结果是0，n就还是以前的n，所以最后return n 就是single number（一个single number）
 如果两个single number，n就是剩下两个single number按位异或的结果
 ```
@@ -674,8 +683,11 @@ result[1] = num2;
 Example: A = [1, 2, 3, 4]
 return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] itself.
 >
-一条很有用的discuss：sum += curr really does the trick. Brilliant!
+一条很有用的discuss：
+
+sum += curr really does the trick. Brilliant!
 I think the easy way to understand this is that adding current number to our existing arithmetic sequence, we will have curr additional combinations of new arithmetic slices.
+
 Let's say if we have [1, 2, 3, 4] and currently we have 3 arithmetic slices (curr is 2). We are going to add 5 to our arithmetic sequence. So that we will have curr new slices (curr is 3), which is [3, 4, 5], [2, 3, 4, 5] and [1, 2, 3, 4, 5]. Now, the total valid arithmetic slices is 3 + curr = 6. That's exactly the same as sum += curr.
 
 ####406. Queue Reconstruction by Height
