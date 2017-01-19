@@ -516,153 +516,7 @@ Count the number of prime numbers less than a non-negative number, n. 和61B例�
 ####6. ZigZag Conversio
 discuss中看到的方法，思路是给rownumber， 然后就在row1放一个char，row=row+1放一个，+1和-1分别对应两种情况，其实可以理解为拐弯，比如row=0的时候，说明要往下走，row=row+1，row=rownumber-1的时候说明要往上往回走了，所以row=row-1。高端的不行
 
-##binarySearch
-278. First Bad version
-374. Guess Number Higher or Lower
-475. Heaters
-275. H-Index2
-153. Find Minimum in Rotated Sorted Array
 
-####notice!
-binarySearch 常用 start/end，sort问题常用 left/right，two pointers问题常用 fast/slow，linked list + two pointers常用 walker/runner
-
-####278. First Bad version/
-
-注意：和first position of target（两个题二分考点一毛一样），区别在于返回值，version或者说bad version是连续存在的，有3必有2，但target可能不存在，所以version直接返回start，target要考虑不存在的情况下返回-1，其他情况返回start
-
-看题应该会立刻想到二分查找，另外这个思想和和438中sliding window的思路有有一点类似.
-这个题需要搞清楚两点：
-
-1. 如果mid不是，那mid前都不是，查找mid后面，如果mid是，查找mid前
-2. 返回谁，我是举了个例子试了一下，不过从if这句可以看出，返回start
-3. 注意start=1，从1开始
-```
-while(start<end){
-    int mid = start+(end-start)/2;
-    //all the versions after a bad version are also bad，所以如果mid没有，mid前肯定都没有，查找后一半
-    if(!isBadVersion(mid)) start = mid+1;
-    else end = mid;
-}
-```
-
-####374. Guess Number Higher or Lower
-跟上题一样，binary search 代码也几乎一样，==1说明更大，向后找，所以start=mid+1；==-1说明更小，向前找，返回start。可以背个模板了。
-
-####475. Heaters
-还是tag：binary search, 看题并没有很好的思路，discuss
-```
-public int findRadius(int[] houses, int[] heaters) {
-    //用binary search前需要排序，不然答案不确定
-    Arrays.sort(heaters);
-    int result = Integer.MIN_VALUE;        
-    for (int house : houses) {
-        //Arrays.bianrySearch(object[] a, object key)如果它包含在数组中，则返回搜索键的索引；否则返回 (-(插入点) - 1)。插入点被定义为将键插入数组的那一点：即第一个大于此键的元素索引。
-        int index = Arrays.binarySearch(heaters, house);
-        if (index < 0) {
-            index = -(index + 1);
-        }
-        //如果<0，说明house在最左边heater的左边，dist1=max无意义，实际算的距离是dist2，此时=heaters[index] - house
-        int dist1 = index - 1 >= 0 ? house - heaters[index - 1] : Integer.MAX_VALUE;
-        int dist2 = index < heaters.length ? heaters[index] - house : Integer.MAX_VALUE;        	
-        result = Math.max(result, Math.min(dist1, dist2));
-    }       
-    return result;
-}
-```
-
-####275. H-Index2
-given: sorted array, require O(lgn)，搞清楚要求的话很容易想到binary search。注意有一种特殊情况：input: [0,1,2,4,5,6]，output: 3，整个while循环都不能输出正确答案，所以需要return输出的帮助
-```
-while(start<=end){
-    int mid = (start+end)/2;
-    if(citations[mid]==(citations.length-mid)) return citations.length-mid;
-    else if(citations[mid]<(citations.length-mid)) start = mid+1;
-    else end = mid-1;
-}
-return citations.length-start;
-```
-
-####274. H-Index
-new一个新array实现类似哈希表的思想，新array的下标对应input的element，新array长度比input长1，输入的数组中，比较大的数字都记在最后一位：
-
-比如input：[0,3，1，6，5] 
-new array:[1，1，0，1，0，2]
-      idx: 0  1 2  3  4 5
-
-之后从后往前计算new array element sum 当 sum>=idx 此时的idx就是我们要找的h-index
-```
-public int hIndex(int[] citations) {
-    int len = citations.length;
-    if(len==0) return 0;
-    int[] re = new int[len+1];
-    for(int i = 0; i<len; i++){
-        if(citations[i]>len) re[len]++;
-        else re[citations[i]]++;
-    }
-    int sum = 0;
-    for(int i = len; i>0; i--){
-        sum+=re[i];
-        if(sum>=i) return i;
-    }
-    return 0;
-}
-```
-
-####153. Find Minimum in Rotated Sorted Array
-binary search写了这么多，这个还是不会写，感觉没抓住要点，有模板也不行.
-
-这个题的要点，应该在if判断那里，discuss里的解析写的挺好的
-
-1. The minimum element must satisfy one of two conditions: 1) If rotate, A[min] < A[min - 1]; 2) If not, A[0].
-2. check the middle element, if it is less than previous one, then it is minimum. 
-3. If not, there are 2 conditions as well: If it is greater than both left and right element, then minimum element should be on its right, otherwise on its left.
-```
-public int findMin(int[] nums) {
-    if(nums==null||nums.length==0) return 0;
-    if(nums.length==1) return nums[0];
-    int start = 0;
-    int end = nums.length-1;
-    while(start<end){
-        int mid = start+(end-start)/2;
-        if(nums[mid]<nums[mid-1]) return nums[mid];
-        else if(nums[mid]>nums[end]&&nums[mid]>nums[start]) start = mid+1;
-        else  end = mid-1;
-    }
-    return nums[start];
-}
-```
-
-####287. Find the Duplicate Number
-这题要求是要求是：
-
-You must not modify the array (assume the array is read only).
-
-You must use only constant, O(1) extra space.
-
-Your runtime complexity should be less than O(n2).
-
-There is only one duplicate number in the array, but it could be repeated more than once.
-
-discuss区一个解法：O(n) time and O(1) space without modifying the array.[two pointer]
-
-
-
-虽然有binary search的tag但我肯定想不到这种binary search的方法。。。而且这个方法复杂度也不够好：O(1) space complexity, O(nlgn) time complexity ，跟排序，然后for循环找duplicate的复杂度一样。不过还是放上code,cnt是计数的，通过cnt和mid比较判断重复元素在哪边。不好想也不优，算了。。
-```
-public int findDuplicate(int[] nums) {
-	int low = 1, high = nums.length - 1;
-    while (low <= high) {
-        int mid = (int) (low + (high - low) * 0.5);
-        int cnt = 0;
-        for (int a : nums) {
-            if (a <= mid) ++cnt;
-        }
-        if (cnt <= mid) low = mid + 1;
-        else high = mid - 1;
-    }
-    return low;
-}
-```
 
 ####448. Find All Numbers Disappeared in an Array
 但愿是easy的最后一题了，总觉得easy要刷完了，结果就会出一道新题。。。
@@ -920,10 +774,6 @@ public ListNode reverseBetween(ListNode head, int m, int n) {
     return dummy.next;
 }
 ```
-
-
-
-
 
 ####83. Remove Duplicates from Sorted List
 还是一种iteration一种recursion,这个题可以不用dummy，删除第二个重复元素，确保head不会改动
@@ -1758,14 +1608,186 @@ public class Solution {
             this.x = x;
             this.y = y;
             this.val = val;
-        }
-    
+        }  
     @Override
     public int compareTo (Tuple that) {
         return this.val - that.val;
     }
 }
 ```
+
+这题discuss区还有个binary search的解法, 这个讲解绍了两种 search space
+
+1. index -- A bunch of examples -- https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/ ( the array is sorted)
+2. range -- https://leetcode.com/problems/find-the-duplicate-number/ (Unsorted Array)
+
+The reason why we did not use index as "search space" for this problem is the matrix is sorted in two directions, we can not find a linear way to map the number and its index. 就是一开始说的错误思路有的问题.
+
+注意：我只是贴上了代码，然而并不能看懂，，过程序好麻烦，放弃了，地址在https://discuss.leetcode.com/topic/52948/share-my-thoughts-and-clean-java-code
+```
+   public int kthSmallest(int[][] matrix, int k) {
+        int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
+        while(lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+            int count = 0,  j = matrix[0].length - 1;
+            for(int i = 0; i < matrix.length; i++) {
+                while(j >= 0 && matrix[i][j] > mid) j--;
+                count += (j + 1);
+            }
+            if(count < k) lo = mid + 1;
+            else hi = mid;
+        }
+        return lo;
+    }
+```
+
+##binarySearch
+278. First Bad version
+374. Guess Number Higher or Lower
+475. Heaters
+275. H-Index2
+153. Find Minimum in Rotated Sorted Array
+
+####notice!
+binarySearch 常用 start/end，sort问题常用 left/right，two pointers问题常用 fast/slow，linked list + two pointers常用 walker/runner
+
+####278. First Bad version/
+
+注意：和first position of target（两个题二分考点一毛一样），区别在于返回值，version或者说bad version是连续存在的，有3必有2，但target可能不存在，所以version直接返回start，target要考虑不存在的情况下返回-1，其他情况返回start
+
+看题应该会立刻想到二分查找，另外这个思想和和438中sliding window的思路有有一点类似.
+这个题需要搞清楚两点：
+
+1. 如果mid不是，那mid前都不是，查找mid后面，如果mid是，查找mid前
+2. 返回谁，我是举了个例子试了一下，不过从if这句可以看出，返回start
+3. 注意start=1，从1开始
+```
+while(start<end){
+    int mid = start+(end-start)/2;
+    //all the versions after a bad version are also bad，所以如果mid没有，mid前肯定都没有，查找后一半
+    if(!isBadVersion(mid)) start = mid+1;
+    else end = mid;
+}
+```
+
+####374. Guess Number Higher or Lower
+跟上题一样，binary search 代码也几乎一样，==1说明更大，向后找，所以start=mid+1；==-1说明更小，向前找，返回start。可以背个模板了。
+
+####475. Heaters
+还是tag：binary search, 看题并没有很好的思路，discuss
+```
+public int findRadius(int[] houses, int[] heaters) {
+    //用binary search前需要排序，不然答案不确定
+    Arrays.sort(heaters);
+    int result = Integer.MIN_VALUE;        
+    for (int house : houses) {
+        //Arrays.bianrySearch(object[] a, object key)如果它包含在数组中，则返回搜索键的索引；否则返回 (-(插入点) - 1)。插入点被定义为将键插入数组的那一点：即第一个大于此键的元素索引。
+        int index = Arrays.binarySearch(heaters, house);
+        if (index < 0) {
+            index = -(index + 1);
+        }
+        //如果<0，说明house在最左边heater的左边，dist1=max无意义，实际算的距离是dist2，此时=heaters[index] - house
+        int dist1 = index - 1 >= 0 ? house - heaters[index - 1] : Integer.MAX_VALUE;
+        int dist2 = index < heaters.length ? heaters[index] - house : Integer.MAX_VALUE;        	
+        result = Math.max(result, Math.min(dist1, dist2));
+    }       
+    return result;
+}
+```
+
+####275. H-Index2
+given: sorted array, require O(lgn)，搞清楚要求的话很容易想到binary search。注意有一种特殊情况：input: [0,1,2,4,5,6]，output: 3，整个while循环都不能输出正确答案，所以需要return输出的帮助
+```
+while(start<=end){
+    int mid = (start+end)/2;
+    if(citations[mid]==(citations.length-mid)) return citations.length-mid;
+    else if(citations[mid]<(citations.length-mid)) start = mid+1;
+    else end = mid-1;
+}
+return citations.length-start;
+```
+
+####274. H-Index
+new一个新array实现类似哈希表的思想，新array的下标对应input的element，新array长度比input长1，输入的数组中，比较大的数字都记在最后一位：
+
+比如input：[0,3，1，6，5] 
+new array:[1，1，0，1，0，2]
+      idx: 0  1 2  3  4 5
+
+之后从后往前计算new array element sum 当 sum>=idx 此时的idx就是我们要找的h-index
+```
+public int hIndex(int[] citations) {
+    int len = citations.length;
+    if(len==0) return 0;
+    int[] re = new int[len+1];
+    for(int i = 0; i<len; i++){
+        if(citations[i]>len) re[len]++;
+        else re[citations[i]]++;
+    }
+    int sum = 0;
+    for(int i = len; i>0; i--){
+        sum+=re[i];
+        if(sum>=i) return i;
+    }
+    return 0;
+}
+```
+
+####153. Find Minimum in Rotated Sorted Array
+binary search写了这么多，这个还是不会写，感觉没抓住要点，有模板也不行.
+
+这个题的要点，应该在if判断那里，discuss里的解析写的挺好的
+
+1. The minimum element must satisfy one of two conditions: 1) If rotate, A[min] < A[min - 1]; 2) If not, A[0].
+2. check the middle element, if it is less than previous one, then it is minimum. 
+3. If not, there are 2 conditions as well: If it is greater than both left and right element, then minimum element should be on its right, otherwise on its left.
+```
+public int findMin(int[] nums) {
+    if(nums==null||nums.length==0) return 0;
+    if(nums.length==1) return nums[0];
+    int start = 0;
+    int end = nums.length-1;
+    while(start<end){
+        int mid = start+(end-start)/2;
+        if(nums[mid]<nums[mid-1]) return nums[mid];
+        else if(nums[mid]>nums[end]&&nums[mid]>nums[start]) start = mid+1;
+        else  end = mid-1;
+    }
+    return nums[start];
+}
+```
+
+####287. Find the Duplicate Number
+这题要求是要求是：
+
+You must not modify the array (assume the array is read only).
+
+You must use only constant, O(1) extra space.
+
+Your runtime complexity should be less than O(n2).
+
+There is only one duplicate number in the array, but it could be repeated more than once.
+
+虽然有binary search的tag但我肯定想不到这种binary search的方法。。。而且这个方法复杂度也不够好：O(1) space complexity, O(nlgn) time complexity ，跟排序，然后for循环找duplicate的复杂度一样。不过还是放上code,cnt是计数的，通过cnt和mid比较判断重复元素在哪边。不好想也不优，算了。。推荐下面的two pointers的解法
+```
+public int findDuplicate(int[] nums) {
+	int low = 1, high = nums.length - 1;
+    while (low <= high) {
+        int mid = (int) (low + (high - low) * 0.5);
+        int cnt = 0;
+        for (int a : nums) {
+            if (a <= mid) ++cnt;
+        }
+        if (cnt <= mid) low = mid + 1;
+        else high = mid - 1;
+    }
+    return low;
+}
+```
+discuss区一个解法：O(n) time and O(1) space without modifying the array.[two pointer]
+
+
+
 
 ##subset：dfs+backtracking系列
 ####78. Subset
