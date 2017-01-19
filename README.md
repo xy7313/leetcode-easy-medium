@@ -523,6 +523,9 @@ discuss中看到的方法，思路是给rownumber， 然后就在row1放一个ch
 275. H-Index2
 153. Find Minimum in Rotated Sorted Array
 
+####notice!
+binarySearch 常用 start/end，sort问题常用 left/right，two pointers问题常用 fast/slow，linked list + two pointers常用 walker/runner
+
 ####278. First Bad version/
 
 注意：和first position of target（两个题二分考点一毛一样），区别在于返回值，version或者说bad version是连续存在的，有3必有2，但target可能不存在，所以version直接返回start，target要考虑不存在的情况下返回-1，其他情况返回start
@@ -606,6 +609,60 @@ public int hIndex(int[] citations) {
 ```
 
 ####153. Find Minimum in Rotated Sorted Array
+binary search写了这么多，这个还是不会写，感觉没抓住要点，有模板也不行.
+
+这个题的要点，应该在if判断那里，discuss里的解析写的挺好的
+
+1. The minimum element must satisfy one of two conditions: 1) If rotate, A[min] < A[min - 1]; 2) If not, A[0].
+2. check the middle element, if it is less than previous one, then it is minimum. 
+3. If not, there are 2 conditions as well: If it is greater than both left and right element, then minimum element should be on its right, otherwise on its left.
+```
+public int findMin(int[] nums) {
+    if(nums==null||nums.length==0) return 0;
+    if(nums.length==1) return nums[0];
+    int start = 0;
+    int end = nums.length-1;
+    while(start<end){
+        int mid = start+(end-start)/2;
+        if(nums[mid]<nums[mid-1]) return nums[mid];
+        else if(nums[mid]>nums[end]&&nums[mid]>nums[start]) start = mid+1;
+        else  end = mid-1;
+    }
+    return nums[start];
+}
+```
+
+####287. Find the Duplicate Number
+这题要求是要求是：
+
+You must not modify the array (assume the array is read only).
+
+You must use only constant, O(1) extra space.
+
+Your runtime complexity should be less than O(n2).
+
+There is only one duplicate number in the array, but it could be repeated more than once.
+
+discuss区一个解法：O(n) time and O(1) space without modifying the array.[two pointer]
+
+
+
+虽然有binary search的tag但我肯定想不到这种binary search的方法。。。而且这个方法复杂度也不够好：O(1) space complexity, O(nlgn) time complexity ，跟排序，然后for循环找duplicate的复杂度一样。不过还是放上code,cnt是计数的，通过cnt和mid比较判断重复元素在哪边。不好想也不优，算了。。
+```
+public int findDuplicate(int[] nums) {
+	int low = 1, high = nums.length - 1;
+    while (low <= high) {
+        int mid = (int) (low + (high - low) * 0.5);
+        int cnt = 0;
+        for (int a : nums) {
+            if (a <= mid) ++cnt;
+        }
+        if (cnt <= mid) low = mid + 1;
+        else high = mid - 1;
+    }
+    return low;
+}
+```
 
 ####448. Find All Numbers Disappeared in an Array
 但愿是easy的最后一题了，总觉得easy要刷完了，结果就会出一道新题。。。
@@ -896,31 +953,6 @@ public class Solution {
 }
 ```
 
-####82. Remove Duplicates from Sorted List II
-这个题不会做！！第一个方法还稍微好懂一点，拿[1,1,1,2,3]的例子来说，第一个内层while结束，slow.next=head=1, fast=最后一个1， 进入if(注意并不是比较val)，之后就，代码肯定能看懂，但是dummy.next的变化一直想不通，fast slow都满满指向最后面去了，dummy.next是怎么移动到2，又是怎么不移动了的。。。
-```
-public ListNode deleteDuplicates(ListNode head) {
-	//use two pointers, slow - track the node before the dup nodes, 
-	// fast - to find the last node of dups.
-    ListNode dummy = new ListNode(0), fast = head, slow = dummy;
-    slow.next = fast;
-    while(fast != null) {
-    	while (fast.next != null && fast.val == fast.next.val) {
-     		fast = fast.next;    //while loop to find the last node of the dups.
-    	}
-    	if (slow.next != fast) { //duplicates detected.
-    		slow.next = fast.next; //remove the dups.
-    		fast = slow.next;     //reposition the fast pointer.
-    	} else { //no dup, move down both pointer.
-    		slow = slow.next;
-    		fast = fast.next;
-    	}
-    }
-    return dummy.next;
-}
-```
-
-
 ####203. Remove Linked List Elements
 删除指定element，看起来很简单，写错了两点,第二个方法，dummy-哑节点，的使用多针对单链表没有向前指针的问题，保证链表的head不会在删除操作中丢失，或者用来删除head
 所以当链表head可能有变化时就用dummy，`ListNode dummy = New ListNode(0);dummy.next=head;`最后返回dummy.head
@@ -946,27 +978,6 @@ public ListNode removeElements(ListNode head, int val) {
         if(head.next.val==val) head.next = head.next.next;
         else head = head.next;
     }
-    return dummy.next;
-}
-```
-
-####19. Remove Nth Node From End of List
-walker and runner, init walker,runner both as dummy, move runner n steps, so that the gap between runner and walker =n, then move runner and walker together, when runner get to the end of List, walker is before the nth from the end node, walker.next=walke.next.next， skip original walker.next
-```
-public ListNode removeNthFromEnd(ListNode head, int n) {
-    ListNode dummy = new ListNode(0);
-    dummy.next = head;
-    ListNode walker = dummy;
-    ListNode runner = dummy;
-    // after for loop, gap between runner and walker =n
-    for(int i = 1; i <= n; i++){
-        runner = runner.next;
-    }
-    while(runner.next!=null){
-        runner = runner.next;
-        walker = walker.next;
-    }
-    walker.next=walker.next.next;//skip nth node
     return dummy.next;
 }
 ```
@@ -1016,6 +1027,60 @@ public ListNode swapPairs(ListNode head) {
         current.next.next = first;
         current = current.next.next;
     }
+    return dummy.next;
+}
+```
+
+###linked list + two pointers
+82. Remove Duplicates from Sorted List II
+19. Remove Nth Node From End of List
+141. Linked List Cycle
+142. Linked List Cycle2
+234. Palindrome Linked List
+160. Intersection of Two Linked Lists
+148. Sort List
+
+####82. Remove Duplicates from Sorted List II
+这个题不会做！！第一个方法还稍微好懂一点，拿[1,1,1,2,3]的例子来说，第一个内层while结束，slow.next=head=1, fast=最后一个1， 进入if(注意并不是比较val)，之后就，代码肯定能看懂，但是dummy.next的变化一直想不通，fast slow都满满指向最后面去了，dummy.next是怎么移动到2，又是怎么不移动了的。。。
+```
+public ListNode deleteDuplicates(ListNode head) {
+	//use two pointers, slow - track the node before the dup nodes, 
+	// fast - to find the last node of dups.
+    ListNode dummy = new ListNode(0), fast = head, slow = dummy;
+    slow.next = fast;
+    while(fast != null) {
+    	while (fast.next != null && fast.val == fast.next.val) {
+     		fast = fast.next;    //while loop to find the last node of the dups.
+    	}
+    	if (slow.next != fast) { //duplicates detected.
+    		slow.next = fast.next; //remove the dups.
+    		fast = slow.next;     //reposition the fast pointer.
+    	} else { //no dup, move down both pointer.
+    		slow = slow.next;
+    		fast = fast.next;
+    	}
+    }
+    return dummy.next;
+}
+```
+
+####19. Remove Nth Node From End of List
+walker and runner, init walker,runner both as dummy, move runner n steps, so that the gap between runner and walker =n, then move runner and walker together, when runner get to the end of List, walker is before the nth from the end node, walker.next=walke.next.next， skip original walker.next
+```
+public ListNode removeNthFromEnd(ListNode head, int n) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode walker = dummy;
+    ListNode runner = dummy;
+    // after for loop, gap between runner and walker =n
+    for(int i = 1; i <= n; i++){
+        runner = runner.next;
+    }
+    while(runner.next!=null){
+        runner = runner.next;
+        walker = walker.next;
+    }
+    walker.next=walker.next.next;//skip nth node
     return dummy.next;
 }
 ```
@@ -1077,83 +1142,6 @@ public ListNode detectCycle(ListNode head) {
     return null;
 }
 ```
-
-####2. Add Two Numbers
-简单版：
-
-Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
-
-Output: 7 -> 0 -> 8
-
-这种题对我来说的难点都在 创建sentinel，和d，不停在d后面添加node这些地方，这两种方法其实思路一样，实现上稍有区别
-```
-public ListNode addTwoNumbers(ListNode l1, ListNode l2) {     
-    ListNode cur1 = l1,cur2 = l2;
-    ListNode sentinel = new ListNode(0);
-    ListNode d = sentinel;
-    int carry = 0,sum=0;
-    while(cur1!=null||cur2!=null||carry!=0){
-        sum = (cur1 != null ? cur1.val : 0) + (cur2 != null ? cur2.val : 0) +carry;
-        carry = sum / 10;
-        d.next = new ListNode(sum % 10);
-        d = d.next;
-        cur1 = (cur1!=null?cur1.next:null);
-        cur2 = (cur2!=null?cur2.next:null);    
-    }
-    return sentinel.next;
-}
-public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-    ListNode c1 = l1;
-    ListNode c2 = l2;
-    ListNode sentinel = new ListNode(0);
-    ListNode d = sentinel;
-    int sum = 0;
-    while (c1 != null || c2 != null||sum/10!=0) {
-        sum /= 10;//sum means carry here
-        if (c1 != null) {
-            sum += c1.val;
-            c1 = c1.next;
-        }
-        if (c2 != null) {
-            sum += c2.val;
-            c2 = c2.next;
-        }
-        d.next = new ListNode(sum % 10);
-        d = d.next;
-    }
-    return sentinel.next;
-}
-```
-
-####445. Add Two Numbers II
-跟上面那题很类似，但是Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4) Output: 7 -> 8 -> 0 -> 7
-
-代码用stack实现，一开始是用了三个stack，后来发现可以通过改变新链表的拼接方式生一个stack
-```
-//stack3
-ListNode dummy = new ListNode(0);
-ListNode d = dummy;
-while(!s.empty()||!s2.empty()||carry!=0){
-    sum = (s.empty()?0:s.pop().intValue())+(s2.empty()?0:s2.pop().intValue())+carry;
-    carry = sum/10;
-    s3.push(sum%10);
-}
-while(!s3.empty()){
-    d.next = new ListNode(s3.pop().intValue());
-    d=d.next;
-}
-//without stack3, 在dummy前面一步一步加node
-ListNode dummy = new ListNode(0);
-while(!s.empty()||!s2.empty()||carry!=0){
-    sum = (s.empty()?0:s.pop().intValue())+(s2.empty()?0:s2.pop().intValue())+carry;
-    carry = sum/10;
-    dummy.val = sum%10;
-    ListNode d = new ListNode(sum%10);
-    d.next = dummy;
-    dummy=d; 
-}
-```
-
 
 ####234. Palindrome Linked List
 假设是odd长（even同理）
@@ -1243,6 +1231,52 @@ Notice：只贴一下第二个方法，第一个方法很简单，分别遍历�
 }
  ``` 
 
+####148. Sort List
+sortlist的题都很麻烦的样子，所以记得不要sortlist。。。
+
+这个题有特殊要求，O(1) space complexity。首先，strict O(1) auxiliary space complexity means the maximum number of memory used by the program, except the memory taken by the input data, doesn't change with the input size. 所以，strictly speaking, any solution that involves recursion can never have a strict O(1) auxiliary space complexity. Because the maximum recursion level depends on the the input size and each recursion call consumes memory on stack, thus the maximum number of memory used depends on the input size.
+
+简单来说，递归的都做不到O(1)，大部分是O(logn)，但我只能看懂一个递归的方法，不递归的思路看起来很简单就是merge sort，代码看起来好复杂
+```
+public class Solution {
+    public ListNode sortList(ListNode head) {
+        //这个if很棒，返回head
+        if(head==null||head.next==null) return head;
+        //split the list into 2 pieces;
+        ListNode midEnd = head;
+        ListNode walker = head;
+        ListNode runner = head;
+        while(runner != null&& runner.next!=null){
+            midEnd = walker;
+            walker = walker.next;
+            runner = runner.next.next;
+        }
+        midEnd.next=null;
+        //sort each part by divide conqure method: divide --> merge in order
+        ListNode l1 = sortList(walker);
+        ListNode l2 = sortList(head);       
+        return merge(l1,l2);
+    }
+    public ListNode merge(ListNode l1,ListNode l2){
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;   
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                cur.next = l1;
+                l1 = l1.next;
+            } else {
+                cur.next = l2;
+                l2 = l2.next;
+            }
+            cur = cur.next;
+        }       
+        if (l1 != null) cur.next = l1;    
+        if (l2 != null) cur.next = l2;
+        return dummy.next;         
+    }
+}
+```
+
 ####147. Insertion Sort List
 目前看来打算写的最后一道linked list题
 看题的时候在discuss发现了很多有意思的东西，比如这个
@@ -1289,49 +1323,80 @@ public ListNode insertionSortList(ListNode head) {
 }
 ```
 
-####148. Sort List
-sortlist的题都很麻烦的样子，所以记得不要sortlist。。。
 
-这个题有特殊要求，O(1) space complexity。首先，strict O(1) auxiliary space complexity means the maximum number of memory used by the program, except the memory taken by the input data, doesn't change with the input size. 所以，strictly speaking, any solution that involves recursion can never have a strict O(1) auxiliary space complexity. Because the maximum recursion level depends on the the input size and each recursion call consumes memory on stack, thus the maximum number of memory used depends on the input size.
+####2. Add Two Numbers
+简单版：
 
-简单来说，递归的都做不到O(1)，大部分是O(logn)，但我只能看懂一个递归的方法，不递归的思路看起来很简单就是merge sort，代码看起来好复杂
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+
+Output: 7 -> 0 -> 8
+
+这种题对我来说的难点都在 创建sentinel，和d，不停在d后面添加node这些地方，这两种方法其实思路一样，实现上稍有区别
 ```
-public class Solution {
-    public ListNode sortList(ListNode head) {
-        //这个if很棒，返回head
-        if(head==null||head.next==null) return head;
-        //split the list into 2 pieces;
-        ListNode midEnd = head;
-        ListNode walker = head;
-        ListNode runner = head;
-        while(runner != null&& runner.next!=null){
-            midEnd = walker;
-            walker = walker.next;
-            runner = runner.next.next;
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {     
+    ListNode cur1 = l1,cur2 = l2;
+    ListNode sentinel = new ListNode(0);
+    ListNode d = sentinel;
+    int carry = 0,sum=0;
+    while(cur1!=null||cur2!=null||carry!=0){
+        sum = (cur1 != null ? cur1.val : 0) + (cur2 != null ? cur2.val : 0) +carry;
+        carry = sum / 10;
+        d.next = new ListNode(sum % 10);
+        d = d.next;
+        cur1 = (cur1!=null?cur1.next:null);
+        cur2 = (cur2!=null?cur2.next:null);    
+    }
+    return sentinel.next;
+}
+public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    ListNode c1 = l1;
+    ListNode c2 = l2;
+    ListNode sentinel = new ListNode(0);
+    ListNode d = sentinel;
+    int sum = 0;
+    while (c1 != null || c2 != null||sum/10!=0) {
+        sum /= 10;//sum means carry here
+        if (c1 != null) {
+            sum += c1.val;
+            c1 = c1.next;
         }
-        midEnd.next=null;
-        //sort each part by divide conqure method: divide --> merge in order
-        ListNode l1 = sortList(walker);
-        ListNode l2 = sortList(head);       
-        return merge(l1,l2);
+        if (c2 != null) {
+            sum += c2.val;
+            c2 = c2.next;
+        }
+        d.next = new ListNode(sum % 10);
+        d = d.next;
     }
-    public ListNode merge(ListNode l1,ListNode l2){
-        ListNode dummy = new ListNode(0);
-        ListNode cur = dummy;   
-        while (l1 != null && l2 != null) {
-            if (l1.val < l2.val) {
-                cur.next = l1;
-                l1 = l1.next;
-            } else {
-                cur.next = l2;
-                l2 = l2.next;
-            }
-            cur = cur.next;
-        }       
-        if (l1 != null) cur.next = l1;    
-        if (l2 != null) cur.next = l2;
-        return dummy.next;         
-    }
+    return sentinel.next;
+}
+```
+
+####445. Add Two Numbers II
+跟上面那题很类似，但是Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4) Output: 7 -> 8 -> 0 -> 7
+
+代码用stack实现，一开始是用了三个stack，后来发现可以通过改变新链表的拼接方式生一个stack
+```
+//stack3
+ListNode dummy = new ListNode(0);
+ListNode d = dummy;
+while(!s.empty()||!s2.empty()||carry!=0){
+    sum = (s.empty()?0:s.pop().intValue())+(s2.empty()?0:s2.pop().intValue())+carry;
+    carry = sum/10;
+    s3.push(sum%10);
+}
+while(!s3.empty()){
+    d.next = new ListNode(s3.pop().intValue());
+    d=d.next;
+}
+//without stack3, 在dummy前面一步一步加node
+ListNode dummy = new ListNode(0);
+while(!s.empty()||!s2.empty()||carry!=0){
+    sum = (s.empty()?0:s.pop().intValue())+(s2.empty()?0:s2.pop().intValue())+carry;
+    carry = sum/10;
+    dummy.val = sum%10;
+    ListNode d = new ListNode(sum%10);
+    d.next = dummy;
+    dummy=d; 
 }
 ```
 
