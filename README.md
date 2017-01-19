@@ -1334,7 +1334,12 @@ public ListNode mergeKLists(ListNode[] lists) {
 }
 ```
 
-##sort相关(3 problems)
+##sort相关(4 problems)
+215. Kth Largest Element in an Array
+324. Wiggle Sort II
+179. Largest Number
+451. Sort Characters By Frequency
+
 ####215. Kth Largest Element in an Array
 用quicksort的思想，实现O(n)的算法。快排的思想是分治，divide and conqure。这里因为只需要找到某元素，所以分治之后的部分只有包含要查找元素的那部分需要处理，剩下的不需要处理，所以原本快排是nlogn的算法，这里不完全排序，可以达到linear。
 还有之所以看到了这题是因为下面的题用到了这个题目。
@@ -1488,18 +1493,6 @@ public String largestNumber(int[] nums) {
 }
 ```
 
-####347. Top K Frequent Elements
-还有一个重写compare的题，当然这个题用hashmap也可以，复杂度不知道行不行,在discuss区看到的maxheap实现的方法，因为要topk，所以用maxheap重写compare改变排序规则就可以实现，大牛 代码居然可以缩减到7行，有点厉害的，注意Lambda箭头函数，PriorityQueue 的 addAll(), Map 的 map.getOrDefault(n,0),map.entrySet(),map.getValue(),map.getKey()这些方法的灵活使用，基本可以记得，要priority queue，compare(a,b){return a-b;}
-```
-Map<Integer, Integer> map = new HashMap<>();
-for(int n: nums) map.put(n,map.getOrDefault(n,0)+1);
-PriorityQueue<Map.Entry<Integer,Integer>> maxHeap = new PriorityQueue<>((a,b)->(b.getValue()-a.getValue()));
-maxHeap.addAll(map.entrySet());
-List<Integer> re = new ArrayList<Integer>();
-while(re.size()<k) re.add(maxHeap.poll().getKey());
-return re;
-```
-
 ####451. Sort Characters By Frequency
 自从开是刷medium的题之后，每天都是炼狱模式，各种没见过的题型，要么就是想不出解法，要么就是想出的不符合要求，每次看答案都要看好久（生无可恋脸，这个题也是，要求O(n)，所以hashmap+排序value的方法是不满足要求的
 思路：
@@ -1553,6 +1546,36 @@ private List<Character>[] buildArray(Map<Character,Integer> map, int max){
 }
 ```
 
+##PriorityQueue/Heap相关
+linked list 里 23. Merge k Sorted Lists
+sort 里 215. Kth Largest Element in an Array
+下面的：
+347. Top K Frequent Elements
+378. Kth Smallest Element in a Sorted Matrix
+###关于queue！
+1. The java.util.Queue is a subtype of java.util.Collection interface. It is an ordered list of objects with its use limited to inserting elements at the end of list and deleting elements from the start of list i.e. it follows FIFO principle.
+2. 可以用priority queue和linked list实现
+1. 用priority queue实现时, add(E) might throw an exception while offer(E) will simply return false.(offer，add区别：一些队列有大小限制，因此如果想在一个满的队列中加入一个新项，多出的项就会被拒绝。这时新的 offer 方法就可以起作用了。它不是对调用 add() 方法抛出一个 unchecked 异常，而只是得到由 offer() 返回的 false。)
+2. poll will return null if there are no elements. remove() will throw a NoSuchElementException
+3. peek，element区别：element() 和 peek() 用于在队列的头部查询元素。与 remove() 方法类似，在队列为空时， element() 抛出一个异常，而 peek() 返回 null
+4. *异常类型（不太重要）：add：如果队列已满，则抛出一个IIIegaISlabEepeplian异常；remove：如果队列为空，则抛出一个NoSuchElementException异常；element：如果队列为空，则抛出一个NoSuchElementException异常
+
+####347. Top K Frequent Elements
+还有一个重写compare的题，当然这个题用hashmap也可以，复杂度不知道行不行,在discuss区看到的maxheap实现的方法，因为要topk，所以用maxheap重写compare改变排序规则就可以实现，大牛 代码居然可以缩减到7行，有点厉害的，注意Lambda箭头函数，PriorityQueue 的 addAll(), Map 的 map.getOrDefault(n,0),map.entrySet(),map.getValue(),map.getKey()这些方法的灵活使用，基本可以记得，要priority queue，compare(a,b){return a-b;}
+```
+Map<Integer, Integer> map = new HashMap<>();
+for(int n: nums) map.put(n,map.getOrDefault(n,0)+1);
+PriorityQueue<Map.Entry<Integer,Integer>> maxHeap = new PriorityQueue<>((a,b)->(b.getValue()-a.getValue()));
+maxHeap.addAll(map.entrySet());
+List<Integer> re = new ArrayList<Integer>();
+while(re.size()<k) re.add(maxHeap.poll().getKey());
+return re;
+```
+
+####378. Kth Smallest Element in a Sorted Matrix
+
+
+##subset：dfs+backtracking系列
 ####78. Subset
 DFS recursion 经典题，可以当做模板来背，画递归树或者按递归步骤推演程序运算过程很有利于理解
 tips: lintcode代码中必须加入排序提交才能通过
