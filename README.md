@@ -1623,7 +1623,7 @@ public class Solution {
 
 The reason why we did not use index as "search space" for this problem is the matrix is sorted in two directions, we can not find a linear way to map the number and its index. 就是一开始说的错误思路有的问题.
 
-注意：我只是贴上了代码，然而并不能看懂，，过程序好麻烦，放弃了，地址在https://discuss.leetcode.com/topic/52948/share-my-thoughts-and-clean-java-code
+注意：我只是贴上了代码，然而并不能看懂，，过程序好麻烦，放弃了，还是用上面queue的方法吧，binary search的方法地址在https://discuss.leetcode.com/topic/52948/share-my-thoughts-and-clean-java-code
 ```
    public int kthSmallest(int[][] matrix, int k) {
         int lo = matrix[0][0], hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;//[lo, hi)
