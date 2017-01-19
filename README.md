@@ -1642,11 +1642,57 @@ return re;
 ####378. Kth Smallest Element in a Sorted Matrix
 第一眼看这个题的思路（注意错误思路，没做的话先看下面正确思路再看这个，以防记住了错误思路）：双层for循环遍历matrix，挨个存入priority queue，然后挨个poll找到kth smallest，错误原因，matrix中每个array是sorted，不代表整体也是sorted，比如matrix = [ [ 1,  5,  9],[10, 11, 15],[12, 13, 15] ],k = 8, return 13是正解，如果按照错误思路，都放入priority queue，得到queue：[1,5,9,10,11,12,13,15,15], k=8， return15 ,which is wrong answer
 
-正确答案：按逻辑想，是并不能想通的，方法是，画queue，画一遍就会发现，是一行一行放入queue的，防止出现了上面思路的问题
+正确答案：按目前的水平是并不能想到的，看了之后表示是可以理解的，画queue，画一遍就会发现，是一行一行放入queue的，防止出现了上面思路的问题
 根据代码来看是这么实现的：
 
-1. 
+1. 首先，把row1放入priority queue，主要是有个长度概念吧，这样方便放后面的array，从题目给的matrix的样子来说，方便向下层对应位置找数字
+2. 开始k-1次循环，
+    1. 目的是：poll出 [1~(k-1)th Smallest elements。 这样循环结束时，poll()就得到 kth element
+    2. 过程是：向queue中依次poll, add， 只要poll出的元素的row<matrix.lenth-1， 每poll出一个row的元素，放入一个row+1对应位置的元素，（下一行对应位置,ie:poll(1)-->i.row<matrix.lenth-1-->add(10)）
+    3. 原理是：其实我们想做的事情，就是 依次把每个array的每个元素放入queue中，直到遇到 kth element，，但这里实现的方式是通过拿出，就是相反的思路，先放，后拿，直到拿出到kth element。（真的太难说清楚了，我严重怀疑自己再次看这段话的时候都会懵逼，真的顺着代码的思路一步一步画个queue，肯定可以很好的理解到底咋回事）
 
+Time complexity: O(klgk)
+跟着答案画图过了一遍，然后自己写一遍，出现了好多typo，水爆了，因为typo面试编译不过岂不是懵逼。
+
+还有，自己写的时候懒了，用了Lembda->然后发现慢了很多，问号脸，所以还是override compare方法吧。。。
+```
+public class Solution {
+    public int kthSmallest(int[][] matrix, int k) {
+        int len = matrix.length;
+        PriorityQueue<Elem> queue = new PriorityQueue<>(len,(a,b)->(a.val-b.val));
+        for(int i = 0; i<len; i++){
+            queue.add(new Elem(0,i,matrix[0][i]));
+        } 
+        for(int i = 0; i<k-1; i++){
+            Elem elem = queue.poll();
+            if(elem.row==(len-1)) continue;
+            queue.add(new Elem(elem.row+1,elem.col,matrix[elem.row+1][elem.col]));
+        }
+        return queue.poll().val;
+    }
+    class Elem{
+        int row, col, val;
+        public Elem(int r, int col, int val){
+            this.row=r;
+            this.col=col;
+            this.val=val;
+        }
+    }
+    //不用Lambda的等效写法:PriorityQueue<Tuple> pq = new PriorityQueue<Tuple>();
+    class Tuple implements Comparable<Tuple> {
+        int x, y, val;
+        public Tuple (int x, int y, int val) {
+            this.x = x;
+            this.y = y;
+            this.val = val;
+        }
+    
+    @Override
+    public int compareTo (Tuple that) {
+        return this.val - that.val;
+    }
+}
+```
 
 ##subset：dfs+backtracking系列
 ####78. Subset
