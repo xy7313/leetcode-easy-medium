@@ -1071,8 +1071,12 @@ public ListNode detectCycle(ListNode head) {
 ```
 
 ####2. Add Two Numbers
-简单版：Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+简单版：
+
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+
 Output: 7 -> 0 -> 8
+
 这种题对我来说的难点都在 创建sentinel，和d，不停在d后面添加node这些地方，这两种方法其实思路一样，实现上稍有区别
 ```
 public ListNode addTwoNumbers(ListNode l1, ListNode l2) {     
@@ -1115,6 +1119,7 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 
 ####445. Add Two Numbers II
 跟上面那题很类似，但是Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4) Output: 7 -> 8 -> 0 -> 7
+
 代码用stack实现，一开始是用了三个stack，后来发现可以通过改变新链表的拼接方式生一个stack
 ```
 //stack3
@@ -1144,7 +1149,9 @@ while(!s.empty()||!s2.empty()||carry!=0){
 
 ####234. Palindrome Linked List
 假设是odd长（even同理）
+
 一开始的思路是，分成前后相等两部分，中间点可以不管，把后半部分reverse一下，然后和前半部分比较看是否完全相同，看了好几个gitbook的实现都是这样的，有个[YouTube视频](https://www.youtube.com/watch?v=Os5FM4KQtxw&index=14&list=PLNmW52ef0uwsjnM06LweaYEZr-wjPKBnj)，讲这道题，用的是stack，个人觉得用在这里很适合，把前半部分压栈，过中点之后依次pop出来跟后半截比较。
+
 另一个技巧：用都指向 head 的快慢指针可以判断链表长度奇偶，最后 fast == null 的时候为偶，slow 指向后半单第一个节点;fast.next == null 的时候链表长度为奇数，slow 指向中间节点
 ```
  public boolean isPalindrome(ListNode head) {
@@ -1237,10 +1244,13 @@ For God's sake, don't try sorting a linked list during the interviewer
 and
 >sort array or sort linkedlist[here](http://stackoverflow.com/questions/1525117/whats-the-fastest-algorithm-for-sorting-a-linked-list/1525419#1525419)
 Depending on a number of factors, it may actually be faster to copy the list to an array and then use a Quicksort.
+
 The reason this might be faster is that an array has much better cache performance than a linked list. If the nodes in the list are dispersed in memory, you may be generating cache misses all over the place. Then again, if the array is large you will get cache misses anyway.
 Mergesort parallelises better, so it may be a better choice if that is what you want. It is also much faster if you perform it directly on the linked list.
+
 Since both algorithms run in O(n * log n), making an informed decision would involve profiling them both on the machine you would like to run them on.
 这个题表示不会做，简化算法if判断的原因： Before insert, the prev is at the last node of the sorted list. Only the last node's value is larger than the current inserting node should we move the temp back to the head
+
 ```
 public ListNode insertionSortList(ListNode head) {
     if( head == null ){
@@ -1270,7 +1280,9 @@ public ListNode insertionSortList(ListNode head) {
 
 ####148. Sort List
 sortlist的题都很麻烦的样子，所以记得不要sortlist。。。
+
 这个题有特殊要求，O(1) space complexity。首先，strict O(1) auxiliary space complexity means the maximum number of memory used by the program, except the memory taken by the input data, doesn't change with the input size. 所以，strictly speaking, any solution that involves recursion can never have a strict O(1) auxiliary space complexity. Because the maximum recursion level depends on the the input size and each recursion call consumes memory on stack, thus the maximum number of memory used depends on the input size.
+
 简单来说，递归的都做不到O(1)，大部分是O(logn)，但我只能看懂一个递归的方法，不递归的思路看起来很简单就是merge sort，代码看起来好复杂
 ```
 public class Solution {
@@ -1314,6 +1326,7 @@ public class Solution {
 
 ####21. Merge Two Sorted Lists
 还是iteration和recursion,iteration代码太长了，由此可见递归的好处，代码简介易懂
+
 iteration注意 l1,l2挨个merge的时候为了方便，l1,l2在merge后指向自己next，即后移，同时head即新链表的当前node也后移，另外这里也是head不确定的情况，所以用dummy
 ```
 //dummy
@@ -1337,6 +1350,7 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2){
 
 ####23. Merge k Sorted Lists
 根据priority queue的特性，我们可以通过重写compare方法利用priority queue实现，还有dummy，从后向前拼接。
+
 和下面sort里179一样，都重写了compare。一个是sort方法内，一个是priority queue
 ```
 public ListNode mergeKLists(ListNode[] lists) {
@@ -1377,6 +1391,7 @@ public ListNode mergeKLists(ListNode[] lists) {
 
 ####215. Kth Largest Element in an Array
 用quicksort的思想，实现O(n)的算法。快排的思想是分治，divide and conqure。这里因为只需要找到某元素，所以分治之后的部分只有包含要查找元素的那部分需要处理，剩下的不需要处理，所以原本快排是nlogn的算法，这里不完全排序，可以达到linear。
+
 还有之所以看到了这题是因为下面的题用到了这个题目。
 ```
 public int findKthLargest(int[] nums, int k) {
