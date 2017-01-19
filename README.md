@@ -645,8 +645,8 @@ Q:For num = 5 you should return [0,1,1,2,1,2].
 1. 又是用了传统的hashmap方法，在以前代码的基础上，检测map中value==true的值部分做了很小的改动就可以了。思路还是把数组存入map，出现一次对应value=T，再出现的value=F，之后遍历map(`for(Integer a: m.keySet()){...}`)找value=true
 但隐约记得当年用go刷题的时候看到过牛逼的解法，所有数组元素进行一次位运算，得到singlenumber（只有一个的时候），或者得到两个singlenumber的位运算结果，然后再用一种黑科技把两个数分开。
 2. 当年笔记，其中一只不太懂的一点，如果是3^3 Vs. 3^2^1结果都是0，。。怎么区分
-
-> n=n^val        //如果是出现两次的数，按位异或的结果是0，n就还是以前的n，所以最后return n 就是single number（一个single number）
+> n=n^val        
+//如果是出现两次的数，按位异或的结果是0，n就还是以前的n，所以最后return n 就是single number（一个single number）
 如果两个single number，n就是剩下两个single number按位异或的结果
 ```
 n &= -n
