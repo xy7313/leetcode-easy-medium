@@ -1573,6 +1573,10 @@ return re;
 ```
 
 ####378. Kth Smallest Element in a Sorted Matrix
+第一眼看这个题的思路（注意错误思路，没做的话先看下面正确思路再看这个，以防记住了错误思路）：双层for循环遍历matrix，挨个存入priority queue，然后挨个poll找到kth smallest，错误原因，matrix中每个array是sorted，不代表整体也是sorted，比如matrix = [ [ 1,  5,  9],[10, 11, 15],[12, 13, 15] ],k = 8, return 13是正解，如果按照错误思路，都放入priority queue，得到queue：[1,5,9,10,11,12,13,15,15], k=8， return15 ,which is wrong answer
+正确答案：按逻辑想，是并不能想通的，方法是，画queue，画一遍就会发现，是一行一行放入queue的，防止出现了上面思路的问题
+根据代码来看是这么实现的：
+1. 
 
 
 ##subset：dfs+backtracking系列
