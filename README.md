@@ -1246,11 +1246,12 @@ and
 Sort array or sort linkedlist[here](http://stackoverflow.com/questions/1525117/whats-the-fastest-algorithm-for-sorting-a-linked-list/1525419#1525419)
 Depending on a number of factors, it may actually be faster to copy the list to an array and then use a Quicksort.
        
-        The reason this might be faster is that an array has much better cache performance than a linked list. If the nodes in the list are dispersed in memory, you may be generating cache misses all over the place. Then again, if the array is large you will get cache misses anyway.
+The reason this might be faster is that an array has much better cache performance than a linked list. If the nodes in the list are dispersed in memory,you may be generating cache misses all over the place. Then again, if the array is large you will get cache misses anyway.
+
 Mergesort parallelises better, so it may be a better choice if that is what you want. It is also much faster if you perform it directly on the linked list.
-    
-    Since both algorithms run in O(n * log n), making an informed decision would involve profiling them both on the machine you would like to run them on.
-    
+
+Since both algorithms run in O(n * log n), making an informed decision would involve profiling them both on the machine you would like to run them on.
+
 这个题表示不会做，简化算法if判断的原因： Before insert, the prev is at the last node of the sorted list. Only the last node's value is larger than the current inserting node should we move the temp back to the head
 
 ```
@@ -1440,11 +1441,13 @@ public int findKthLargest(int[] nums, int k) {
 
 ####324. Wiggle Sort II
 google面试题，到处都有跟这个题有关的讲解和介绍，我最初看的是九章的，比较好理解，后来discuss区也看到了高赞的答案，两个都写了，思路如下：
+
 1. 利用快速排序的思想找中位数的期望时间复杂度是O(N).为了防止相等的数放在一起，需要注意放置的顺序。
 2. 九章笔者采用的方法是依nums长度分两种情况：
     若长度为奇数，把比中位数小的依次放在0,2,4,...位置，比中位数大的依次放在length-2,length-4,... 位置；
     若长度为偶数，把比中位数小的依次放在length-2,length-4,...位置，比中位数大的依次放在1,3,5,... 位置。
     其余位置填充中位数。这样可以保证中位数一定与较小与较大的数相邻（题目保证一定有解）
+
 另外，两个方法都用了上题的findKthLargest
 
 ```
@@ -1514,7 +1517,9 @@ public void wiggleSort(int[] nums) {
 
 ####179. Largest Number
 Given a list of non negative integers, arrange them such that they form the largest number.
+
 For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
+
 代码看起来很长，第一个for循环其实不用看，int数组存成string数组，重点在sort，override compareTo方法这里，直接比较拼接后的结果，注意注释掉的是一套，现在的版本是根据拼接结果从大到小排，比如[1,2]-->[2,1]; [10,2]-->[2,10]之后判断String[]首位是不是0，如果是说明全是0，返回0即可，如果不是开始拼接，这里一直向后拼接就可以了，如果排序时候用的s1.compareTo(), 那么这里的拼接需要向前拼接，用注释里的代码。`new Comparator<String>() {...}`注意这个的写法
 ```
 public String largestNumber(int[] nums) {
@@ -1547,11 +1552,15 @@ public String largestNumber(int[] nums) {
 
 ####451. Sort Characters By Frequency
 自从开是刷medium的题之后，每天都是炼狱模式，各种没见过的题型，要么就是想不出解法，要么就是想出的不符合要求，每次看答案都要看好久（生无可恋脸，这个题也是，要求O(n)，所以hashmap+排序value的方法是不满足要求的
+
 思路：
+
 1. 还是hashmap，但注意除了正常的创建map之外还需要保留一个max，即最高频字符出现的次数，后面要用
 2. 构造一个array，这个array的index是array的element出现的此数，这里的array element是一个list，用来存放 出现次数相同的多个字符
 3. 拼组string。通过StringBuilder，index是几，index位置的list里的char就append几次，直到遍历完整个数组。
+
 还有一个细节需要注意，map存放的方式和后面 forloop的临界值要对应好，比如注释中的情况。
+
 突然想到这里可以不用map 就 new int[128]出现的字符对应的下标位置存出现次数（不行好像还要sort）。。。
 
 ```
@@ -1599,11 +1608,17 @@ private List<Character>[] buildArray(Map<Character,Integer> map, int max){
 ```
 
 ##PriorityQueue/Heap相关
+
 linked list 里 23. Merge k Sorted Lists
+
 sort 里 215. Kth Largest Element in an Array
+
 下面的：
+
 347. Top K Frequent Elements
+
 378. Kth Smallest Element in a Sorted Matrix
+
 ###关于queue！
 1. The java.util.Queue is a subtype of java.util.Collection interface. It is an ordered list of objects with its use limited to inserting elements at the end of list and deleting elements from the start of list i.e. it follows FIFO principle.
 2. 可以用priority queue和linked list实现
@@ -1626,8 +1641,10 @@ return re;
 
 ####378. Kth Smallest Element in a Sorted Matrix
 第一眼看这个题的思路（注意错误思路，没做的话先看下面正确思路再看这个，以防记住了错误思路）：双层for循环遍历matrix，挨个存入priority queue，然后挨个poll找到kth smallest，错误原因，matrix中每个array是sorted，不代表整体也是sorted，比如matrix = [ [ 1,  5,  9],[10, 11, 15],[12, 13, 15] ],k = 8, return 13是正解，如果按照错误思路，都放入priority queue，得到queue：[1,5,9,10,11,12,13,15,15], k=8， return15 ,which is wrong answer
+
 正确答案：按逻辑想，是并不能想通的，方法是，画queue，画一遍就会发现，是一行一行放入queue的，防止出现了上面思路的问题
 根据代码来看是这么实现的：
+
 1. 
 
 
@@ -1663,6 +1680,7 @@ public class Solution {
 
 ####46. permutation
 背会了subset也不会写permutation，好烦躁。这个题可以看出和subset的区别是 拼完之后才放入result中，所以就想helper之后再results.add，但走了条错路，正确的思路是，跟以前一样开始helper的时候result.add不同的是只有当subset==nums.length才添加这个subset. 又挣扎了一会儿发现就算写在后面也可以，写在后面跑一遍发现还是添加了subset那么多东西，就想到要要等三个了在加入results，再想到判断subset大小满足条件才添加，一样可以ac。。。一直觉得递归很难想可能就在于，我怎么都想不到在helper刚进入的时候添加上一次的subset，顶多能看懂，自己想总是把添加操作想在后面，sign。。
+
 这题的关键就在于helper中的 if(){...}
 ```
 //按照subset的格式写的话是这样的
@@ -1691,7 +1709,9 @@ public class Solution {
 
 ####permutation2
 `if(i>0 &&nums[i-1]==nums[i] && !used[i-1]) continue; `这个判断判断主要是为了去除重复元素影响。
+
 比如，给出一个排好序的数组，[1,2,2]，那么第一个2和第二2如果在结果中互换位置，我们也认为是同一种方案，所以我们强制要求相同的数字，原来排在前面的，在结果当中也应该排在前面，这样就保证了唯一性。所以当前面的2还没有使用的时候，就不应该让后面的2使用。
+
 如果看不懂这句话，找一张大点的纸，按照程序写一下执行流程，执行到第二次放入第一个元素1的时候就明白了。
 ```
 public class Solution {
@@ -1725,8 +1745,11 @@ public class Solution {
 
 ####392. is Subsequence
 注意题目：A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ace" is a subsequence of "abcde" while "aec" is not).
+
 所以有个很简单的方法就是这样，注意转成char[]会快很多，原因还没仔细想，应该是string的操作都慢，因为string都是reference拷贝，所以慢吧，
+
 想了个hashmap的方法,一个存map一次比较，注意这种不行，不能保证顺序
+
 tag说要binary search，先留坑
 ```
 public boolean isSubsequence(String s, String t) {
