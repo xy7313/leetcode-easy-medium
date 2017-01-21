@@ -31,3 +31,22 @@ public class Solution {
         return -1;
     }
 }
+/*有个更直接一点的算法，注意
+ 1. first for loop s<haystack.length()-needle.length()+1, 
+ 2. int t must be declared out of inner for-loop
+ 3. if statement in inne for-loop, haystack.charAt(s+t),s+t
+ */
+public class Solution {
+    public int strStr(String haystack, String needle) {
+        //  if(needle=="") return 0;
+        if(haystack==null||needle==null) return -1;
+        for(int s = 0; s<haystack.length()-needle.length()+1; s++){
+            int t;
+            for( t = 0; t<needle.length();t++){
+                if(haystack.charAt(s+t)!=needle.charAt(t))break;
+            }
+            if(t==needle.length()) return s;
+        }
+      return -1;  
+    }
+}
