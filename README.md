@@ -421,6 +421,11 @@ public class Solution {
 }
 ```
 
+##hashmap+string
+205
+
+290
+
 ####205. Isomorphic Strings
 论坛里看到的解题思路，感觉现在不适合刷题，想到hashmap但是不知道isomorphic的两个词到底什么关系
 
