@@ -1694,6 +1694,8 @@ The reason why we did not use index as "search space" for this problem is the ma
 475. Heaters
 275. H-Index2
 153. Find Minimum in Rotated Sorted Array
+74. Search a 2D Matrix
+287. Find the Duplicate Number
 
 ####notice!
 binarySearch 常用 start/end，sort问题常用 left/right，two pointers问题常用 fast/slow，linked list + two pointers常用 walker/runner
@@ -1868,6 +1870,29 @@ public int findDuplicate(int[] nums) {
     return -1;
 }
 ```
+
+####74. Search a 2D Matrix
+binary search, convers the nth number to matrix[n/col][n%col]. Notice: we should check `if(matrix[0]==null||matrix[0].length==0) return false;` too.
+```
+public boolean searchMatrix(int[][] matrix, int target) {
+    if(matrix==null||matrix.length==0) return false;
+    if(matrix[0]==null||matrix[0].length==0) return false;
+    int row = matrix.length;
+    int col = matrix[0].length;
+    int start = 0, end = row*col-1;
+    while(start+1<end){
+        int mid = start+(end-start)/2;
+        if(matrix[mid/col][mid%col]==target) return true;
+        else if(matrix[mid/col][mid%col]>target) end = mid;
+        else start = mid;
+    }
+    if(matrix[start/col][start%col]==target) return true;
+    else if(matrix[end/col][end%col]==target) return true;
+    return false;
+}
+```
+
+
 
 
 
