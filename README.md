@@ -1892,6 +1892,30 @@ public boolean searchMatrix(int[][] matrix, int target) {
 }
 ```
 
+####240. Search a 2D Matrix II
+这个题的考点在思路上，想做到时间复杂度小于暴力解，就考虑每次不是一个一个排除，而是根据sort后的元素关系一列或一排的排除，此时选取最大值或最小值不合适，因为他们所在列还是行都肯定比最大最小，小/大，所以选择左下点和右上点，以左下点为例（代码是根据左下实现的），如果左下点<target 左下点所在的列都可以不看，因为左下点是此列最大值，此时左数第二列的最下面成为我们新的左下点，还是这样比较，如果==target，当前列和排都不看，如果>target，当前排不看。
+
+以上想清楚了，代码写起来很简单，注意（xy要搞清楚）
+```
+public boolean searchMatrix(int[][] matrix, int target) {
+    if(matrix==null||matrix.length==0) return false;
+    if(matrix[0]==null||matrix[0].length==0) return false;
+    int row = matrix.length;
+    int col = matrix[0].length;
+
+    int x = row-1, y =0;
+    while(y<col&&x>=0){
+        if(matrix[x][y]==target){
+            return true;
+        }else if(matrix[x][y]>target){
+            x--;
+        }else if(matrix[x][y]<target){
+            y++;
+        }
+    }
+    return false;
+}
+```
 
 
 
