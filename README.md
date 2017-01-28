@@ -1694,6 +1694,7 @@ The reason why we did not use index as "search space" for this problem is the ma
 475. Heaters
 275. H-Index2
 153. Find Minimum in Rotated Sorted Array
+33. Search in Rotated Sorted Array
 74. Search a 2D Matrix
 287. Find the Duplicate Number
 
@@ -1869,6 +1870,25 @@ public int findDuplicate(int[] nums) {
     }
     return -1;
 }
+```
+
+####33. Search in Rotated Sorted Array
+这个是有点复杂的二分，不太好想。思路是分两种情况，一种是start-mid是不rotated的，那rotated部分肯定在mid-end，另一种相反。假设sratr-mid是不rotated，我们做正常二分，反之，我们在mid-end部分做二分
+```
+while(start+1<end){
+    int mid = start+(end-start)/2;
+    if(nums[mid]==target) return mid;
+    if(nums[start]<nums[mid]){
+        if(nums[start]<=target&&target<=nums[mid]) end = mid;
+        else start = mid;
+    }else{
+        if(nums[end]>=target&&target>=nums[mid]) start = mid;
+        else end = mid;
+    }
+}
+if(nums[start]==target) return start;
+if(nums[end]==target) return end;
+return -1;
 ```
 
 ####74. Search a 2D Matrix
