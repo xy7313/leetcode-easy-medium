@@ -5,15 +5,17 @@ public class Solution {
         String rev = new StringBuffer(actual).reverse().toString();
         return actual.equals(rev);
     }
-    public class Solution {
+}
+
+public class Solution {
     public boolean isPalindrome(String s) {
-        for(int i = 0, j = s.length() - 1; i < j; ++i, --j) {
+        for(int i = 0, j = s.length() - 1; i < j; i++, j--) {
             if(!Character.isLetterOrDigit(s.charAt(i))) {
-                ++j;
+                j++;
                 continue;
             }
             if(!Character.isLetterOrDigit(s.charAt(j))) {
-                --i;
+                i--;
                 continue;
             }            
             if(Character.toLowerCase(s.charAt(i)) != Character.toLowerCase(s.charAt(j))) {
@@ -22,5 +24,4 @@ public class Solution {
         }
         return true;
     }
-}
 }

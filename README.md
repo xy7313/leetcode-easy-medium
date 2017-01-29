@@ -6,9 +6,6 @@ from easy ac
 ####412. fizzbuzz
 最简单的数学题，注意if判断顺序或者就都单列出来总不会错
 
-####344.reverse string
-转成数组`s.toCharArray()`转回string`String.valueOf(charArrayName)`
-
 ####292. nim game
 只要石头堆对4取余有剩余，剩余的就是我的，就能赢
 
@@ -356,6 +353,9 @@ for(int i = 1;i<nums.length;i++){
 return (rex==x||x==rex/10);
 ```
 
+####409. Longest Palindrome
+看上去吓一跳稍微想一下还挺简单的，就是出现奇数次数的字母和出现偶数次数的字母的判断，出现偶数次的，全+，出现奇数次的，除了%2这部分全加，最后，中间可以有一个奇数次的，所以如果有出现奇数次的字母出现，最终结果+1。我自己写的解法估计不太好，尤其a那里，accepied的时候也是忍不住笑出声
+
 ####125. Valid Palindrome
 1. 方法1：string的问题用string的方法来解决，replaceAll, 前面通过正则去掉所有非字母字符，之后equal方法，但注意要new一个stringbuffer对象
 ```
@@ -364,9 +364,41 @@ return actual.equals(new StringBuffer(actual).reverse().toString());
 ```
 2. 操作数组，类似双指针的方法，一种神奇的for方式， 从数组前后，i，j一起for：`for(int i = 0, j = s.length() - 1; i < j; ++i, --j) {`
 还有char奇奇怪怪的方法，`!Character.isLetterOrDigit(s.charAt(i))` 返回true的时候说明不是letter，还有`character.toLowerCase`
+```
+public boolean isPalindrome(String s) {
+    for(int i = 0, j = s.length() - 1; i < j; i++, j--) {
+        if(!Character.isLetterOrDigit(s.charAt(i))) {
+            j++;
+            continue;
+        }
+        if(!Character.isLetterOrDigit(s.charAt(j))) {
+            i--;
+            continue;
+        }            
+        if(Character.toLowerCase(s.charAt(i)) != Character.toLowerCase(s.charAt(j))) {
+            return false;
+        } 
+    }
+    return true;
+}
+```
 
-####409. Longest Palindrome
-看上去吓一跳稍微想一下还挺简单的，就是出现奇数次数的字母和出现偶数次数的字母的判断，出现偶数次的，全+，出现奇数次的，除了%2这部分全加，最后，中间可以有一个奇数次的，所以如果有出现奇数次的字母出现，最终结果+1。我自己写的解法估计不太好，尤其a那里，accepied的时候也是忍不住笑出声
+####344.reverse string
+这个题有两种方法，好想的是：转成数组`s.toCharArray()`转回string`String.valueOf(charArrayName)`
+
+第二种方法用了类似上面的思想，从前后同时遍历，可以做到in place 空间复杂度更低一点
+```
+public String reverseString(String s) {
+    char[] str = s.toCharArray();
+    int start = 0, end = str.length-1;
+    for (int i = start, j = end; i < j; i++, j--) {
+        char temp = str[i];
+        str[i] = str[j];
+        str[j] = temp;
+    }
+    return String.valueOf(str);
+}
+```
 
 ####36. Valid Sudoku
 横竖的判断就是ij互换一下，需要哪个坐标变就把内层循环的int放过去，比如列的时候需要x坐标变，就把内层循环的j放过去
@@ -1911,7 +1943,6 @@ public class Solution {
     }
 }
 ```
-
 
 ####74. Search a 2D Matrix
 binary search, convers the nth number to matrix[n/col][n%col]. Notice: we should check `if(matrix[0]==null||matrix[0].length==0) return false;` too.
