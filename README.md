@@ -1257,6 +1257,7 @@ public ListNode insertionSortList(ListNode head) {
 145. Binary Tree Postorder Traversal
 144. Binary Tree Preorder Traversal
 104. Maximum Depth of Binary Tree
+111. Minimum Depth of Binary Tree
 
 
 
@@ -1337,6 +1338,24 @@ public int maxDepth(TreeNode root) {
     return Math.max(left,right)+1;
 }
 ```
+
+####111. Minimum Depth of Binary Tree
+大眼一看跟上面这个题差不多，但还是上面说的，需要注意return什么，这里出现了特殊情况。强行解释一波，根据题目描述“The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.”可以不太严谨的理解为，这个min至少是2，所以如果左或右的minDep==0，不能直接取min+1了。
+`return (left == 0 || right == 0) ? left + right + 1:Math.min(left,right)+1;`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
