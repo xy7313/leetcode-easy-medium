@@ -1252,6 +1252,69 @@ public ListNode insertionSortList(ListNode head) {
 }
 ```
 
+##刚好看到树，以下全是树的题
+94. Binary Tree Inorder Traversal
+145. Binary Tree Postorder Traversal
+
+####94. Binary Tree Inorder Traversal
+看过答案后自己写的时候卡在了内层while判断条件和最后cur=cur.right 内层循环条件是为了帮助找到当前root的最左下角的，cur=cur.right 是左边和root完成后去处理右边
+```
+while(cur!=null || !stack.empty()){
+    while(cur != null){
+        stack.push(cur);
+        cur = cur.left;
+    }  
+    cur = stack.pop();
+    result.add(cur.val);
+    cur = cur.right;
+}
+```
+
+####145. Binary Tree Postorder Traversal
+1. divide and conquer 这种跟下面pre的基本一样
+2. iteration 这种很难想，贴代码，背
+```
+public List<Integer> postorderTraversal(TreeNode root) {
+    Stack<TreeNode> stack = new Stack<>();
+    List<Integer> postorder = new ArrayList<>();
+    TreeNode prev = null;
+    TreeNode curr = root;
+    
+    if(root == null) return postorder;
+    
+    stack.push(root);
+    while(!stack.empyt()){
+        curr = stack.peek();
+        // traverse down the tree
+        if(prev == null || prev.left==curr || prev.right==curr){
+            if (curr.left != null) {
+                stack.push(curr.left);
+            } else if (curr.right != null) {
+                stack.push(curr.right);
+            }
+        }else if (curr.left == prev){//traverse up from left
+            if (curr.right != null) {
+                stack.push(curr.right);
+            }
+        }else{// traverse up from right
+            postorder.add(curr.val);
+            stack.pop();
+        }
+        prev = curr;
+    }
+    
+    return postorder;
+}
+```
+
+
+
+
+
+
+
+
+
 
 ####2. Add Two Numbers
 简单版：
