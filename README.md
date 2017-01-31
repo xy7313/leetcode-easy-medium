@@ -1255,6 +1255,9 @@ public ListNode insertionSortList(ListNode head) {
 ##刚好看到树，以下全是树的题
 94. Binary Tree Inorder Traversal
 145. Binary Tree Postorder Traversal
+144. Binary Tree Preorder Traversal
+
+
 
 ####94. Binary Tree Inorder Traversal
 看过答案后自己写的时候卡在了内层while判断条件和最后cur=cur.right 内层循环条件是为了帮助找到当前root的最左下角的，cur=cur.right 是左边和root完成后去处理右边
@@ -1307,7 +1310,18 @@ public List<Integer> postorderTraversal(TreeNode root) {
 }
 ```
 
-
+####144. Binary Tree Preorder Traversal
+1. divide and conquer 这种跟上面post的基本一样
+2. iteration 注意要先把当前节点存入result，然后再把子节点放入stack，
+```
+stack.push(root);
+while(!stack.empty()){
+    TreeNode cur = stack.pop();
+    result.add(cur.val);
+    if(cur.right!=null) stack.push(cur.right);
+    if(cur.left!=null) stack.push(cur.left); 
+}
+```
 
 
 
