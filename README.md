@@ -1256,6 +1256,9 @@ public ListNode insertionSortList(ListNode head) {
 94. Binary Tree Inorder Traversal
 145. Binary Tree Postorder Traversal
 144. Binary Tree Preorder Traversal
+104. Maximum Depth of Binary Tree
+
+
 
 
 
@@ -1323,7 +1326,17 @@ while(!stack.empty()){
 }
 ```
 
-
+####104. Maximum Depth of Binary Tree
+divide-conquer，对队规还是不太熟，感觉难点在于return什么
+```
+public int maxDepth(TreeNode root) {
+    int dep = 0;
+    if(root==null) return dep;
+    int left = maxDepth(root.left);
+    int right = maxDepth(root.right);
+    return Math.max(left,right)+1;
+}
+```
 
 
 
