@@ -636,7 +636,51 @@ result左移，空出一位放n的最右位，n右移，看见位运算还是懵
 2. 不需要取绝对值单独判断符号，%10的时候得到的结果是带-的
 3. y是long，但需要的结果是int，所以需要判断y能不能转int，就是在最大值和最小值之间
 
+####53. Maximum Subarray
+1. 有种greedy的方法，不懂为什么sum=max(sum,0);
+```
+public int maxSubArray(int[] nums) {
+    if(nums==null || nums.length==0) return 0;
+    int max = Integer.MIN_VALUE, sum = 0;
+    for(int i : nums){
+        sum += i;
+        max = Math.max(max, sum);
+        sum = Math.max(sum,0);
+    }
+    return max;
+}
+```
 
+2. 这个方法比较好懂一点
+```
+public int maxSubArray(int[] A) {
+    int max = Integer.MIN_VALUE, sum = 0;
+    for (int i = 0; i < A.length; i++) {
+        if (sum < 0) sum = A[i];
+        else sum += A[i];
+        if (sum > max) max = sum;
+    }
+    return max;
+}
+```
+
+3. perfix 表示不懂+1
+```
+public int maxSubArray(int[] A) {
+    if (A == null || A.length == 0){
+        return 0;
+    }
+    
+    int max = Integer.MIN_VALUE, sum = 0, minSum = 0;
+    for (int i = 0; i < A.length; i++) {
+        sum += A[i];
+        max = Math.max(max, sum - minSum);
+        minSum = Math.min(minSum, sum);
+    }
+
+    return max;
+}
+```
 
 easy除tree和linkedList问题外全部过一遍
 
@@ -1152,6 +1196,11 @@ private ListNode reverse(ListNode head){
 disscuss区大神的分析:
 >use two iterations here. In the first iteration, we will reset the pointer of one linkedlist to the head of another linkedlist after it reaches the tail node. In the second iteration, we will move two pointers until they points to the same node. Our operations in first iteration will help us counteract the difference.
 So if two linkedlist intersects, the meeting point in second iteration must be the intersection point. If the two linked lists have no intersection at all, then the meeting pointer in second iteration must be the tail node of both lists, which is null
+
+>The problem description especially required the code to run in O(n) time and O(1) space. Thus I came up with the most direct way.
+　　Just count the lengths of both lists, set two pointers from the list heads, align them to equipotential position and move'em forward until they coincide.
+　　That would be the answer we seek.
+　　Time complexity should be O(n + m), if you name the lengths of both lists to be "n" and "m". Extra space required is O(1).
 
 Notice：只贴一下第二个方法，第一个方法很简单，分别遍历链表直到空，通过counter获取长度，然后通过两个长度差值移动指向较长链表的node的位置，在等长之后比较node是否相同，是就返回该node。
  ```
@@ -1994,7 +2043,7 @@ public int findMin(int[] nums) {
 }
 ```
 
-####287. Find the Duplicate Number
+####287. Find the Duplicate Number(bb)
 这个题超智商了，后面两种方法均看不懂，我只能想到这一种，然而不满足题目要求，改变了数组，，gg，不如挑一个背吧┑(￣Д ￣)┍。。。
 ```
 public int findDuplicate(int[] nums) {
