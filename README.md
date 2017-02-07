@@ -804,22 +804,27 @@ return re;
  */
 
 ##61B刚好看到LinkedList 所以把之前空的链表题都补一下，下面全部都是linked list相关
-####237. Delete Node in a Linked List
-代码很简单，道理也都懂，思路也没错，但居然写成了注释里那种形式，有一点被注释里的class definition 影响了，还有是对构造函数的不熟悉，总之这个主意吧。
-思路是最后一个node的值付给当前，当前的.next置成next.next
-```
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x;  }
- * }
- */
-node.val=node.next.val;
-        // node.ListNode(node.next.val);不能这么用，构造方法，new的时候才能用
-node.next=node.next.next;
-```
+
+206. Reverse LinkedList
+92. Reverse Linked List II
+237. Delete Node in a Linked List
+203. Remove Linked List Elements
+83. Remove Duplicates from Sorted List
+328. Odd Even Linked List
+24. Swap Nodes in Pairs
+86. Partition List
+82. Remove Duplicates from Sorted List II
+19. Remove Nth Node From End of List
+141. Linked List Cycle
+142. Linked List Cycle2
+234. Palindrome Linked List
+160. Intersection of Two Linked Lists
+148. Sort List
+147. Insertion Sort List
+21. Merge Two Sorted Lists
+23. Merge k Sorted Lists
+2. Add Two Numbers
+445. Add Two Numbers II
 
 ####206. Reverse LinkedList
 没做过一上来感觉不太好想，有个视频，看到一半恍然大悟：https://www.youtube.com/watch?v=sYcOK51hl-A
@@ -905,32 +910,21 @@ public ListNode reverseBetween(ListNode head, int m, int n) {
 }
 ```
 
-####83. Remove Duplicates from Sorted List
-还是一种iteration一种recursion,这个题可以不用dummy，删除第二个重复元素，确保head不会改动
+####237. Delete Node in a Linked List
+代码很简单，道理也都懂，思路也没错，但居然写成了注释里那种形式，有一点被注释里的class definition 影响了，还有是对构造函数的不熟悉，总之这个主意吧。
+思路是最后一个node的值付给当前，当前的.next置成next.next
 ```
-public class Solution {
-    public ListNode deleteDuplicates(ListNode head) {
-        //改动list不改动head，最后返回dead
-        ListNode list = head;
-        while(list!=null){
-            if(list.next==null){
-                return head;
-            }else if(list.next.val == list.val){
-                //这里跟237那道delete一个意思
-                list.next = list.next.next;
-            } else{
-                list = list.next;
-            }
-        }
-        return head;
-    }
-    //recursive
-    public ListNode deleteDuplicates(ListNode head) {
-        if(head == null || head.next == null)return head;
-        head.next = deleteDuplicates(head.next);
-        return head.val == head.next.val ? head.next : head;
-    }
-}
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x;  }
+ * }
+ */
+node.val=node.next.val;
+        // node.ListNode(node.next.val);不能这么用，构造方法，new的时候才能用
+node.next=node.next.next;
 ```
 
 ####203. Remove Linked List Elements
@@ -959,6 +953,34 @@ public ListNode removeElements(ListNode head, int val) {
         else head = head.next;
     }
     return dummy.next;
+}
+```
+
+####83. Remove Duplicates from Sorted List
+还是一种iteration一种recursion,这个题可以不用dummy，删除第二个重复元素，确保head不会改动
+```
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        //改动list不改动head，最后返回dead
+        ListNode list = head;
+        while(list!=null){
+            if(list.next==null){
+                return head;
+            }else if(list.next.val == list.val){
+                //这里跟237那道delete一个意思
+                list.next = list.next.next;
+            } else{
+                list = list.next;
+            }
+        }
+        return head;
+    }
+    //recursive
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null)return head;
+        head.next = deleteDuplicates(head.next);
+        return head.val == head.next.val ? head.next : head;
+    }
 }
 ```
 
@@ -1010,15 +1032,6 @@ public ListNode swapPairs(ListNode head) {
     return dummy.next;
 }
 ```
-
-###linked list + two pointers
-82. Remove Duplicates from Sorted List II
-19. Remove Nth Node From End of List
-141. Linked List Cycle
-142. Linked List Cycle2
-234. Palindrome Linked List
-160. Intersection of Two Linked Lists
-148. Sort List
 
 ####82. Remove Duplicates from Sorted List II
 这个题不会做！！第一个方法还稍微好懂一点，拿[1,1,1,2,3]的例子来说，第一个内层while结束，slow.next=head=1, fast=最后一个1， 进入if(注意并不是比较val)，之后就，代码肯定能看懂，但是dummy.next的变化一直想不通，fast slow都满满指向最后面去了，dummy.next是怎么移动到2，又是怎么不移动了的。。。
@@ -1203,8 +1216,8 @@ So if two linkedlist intersects, the meeting point in second iteration must be t
 　　Time complexity should be O(n + m), if you name the lengths of both lists to be "n" and "m". Extra space required is O(1).
 
 Notice：只贴一下第二个方法，第一个方法很简单，分别遍历链表直到空，通过counter获取长度，然后通过两个长度差值移动指向较长链表的node的位置，在等长之后比较node是否相同，是就返回该node。
- ```
- public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+```
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
     if(headA == null || headB == null) return null;
     ListNode a = headA;
     ListNode b = headB;
@@ -1214,7 +1227,7 @@ Notice：只贴一下第二个方法，第一个方法很简单，分别遍历�
     }
     return a;
 }
- ``` 
+``` 
 
 ####148. Sort List
 sortlist的题都很麻烦的样子，所以记得不要sortlist。。。
@@ -1308,6 +1321,65 @@ public ListNode insertionSortList(ListNode head) {
 }
 ```
 
+####21. Merge Two Sorted Lists
+还是iteration和recursion,iteration代码太长了，由此可见递归的好处，代码简介易懂
+
+iteration注意 l1,l2挨个merge的时候为了方便，l1,l2在merge后指向自己next，即后移，同时head即新链表的当前node也后移，另外这里也是head不确定的情况，所以用dummy
+```
+//dummy
+    ListNode dummy = new ListNode(0);
+    ListNode head = dummy;
+    ...
+    return dummy.next;
+//recursion
+public ListNode mergeTwoLists(ListNode l1, ListNode l2){
+    if(l1 == null) return l2;
+    if(l2 == null) return l1;
+    if(l1.val < l2.val){
+        l1.next = mergeTwoLists(l1.next, l2);
+        return l1;
+    } else{
+        l2.next = mergeTwoLists(l1, l2.next);
+        return l2;
+    }
+}
+```
+
+####23. Merge k Sorted Lists
+根据priority queue的特性，我们可以通过重写compare方法利用priority queue实现，还有dummy，从后向前拼接。
+
+和下面sort里179一样，都重写了compare。一个是sort方法内，一个是priority queue
+```
+public ListNode mergeKLists(ListNode[] lists) {
+    if (lists==null||lists.length==0) return null;
+    PriorityQueue<ListNode> queue= new PriorityQueue<ListNode>(lists.length,new Comparator<ListNode>(){
+        @Override
+        /*
+        1. 这里compare方法可以直接return n1.val-n2.val;
+        */
+        public int compare(ListNode n1, ListNode n2){
+            if(n1.val<n2.val) return -1;
+            else if(n1.val==n2.val) return 0;
+            else return 1;
+        }
+    });
+    ListNode dummy = new ListNode(0);
+    ListNode tail = dummy;
+    for(ListNode n:lists){
+        if(n!=null) queue.add(n);
+    }
+    while(!queue.isEmpty()){
+        tail.next = queue.poll();
+        tail=tail.next;
+        
+        if(tail.next!=null){
+            queue.add(tail.next)；
+        } 
+    }
+    return dummy.next;
+}
+```
+
 ####2. Add Two Numbers
 简单版：
 
@@ -1384,64 +1456,8 @@ while(!s.empty()||!s2.empty()||carry!=0){
 }
 ```
 
-####21. Merge Two Sorted Lists
-还是iteration和recursion,iteration代码太长了，由此可见递归的好处，代码简介易懂
 
-iteration注意 l1,l2挨个merge的时候为了方便，l1,l2在merge后指向自己next，即后移，同时head即新链表的当前node也后移，另外这里也是head不确定的情况，所以用dummy
-```
-//dummy
-    ListNode dummy = new ListNode(0);
-    ListNode head = dummy;
-    ...
-    return dummy.next;
-//recursion
-public ListNode mergeTwoLists(ListNode l1, ListNode l2){
-    if(l1 == null) return l2;
-    if(l2 == null) return l1;
-    if(l1.val < l2.val){
-        l1.next = mergeTwoLists(l1.next, l2);
-        return l1;
-    } else{
-        l2.next = mergeTwoLists(l1, l2.next);
-        return l2;
-    }
-}
-```
 
-####23. Merge k Sorted Lists
-根据priority queue的特性，我们可以通过重写compare方法利用priority queue实现，还有dummy，从后向前拼接。
-
-和下面sort里179一样，都重写了compare。一个是sort方法内，一个是priority queue
-```
-public ListNode mergeKLists(ListNode[] lists) {
-    if (lists==null||lists.length==0) return null;
-    PriorityQueue<ListNode> queue= new PriorityQueue<ListNode>(lists.length,new Comparator<ListNode>(){
-        @Override
-        /*
-        1. 这里compare方法可以直接return n1.val-n2.val;
-        */
-        public int compare(ListNode n1, ListNode n2){
-            if(n1.val<n2.val) return -1;
-            else if(n1.val==n2.val) return 0;
-            else return 1;
-        }
-    });
-    ListNode dummy = new ListNode(0);
-    ListNode tail = dummy;
-    for(ListNode n:lists){
-        if(n!=null) queue.add(n);
-    }
-    while(!queue.isEmpty()){
-        tail.next = queue.poll();
-        tail=tail.next;
-        
-        if(tail.next!=null){
-            queue.add(tail.next)；
-        } 
-    }
-    return dummy.next;
-}
-```
 
 ##刚好看到树，以下全是树的题
 94. Binary Tree Inorder Traversal
