@@ -1082,7 +1082,7 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 用双指针的思路，walker moves step by step. runner moves two steps at time. if the Linked List has a cycle walker and runner will meet at some
 point. 
 
-解法代码下一题中其实是包含的，但我还是把这个代码贴出来了，因为判定条件那里需要注意，这道题的写法是，先判断了head==null，之后while中判断runner.next和runner.next.next，个人理解是runner跑的快，需要注意判断runner而不是walker。但是下一题的写法我又重新懵逼了，下一题没有单独的判断head，而是直接while种判断了runner和runner.next，我个人的理解是还需要再判断runner.next.next的，但是没判断也ac了，这里不太懂。。
+解法代码下一题中其实是包含的，但我还是把这个代码贴出来了，因为判定条件那里需要注意，这道题的写法是，先判断了head==null，之后while中判断runner.next和runner.next.next，个人理解是runner跑的快，需要注意判断runner而不是walker。下一题的写法看起来跟这个不同，其实一样
 ```
 public boolean hasCycle(ListNode head) {
     if(head==null) return false;
@@ -2337,6 +2337,8 @@ public boolean isSubsequence(String s, String t) {
         return i == s.length();
     }
 ```
+
+####103
 
 
 
