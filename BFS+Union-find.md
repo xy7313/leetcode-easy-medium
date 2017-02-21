@@ -219,3 +219,111 @@ public int find(int[] roots, int id) {
 2. mapping old nodes to new
 3. set all neighbors, all nodes have been newed when constructed mapping, so all newNodes, newNighbors do not need to be redeclare again, just mapping.get(), we get the new node
 4. return mapping.get(node); 这个return看起来很正常，但是刚看到题的时候有点懵逼，不知道该返回什么
+
+####490. the maze
+给一个maze，从起点走到终点，注意一点是选定一个方向之后撞墙才停， 返回boolean判断能否到达destination。可以用bfs和dfs，这里选择bfs。因为是付费题，所以直接从discuss区拿了答案来。
+
+(topological sort)
+####207. Course Schedule
+1. initialization
+```
+ //idx of edges: node, element(arraylist) of edges: node.neighbors
+int[] indegree = new int[numCourses];
+List[] edges = new List[numCourses];
+// initialization: each node has a list to store its neighbors
+for (int i = 0;i < numCourses; i++){
+    edges[i] = new ArrayList<Integer>();
+}
+```
+
+2. compute indegree
+```
+//eg:pair[0,1] means to take course 0 you have to first take course 1,0-indegree=1
+for(int i = 0; i<prerequisites.length; i++){
+    indegree[prerequisites[i][0]]++;
+    edges[prerequisites[i][1]].add(prerequisites[i][0]);
+}
+```
+
+3. deal with nodes, whoes indegree==0
+```
+//add all nodes with indegree==0, no prerequisites needed
+Queue<Integer> queue = new LinkedList();
+for(int i = 0; i < indegree.length; i++){
+    if (indegree[i] == 0) {
+        queue.add(i);
+    }
+}
+```
+
+4. bfs
+```
+//bfs from nodes above, update indegree once visited
+int count = 0;
+while(!queue.isEmpty()){
+    int course = queue.poll();
+    count ++;
+    int n = edges[course].size();
+    for(int i = 0; i < n; i++){
+        int pointer = (int)edges[course].get(i);
+        indegree[pointer]--;
+        if (indegree[pointer] == 0) {
+            queue.add(pointer);
+        }
+    }
+}
+```
+
+5. return
+```
+//if it has cycle, there will be some node with indegree>0 left, return false, and count<numCourse
+return count == numCourses;
+```
+
+####210. Course Schedule II
+跟上体基本一样，两点区别
+
+1. 需要一个array来存储每次count计数时对应的course
+2. return count == numCourses ? order: new int[]{};
+
+####310. Minimum Height Trees
+是个不会的题，找高度最小的树，返回这些树的root，一开始想的是从leaf开始bfs。后来看代码确实bfs思想，算了一遍可以理解代码，但不太理解思路
+```
+public class Solution {
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+    //判断边界值的两种方法
+    // if (n == 1) return Collections.singletonList(0);
+    List<Integer> leaves = new ArrayList<>();
+    if (n==1) {
+		leaves.add(0);
+		return leaves;
+	}
+
+    //represent the graph using adjancent List;
+    List<Set<Integer>> adj = new ArrayList<>(n);
+    for (int i = 0; i < n; ++i) {
+        adj.add(new HashSet<>());
+    }
+    for (int[] edge : edges) {
+        adj.get(edge[0]).add(edge[1]);
+        adj.get(edge[1]).add(edge[0]);
+    }
+
+    for (int i = 0; i < n; ++i) {
+        if (adj.get(i).size() == 1) leaves.add(i);
+    }
+
+    while (n > 2) {
+        n -= leaves.size();
+        List<Integer> newLeaves = new ArrayList<>();
+        for (int i : leaves) {
+            int j = adj.get(i).iterator().next();
+            adj.get(j).remove(i);
+            if (adj.get(j).size() == 1) newLeaves.add(j);
+        }
+        leaves = newLeaves;
+    }
+    return leaves;
+}
+}
+```
