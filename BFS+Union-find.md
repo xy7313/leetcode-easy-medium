@@ -198,8 +198,12 @@ public int find(int[] roots, int id) {
 
 2. lintcode版本，要输出所有结果的，用bfs，（用union-find的话输出不太方便）每个节点bfs可以找到他所在的component。 很正常的bfs，这里用一个visited map来记录那些节点被访问过了。但答案里有一点很奇怪，排序了
 
+
+
+
 ##单纯的BFS
-127. Word Ladder
+
+####127. Word Ladder
 1. 题目解释和input：Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord。Notice ：
     1. Only one letter can be changed at a time.
     2. Each transformed word must exist in the word list.
@@ -209,3 +213,9 @@ public int find(int[] roots, int id) {
     2. bfs: while(){len++;...}; two for-loops: size, validNexts; another hashSet to record all words have visited
     3. validNext, replace all characters in a word one by one by replace the char from 'a' to 'z' `for(char c = 'a'; c<='z'; c++){...`  a special for loop,
     4. replace a letter
+
+####133. Clone Graph
+1. get all nodes (by BFS)
+2. mapping old nodes to new
+3. set all neighbors, all nodes have been newed when constructed mapping, so all newNodes, newNighbors do not need to be redeclare again, just mapping.get(), we get the new node
+4. return mapping.get(node); 这个return看起来很正常，但是刚看到题的时候有点懵逼，不知道该返回什么
