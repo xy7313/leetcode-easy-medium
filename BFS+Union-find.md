@@ -1,11 +1,12 @@
 BFS+Union-find+follow up
 
-##(前五个都是BFS+Union-find)
+##(前四个都是BFS+Union-find)
 
 200. Number of Islands
 0. Number of Islands II
 1. Graph Valid Tree
 2. Connected Component in Undirected Graph
+
 
 >还有个    130. Surrounded Regions ，先拉黑
 
@@ -197,4 +198,14 @@ public int find(int[] roots, int id) {
 
 2. lintcode版本，要输出所有结果的，用bfs，（用union-find的话输出不太方便）每个节点bfs可以找到他所在的component。 很正常的bfs，这里用一个visited map来记录那些节点被访问过了。但答案里有一点很奇怪，排序了
 
-####128. Longest Consecutive Sequence 
+##单纯的BFS
+127. Word Ladder
+1. 题目解释和input：Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord。Notice ：
+    1. Only one letter can be changed at a time.
+    2. Each transformed word must exist in the word list.
+    3. input wordList is List instead of set
+2. 代码注意：
+    1. convert list to set to keep non-duplicates
+    2. bfs: while(){len++;...}; two for-loops: size, validNexts; another hashSet to record all words have visited
+    3. validNext, replace all characters in a word one by one by replace the char from 'a' to 'z' `for(char c = 'a'; c<='z'; c++){...`  a special for loop,
+    4. replace a letter
