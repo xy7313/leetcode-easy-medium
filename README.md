@@ -753,8 +753,46 @@ public boolean isSubsequence(String s, String t) {
     }
 ```
 
-####103
+####128. Longest Consecutive Sequence 
+这题难点应该在时间复杂度的要求上，不然的话sort很好做，这题时间复杂度要求是O(n). discuss中找到的方法，amorized O(n). 代码有两个重点：
 
+1. 首先选用set，数组中所有数遍历入set中
+2. 每次遍历到一个数时，在set中要挨个找比它大1的，也要挨个找比它小1的，所以要在set里找两次 
+2. 每次找到之后就把当前这个数删掉，降低了复杂度，避免重复比较判断
+
+```
+public int longestConsecutive(int[] nums) {
+  int max = 0;
+  
+  Set<Integer> set = new HashSet<Integer>();
+  for (int i = 0; i < nums.length; i++) {
+    set.add(nums[i]);
+  }
+  
+  for (int i = 0; i < nums.length; i++) {
+    int count = 1;
+    
+    // look left
+    int num = nums[i]-1;
+    while (set.contains(num)) {
+      count++;
+      set.remove(num);
+      num--;
+    }
+    
+    // look right
+    num = nums[i]+1;
+    while (set.contains(num)) {
+      count++;
+      set.remove(num);
+      num++;
+    }
+    max = Math.max(max, count);
+  }
+  
+  return max;
+}
+```
 
 
 

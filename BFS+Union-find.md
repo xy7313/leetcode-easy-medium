@@ -6,7 +6,6 @@ BFS+Union-find+follow up
 0. Number of Islands II
 1. Graph Valid Tree
 2. Connected Component in Undirected Graph
-128. Longest Consecutive Sequence 
 
 >还有个    130. Surrounded Regions ，先拉黑
 
@@ -196,6 +195,6 @@ public int find(int[] roots, int id) {
 }
 ```
 
-2. lintcode版本，要输出所有结果的，用bfs，每个节点bfs可以找到他所在的component。 很正常的bfs，这里用一个visited map来记录那些节点被访问过了。但答案里有一点很奇怪，排序了
+2. lintcode版本，要输出所有结果的，用bfs，（用union-find的话输出不太方便）每个节点bfs可以找到他所在的component。 很正常的bfs，这里用一个visited map来记录那些节点被访问过了。但答案里有一点很奇怪，排序了
 
 ####128. Longest Consecutive Sequence 
