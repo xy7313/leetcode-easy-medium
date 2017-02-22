@@ -289,41 +289,43 @@ return count == numCourses;
 ####310. Minimum Height Trees
 是个不会的题，找高度最小的树，返回这些树的root，一开始想的是从leaf开始bfs。后来看代码确实bfs思想，算了一遍可以理解代码，但不太理解思路
 ```
-public class Solution {
-    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
-    //判断边界值的两种方法
+public List<Integer> findMinHeightTrees(int n, int[][] edges) {
     // if (n == 1) return Collections.singletonList(0);
+
     List<Integer> leaves = new ArrayList<>();
     if (n==1) {
 		leaves.add(0);
 		return leaves;
 	}
-
-    //represent the graph using adjancent List;
+	//idx: node, element-set: neighbors
     List<Set<Integer>> adj = new ArrayList<>(n);
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; i++) {
         adj.add(new HashSet<>());
     }
     for (int[] edge : edges) {
         adj.get(edge[0]).add(edge[1]);
         adj.get(edge[1]).add(edge[0]);
     }
-
-    for (int i = 0; i < n; ++i) {
-        if (adj.get(i).size() == 1) leaves.add(i);
+    //only one neighbors --> leaves
+    for (int i = 0; i < n; i++) {
+        if (adj.get(i).size() == 1){
+            leaves.add(i);
+        } 
     }
-
+    //核心思路在这个while里，一个node的所有edge相连node都排除之后还剩一条edge连另一个node，这个就可以当做min height tree的root了
     while (n > 2) {
+        //n = nodes - leaves
         n -= leaves.size();
         List<Integer> newLeaves = new ArrayList<>();
         for (int i : leaves) {
             int j = adj.get(i).iterator().next();
             adj.get(j).remove(i);
-            if (adj.get(j).size() == 1) newLeaves.add(j);
+            if (adj.get(j).size() == 1) {
+                newLeaves.add(j);
+            }
         }
         leaves = newLeaves;
     }
     return leaves;
-}
 }
 ```
