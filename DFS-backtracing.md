@@ -97,7 +97,7 @@ public class Solution {
 ####39. combination sum
 第二次遇到这个题，dfs可以独立写出来了，背的不错，需要注意的：
 
-1. 结果里每种combination都只能出现一次，又每个数字使用次数不限，所以需要去重
+1. 结果里每种combination都只能出现一次，又每个数字使用次数不限，所以需要去重，（如果不removeDuplicate，也可直接排序一下，不过remove Diplicates应该复杂度低一些）
 2. 居然写不出bug-free的removeDuplicates，我总记得上次这个代码是自己写的而且没啥问题啊。。。
 
 ```
@@ -165,7 +165,36 @@ Combination sum2
 
 ######两道题代码写法的区别有四点：
 
-1. 不需要removeDuplicate
-2. 需要sort
+1. 不需要removeDuplicate（如果原题不removeDuplicate，也可直接排序一下，不过remove Diplicates应该复杂度低一些）
+2. 需要sort（第二题这个是必须sort，没有别的选择）
 3. 每次dfs开始从i+1，不再是i
 4. 多一次去重`if(i!=startIdx && candidates[i]==candidates[i-1]) continue;`
+
+####216. Combination Sum III
+不给数组了，直接从1-9，比如：Input: k = 3, n = 7； Output: [[1,2,4]]。 需要注意的是：
+
+1. 从1-9，dfs第一次传入1，for循环<=9
+2. com.size==k
+其实是个最近本的dfs了
+```
+public class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> coms = new ArrayList<>();
+        ArrayList<Integer> com = new ArrayList<>();
+        dfs( 1, n, k, com, coms);
+        return coms;
+    }
+     private void dfs(int startIdx, int target, int k, ArrayList<Integer> com, List<List<Integer>> coms){
+        if(target==0 && com.size()==k){
+            coms.add(new ArrayList<Integer>(com));
+            return;
+        }
+        for(int i = startIdx; i<=9; i++){
+            com.add(i);
+            dfs(i+1,target-i,k,com,coms);
+            com.remove(com.size()-1);
+        }
+    }
+}
+```
+
