@@ -9,12 +9,6 @@ from easy ac
 ####292. nim game
 只要石头堆对4取余有剩余，剩余的就是我的，就能赢
 
-####136. single number
-1. hashmap<Integer,Boolean>
-2. array 排序的方法：（排序时间复杂度nlogn）Arrays.sort(nums); 循环的时候，判断相邻两数差==0，i+=2
-3. notice:如果有多个singlenumber，题目中没有描述清楚，应该问清楚
-
-
 ####371. sum Two Integer
 sum 得到按位异或的结果，在没有进位的情况下就是我们想要的和；如果有进位，进入while循环处理进位
 [code](https://github.com/xy7313/leetEM/blob/master/371sumTwoInteger.java)
@@ -214,11 +208,6 @@ while(i < j){
 1. string1.length()>string2.length()`int x=len1<0?0:num1.charAt(len1)-'0';int y=len2<0?0:num2.charAt(len2)-'0';`
 2. carry 
 
-####268. Missing Number
-1. 方法1，排序，然后用数组中的元素跟索引比较，索引有，元素没有的（其实就是i!=nums[i]）直接返回i，复杂度略高
-2. 方法2，求和，已知我们有的是[0,n]之间distinct的数字，可以直接把[0,n]这些全部相加再-数组中所有元素和
-    1. 即1+2+。。。+（index+1）（其实也就是length）与nums[0]+nums[1]+...的差值. (we are missing only one number in [0,n], we just need to look at the difference between the sum([0,n]) = n * (n+1) / 2 and the sum of nums in our array.)
-
 ####463. Island Perimeter
 1. 首先想到的思路：每个0格上下左右是否有1，有的话计数器+1，格子是否在周围一圈上的位置，如果是，计数器+1，这个方法一开始超时跑不过，以为写错了，后来发现超时的原因是因为有system.out.println的打印语句。。。
 2. 直接用1的格子，每个格子四条边，每和一个左边的1（遍历过的1）相邻，两个格子各少1，所以是-2
@@ -240,37 +229,6 @@ while(i < j){
 
 1. 第一个words，`i==0 && charAt(i)!=' '；`
 2. 后面的words，`charAt(i-1)==' ' && charAt(i)!=' ';`
-
-####202 Happy Number
-看起来很简单，写起来很麻烦
-1. 首先要确定需要两层循环，外层循环直到得到的 和<10，内层循环确保 每一位都平方并sum了，
-2. 1,7是happynumber
-代码不多，直接贴了，
-```
-public boolean isHappy(int n) {
-    if (n <= 0) return false;
-    while(n>=10){
-        int sum = 0;      
-        while(n!=0){
-            sum +=(n%10)*(n%10);
-            n/=10;   //确保算了每一位的平方
-        }            
-        n=sum;  //sum是每一位的平方的和
-    }
-    return n == 1 || n == 7; 
-}
-```
-
-####231. Power of Two
-power of 2 only contains one 1, (power of 2)-1 is only consist of 1(ex:8=1000,7=111),one line code: `return n>0 && (n&(n-1))==0;`
-
-####326. Power of Three
- 任何一个3的x次方一定能被int型里最大的3的x次方整除，1162261467 is 3^19,  3^20 is bigger than int,`return ( n>0 && 1162261467%n==0);`  
-
-####342. Power of Four
-1. 方法1: 4^0 = 1, 4^1 = 100, 4^2 = 10000.所以4的二进制只有一个1且在odd位; 另外Integer.toString(int i, int radix)这个方法是把前面的数按后面数的进制转换，这里相当于4进制，既3=3，4=10，5=11，15=33，16=100`return Integer.toString(num, 4).matches("10*");`
-2. 方法2：`return num > 0 && (num&(num-1)) == 0 && (num & 0x55555555) != 0;//make sure that 1 bit always appears at the odd position `
-3. 方法3：这个比较数学讨论区大神有解释，一个数既是2的幂，又等于3的倍数+1，`x^n-1=(x-1)(x^(n-1)+...+x^1+1)右边乘法展开是可以得到左边的，所以 4^n=3*(...)+1`就是power of 4`return (num&(num-1))==0 && num>0 && (num-1)%3==0;`
 
 ####191. Number of 1 Bits
 还是看到就头疼的题，估计再看点这类题就会好点了，，，
@@ -583,45 +541,6 @@ easy除tree和linkedList问题外全部过一遍
 ####338. Counting Bits
 Q:For num = 5 you should return [0,1,1,2,1,2].
 比如返回2-4之间的数，可以先算上2的结果，再加上后面的部分，所以核心代码`result[i] = result[i>>1] + (i&1);`
-
-####260. Single Number3
-1. 又是用了传统的hashmap方法，在以前代码的基础上，检测map中value==true的值部分做了很小的改动就可以了。思路还是把数组存入map，出现一次对应value=T，再出现的value=F，之后遍历map(`for(Integer a: m.keySet()){...}`)找value=true
-但隐约记得当年用go刷题的时候看到过牛逼的解法，所有数组元素进行一次位运算，得到singlenumber（只有一个的时候），或者得到两个singlenumber的位运算结果，然后再用一种黑科技把两个数分开。
-2. 当年笔记，其中一只不太懂的一点，如果是3^3 Vs. 3^2^1结果都是0，。。怎么区分
-
-	> n=n^val        //如果是出现两次的数，按位异或的结果是0，n就还是以前的n，所以最后return n 就是single number（一个single number）
-如果两个single number，n就是剩下两个single number按位异或的结果
-	
-	```
-n &= -n
-//n和自己的相反数相与（&），结果是该数的最低为1的位
-//比如这里n是6，0010从右数第二位是1，也就是说3^5从右起第一位不一样的是在第二位
-//3和5在倒数第二位上有所不同。再次遍历数组，只是这次我们根据倒数第二位上是0还是1，把数组中的数分成两组。这样可以保证3和5一定不在同一组。然后再对2组分别进行异或运算，即可得到最后的结果。
-for _, v1 := range nums {
-    if (v1 & n) == 0 {
-        result[0] ^= v1
-    } else {
-        result[1] ^= v1
-    }
-}
-```
-3. discuss区类似上面的方法：Find the rightmost set bit, divide numbers into two groups. Each group will end up being one unique number.
-下面是核心部分，
-```
-int xor = nums[0];
-for (int i=1; i<nums.length; i++){
-    xor ^= nums[i];
-}
-int bit = xor & ~(xor-1);
-int num1 = 0;
-int num2 = 0;
-for (int num : nums){
-    if ((num & bit) > 0) num1 ^= num;
-    else num2 ^= num;
-}
-result[0] = num1;
-result[1] = num2;
-```
 
 ####413. Arithmetic Slices
 Example: A = [1, 2, 3, 4]
