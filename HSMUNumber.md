@@ -1,8 +1,12 @@
 ##ALL ** numbers
-single number * 2
+single number * 3
 happy number
 missing number
 ugly number * 3
+Valid Number
+additive number(dfs || iteration)
+
+
 
 palindrom number 在 palindrome，他们的处理方法比较相像
 Largest number 在 sort
@@ -215,3 +219,53 @@ Ugly numbers are positive numbers whose prime factors only include 2, 3, 5。1 i
 ####264. Ugly Number II
 
 ####313. Super Ugly Number
+
+####65. Valid Number
+是个比较常规的题，if-else和switch都可以。需要4个boolean来统计
+
+1. number出现了没
+2. "."
+3. "+","-"
+4. "e"
+5. e后面是否有数字，比如1e就是invalid。 numberAfterE 有数字的时候就true，有e出现就false
+```
+public boolean isNumber(String s) {
+    if(s==null||s.length()==0) return false;
+    s = s.trim();
+    char[] cs =  s.toCharArray();
+    
+    boolean point = false;
+    boolean e = false;
+    boolean number = false;
+    boolean numberAfterE = true;
+    
+    for(int i = 0; i<cs.length; i++){
+        if('0' <= cs[i] && cs[i] <= '9') {
+            number = true;
+            numberAfterE = true;
+        } else if(cs[i] == '.') {
+            if(e || point) {
+                return false;
+            }
+            point = true;
+        } else if(cs[i] == 'e') {
+            if(e || !number) {
+                return false;
+            }
+            numberAfterE = false;
+            e = true;
+        } else if(cs[i] == '-' || cs[i] == '+') {
+            if(i != 0 && cs[i-1] != 'e') {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    return number && numberAfterE;
+}
+```
+
+####306. Additive Number
+1. Generate the first and second of the sequence, check if the rest of the string match the sum recursively. i and j are length of the first and second number. i should in the range of [0, n/2]. The length of their sum should >= max(i,j)
+2. startwith（ string s, int offset）
