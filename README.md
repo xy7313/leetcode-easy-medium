@@ -293,24 +293,6 @@ while(n != 0){
 也是一个很简单的题，给n个硬币，在第k行放k个硬币，能放到第几行，不完整的一行不算
 用了while循环，略慢
 
-####27. Remove Element
-if(nums[i]!=val) {nums[newLength]=nums[i];newLength++;}
-
-####26. Remove Duplicates from Sorted Array
-需要直接改变原数组，加一个新的计数器顺便当做index，这种方法好多array都用了，比如上面的27，这俩代码几乎一模一样就是移除的东西不同
-```
- int n = 1;
-for(int i = 1;i<nums.length;i++){
-    if(nums[i]!=nums[i-1]){
-        nums[n]=nums[i];
-        n++;
-    }
-}
-```
-
-####80. Remove Duplicates from Sorted Array II
-
-
 ####66. Plus One
 从最末位开始，+1，如果<=9直接返回，>9继续下一位+1，如果整个数（数组）遍历完都没返回，说明发生了这种情况9+1=10，需要在最前面多加1位
 
@@ -651,7 +633,7 @@ I think the easy way to understand this is that adding current number to our exi
 Let's say if we have [1, 2, 3, 4] and currently we have 3 arithmetic slices (curr is 2). We are going to add 5 to our arithmetic sequence. So that we will have curr new slices (curr is 3), which is [3, 4, 5], [2, 3, 4, 5] and [1, 2, 3, 4, 5]. Now, the total valid arithmetic slices is 3 + curr = 6. That's exactly the same as sum += curr.
 
 ####406. Queue Reconstruction by Height
-题目大意：Suppose you have a random list of people standing in a queue. Each person is described by a pair of integers (h, k), where h is the height of the person and k is the number of people in front of this person who have a height greater than or equal to h. Write an algorithm to reconstruct the queue.
+题目大意：Suppose you have a random list of people standing in a queue. Each person is described by a pair of integers (h, k), where h is the height of the person and k is the number of people in front of this person who have a height greater than or equal to h. Write an algorithm to reconstruct the queue. tag: Greedy
 >ex:
 Input:
 [[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
@@ -770,7 +752,37 @@ public int longestConsecutive(int[] nums) {
 }
 ```
 
+####454. 4Sum II
+这题tag是binary search，但没看到binary search的答案，所以选择hashmap，time complexity: O(n^2); space complexity: O(n^2)
+>discuss 的一段解释，写的很清楚：Take the arrays A and B, and compute all the possible sums of two elements. Put the sum in the Hash map, and increase the hash map value if more than 1 pair sums to the same value.
+    Compute all the possible sums of the arrays C and D. If the hash map contains the opposite value of the current sum, increase the count of four elements sum to 0 by the counter in the map.
 
+```
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+        Map<Integer,Integer> sums = new HashMap<>();
+        for(int i = 0; i< A.length; i++){
+            for(int j=0;j<B.length;j++){
+			    int sum = A[i]+B[j];
+                //这里也可以用 map.getOrDefault 方法，是java7新加入的
+			    if(sums.containsKey(sum)) {
+				    sums.put(sum, sums.get(sum)+1);
+			    } else {
+				    sums.put(sum, 1);
+			    }
+		    }
+        }
+        int count = 0;
+        for(int i = 0; i< C.length; i++){
+            for(int j=0;j<D.length;j++){
+			    int sum = 0-(C[i]+D[j]);
+			    if(sums.containsKey(sum)) {
+				    count+=sums.get(sum);
+			    }
+		    }
+        }
+        return count;
+    }
+```
 
 
 

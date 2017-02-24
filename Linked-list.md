@@ -6,11 +6,11 @@
 237. Delete Node in a Linked List
 203. Remove Linked List Elements
 83. Remove Duplicates from Sorted List
+82. Remove Duplicates from Sorted List II
+19. Remove Nth Node From End of List
 328. Odd Even Linked List
 24. Swap Nodes in Pairs
 86. Partition List
-82. Remove Duplicates from Sorted List II
-19. Remove Nth Node From End of List
 141. Linked List Cycle
 142. Linked List Cycle2
 234. Palindrome Linked List
@@ -219,6 +219,51 @@ public class Solution {
 }
 ```
 
+####82. Remove Duplicates from Sorted List II
+这个题不会做！！第一个方法还稍微好懂一点，拿[1,1,1,2,3]的例子来说，第一个内层while结束，slow.next=head=1, fast=最后一个1， 进入if(注意并不是比较val)，之后就，代码肯定能看懂，但是dummy.next的变化一直想不通，fast slow都满满指向最后面去了，dummy.next是怎么移动到2，又是怎么不移动了的。。。
+```
+public ListNode deleteDuplicates(ListNode head) {
+	//use two pointers, slow - track the node before the dup nodes, 
+	// fast - to find the last node of dups.
+    ListNode dummy = new ListNode(0), fast = head, slow = dummy;
+    slow.next = fast;
+    while(fast != null) {
+    	while (fast.next != null && fast.val == fast.next.val) {
+     		fast = fast.next;    //while loop to find the last node of the dups.
+    	}
+    	if (slow.next != fast) { //duplicates detected.
+    		slow.next = fast.next; //remove the dups.
+    		fast = slow.next;     //reposition the fast pointer.
+    	} else { //no dup, move down both pointer.
+    		slow = slow.next;
+    		fast = fast.next;
+    	}
+    }
+    return dummy.next;
+}
+```
+
+####19. Remove Nth Node From End of List
+walker and runner, init walker,runner both as dummy, move runner n steps, so that the gap between runner and walker =n, then move runner and walker together, when runner get to the end of List, walker is before the nth from the end node, walker.next=walke.next.next， skip original walker.next
+```
+public ListNode removeNthFromEnd(ListNode head, int n) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode walker = dummy;
+    ListNode runner = dummy;
+    // after for loop, gap between runner and walker =n
+    for(int i = 1; i <= n; i++){
+        runner = runner.next;
+    }
+    while(runner.next!=null){
+        runner = runner.next;
+        walker = walker.next;
+    }
+    walker.next=walker.next.next;//skip nth node
+    return dummy.next;
+}
+```
+
 ####328. Odd Even Linked List
 拼接链表，可通过多个dummy实现，注意  和value无关，只和第几个node有关
 ```
@@ -264,51 +309,6 @@ public ListNode swapPairs(ListNode head) {
         current.next.next = first;
         current = current.next.next;
     }
-    return dummy.next;
-}
-```
-
-####82. Remove Duplicates from Sorted List II
-这个题不会做！！第一个方法还稍微好懂一点，拿[1,1,1,2,3]的例子来说，第一个内层while结束，slow.next=head=1, fast=最后一个1， 进入if(注意并不是比较val)，之后就，代码肯定能看懂，但是dummy.next的变化一直想不通，fast slow都满满指向最后面去了，dummy.next是怎么移动到2，又是怎么不移动了的。。。
-```
-public ListNode deleteDuplicates(ListNode head) {
-	//use two pointers, slow - track the node before the dup nodes, 
-	// fast - to find the last node of dups.
-    ListNode dummy = new ListNode(0), fast = head, slow = dummy;
-    slow.next = fast;
-    while(fast != null) {
-    	while (fast.next != null && fast.val == fast.next.val) {
-     		fast = fast.next;    //while loop to find the last node of the dups.
-    	}
-    	if (slow.next != fast) { //duplicates detected.
-    		slow.next = fast.next; //remove the dups.
-    		fast = slow.next;     //reposition the fast pointer.
-    	} else { //no dup, move down both pointer.
-    		slow = slow.next;
-    		fast = fast.next;
-    	}
-    }
-    return dummy.next;
-}
-```
-
-####19. Remove Nth Node From End of List
-walker and runner, init walker,runner both as dummy, move runner n steps, so that the gap between runner and walker =n, then move runner and walker together, when runner get to the end of List, walker is before the nth from the end node, walker.next=walke.next.next， skip original walker.next
-```
-public ListNode removeNthFromEnd(ListNode head, int n) {
-    ListNode dummy = new ListNode(0);
-    dummy.next = head;
-    ListNode walker = dummy;
-    ListNode runner = dummy;
-    // after for loop, gap between runner and walker =n
-    for(int i = 1; i <= n; i++){
-        runner = runner.next;
-    }
-    while(runner.next!=null){
-        runner = runner.next;
-        walker = walker.next;
-    }
-    walker.next=walker.next.next;//skip nth node
     return dummy.next;
 }
 ```
