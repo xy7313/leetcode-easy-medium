@@ -246,7 +246,6 @@ while(n != 0){
 1. 首先负数这里需要在去掉符号之后-1，-1-->0，-2-->1以此类推，因为-1=‘ffffffff’,然后-2=‘fffffffe'
 2. 之后是num % 16<6 用abcdef剩下用0-9.其他位（前面的位）保留f
 
-
 ####441. Arranging Coins
 也是一个很简单的题，给n个硬币，在第k行放k个硬币，能放到第几行，不完整的一行不算
 用了while循环，略慢
@@ -736,7 +735,13 @@ public int longestConsecutive(int[] nums) {
 算是目标吧，easy-->mediam,ac高到低排，到这里应该200道
  
 
+##hard
 
+####41. First Missing Positive 
+1. If the datastructure can be mutated in place and supports random access then you can do it in O(N) time and O(1) additional space. 
+2. Just go through the array sequentially and for every index write the value at the index to the index specified by value, recursively placing any value at that location to its place and throwing away values > N. 
+3. Then go again through the array looking for the spot where value doesn't match the index - that's the smallest value not in the array. 
+4. This results in at most 3N comparisons and only uses a few values worth of temporary space.
 
 ###遇到的关于github的问题
 问题：
