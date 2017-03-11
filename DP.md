@@ -1,3 +1,15 @@
+70. Climbing Stairs
+198. House Robber
+343. Integer break
+357. Count Numbers with Unique Digits
+10. Regular Expression Matching
+44. Wildcard Matching（通配符）
+
+
+house robber2
+combination sum 4
+target sum
+
 
 ####70. Climbing Stairs
 一个很简单的动态规划问题，居然写出来了一个动态规划，一颗老心都快活过来了，还是只有一句核心代码，`step[i] = (step[i-1])+(step[i-2]);`
@@ -24,12 +36,38 @@ n % 3 == 2 时，分为n个3和一个2的乘积
  * ...
  */
 
+####10. Regular Expression Matching
+https://discuss.leetcode.com/topic/40371/easy-dp-java-solution-with-detailed-explanation/4
+
+题目：
+
+'.' Matches any single character.
+
+'*' Matches zero or more of the preceding element.
+
+The matching should cover the entire input string (not partial).
+
+eg: isMatch("aab", "c*a*b") → true
+```
+```
+
+####44. Wildcard Matching（通配符）
+https://discuss.leetcode.com/topic/22516/my-java-dp-solution-using-2d-table/5
+
+题目：
+
+'?' Matches any single character.
+
+'*' Matches any sequence of characters (including the empty sequence).
+
+The matching should cover the entire input string (not partial).
+
+eg: isMatch("aab", "c*a*b") → false
+```
+```
 
 
 
 
-house robber2
-combination sum 4
-target sum
 
 ####64. Minimum Path Sum 

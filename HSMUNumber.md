@@ -217,8 +217,83 @@ Ugly numbers are positive numbers whose prime factors only include 2, 3, 5。1 i
 所以就拿一个数，只要能被2整除就一直除以2，然后，只要能被3整除就一直除以3，然后，只要能被5整除就一直除以5，如果剩下的不是1，那就不是ugly number
 
 ####264. Ugly Number II
+找nth ungy number，思路是，从1，2，3，4，5.。。这些ugly numbers，挨个分别*2，*3，*5，得到的都还是ugly number，所以哪个小那个排在前面，往list，array，queue里放，到第n个，返回。compute all the ugly numbers in sequence and count to the given number of k ugly numbers
 
+discuss有这三种数据结构的实现。
+
+1. array: https://discuss.leetcode.com/topic/21791/o-n-java-solution 这个discuss里的帖子说的很形象，用了类似归并的算法，每次取最小，取了最小的那个乘数（2，3或5）向后推移一位
+```
+ public int nthUglyNumber(int n) {
+        int[] ugly = new int[n];
+        int multiply2 = 2, multiply3 = 3, multiply5 = 5;
+        int index2 = 0, index3 = 0, index5 = 0;
+        ugly[0] = 1;
+        for(int i = 1; i<n;i++){
+            int min = Math.min(Math.min(multiply2,multiply3),multiply5);
+            ugly[i] = min;
+            if(min==multiply2){
+                index2++;
+                multiply2=2*ugly[index2];
+            }
+            if(min==multiply3){
+                index3++;
+                multiply3=3*ugly[index3];
+            }
+            if(min==multiply5){
+                index5++;
+                multiply5=5*ugly[index5];
+            }
+        }
+        return ugly[n-1];
+    }
+```
+2. ArrayList：https://discuss.leetcode.com/topic/22982/java-easy-understand-o-n-solution
+3. PriorityQueue：https://discuss.leetcode.com/topic/25088/java-solution-using-priorityqueue 这个帖子用的queue，这里1l意思是存入long类型的1，int会有越界，用PriorityQueue<Long> 插入n个数，平均时间是logn，应该是比array快
+```
+public int nthUglyNumber(int n) {
+    if(n==1) return 1;
+    PriorityQueue<Long> q = new PriorityQueue();
+    q.add(1l);
+    
+    for(long i=1; i<n; i++) {
+        long tmp = q.poll();
+        while(!q.isEmpty() && q.peek()==tmp) tmp = q.poll();
+        
+        q.add(tmp*2);
+        q.add(tmp*3);
+        q.add(tmp*5);
+    }
+    return q.poll().intValue();
+}
+```
 ####313. Super Ugly Number
+用了很类似上面的方法，稍微有一些变化，见代码注释
+```
+public class Solution {
+    public int nthSuperUglyNumber(int n, int[] primes) {
+        int[] ugly = new int[n];
+        int[] index = new int[primes.length];
+   
+        ugly[0] = 1;
+        for(int i = 1; i<n;i++){
+            int min = Integer.MAX_VALUE;
+            for(int j = 0; j<primes.length; j++){
+                //primes[j]变化之前就得存入ugly,用ugly number2的方法，primes里元素会改变
+                min = Math.min(ugly[index[j]]*primes[j],min);
+            }
+            ugly[i] = min;
+            for(int j = 0; j<primes.length; j++){
+                if(ugly[i]%primes[j]==0){
+                    index[j]++;
+                    // primes[j]=(primes[j]/index[j])*ugly[index[j]];
+                }
+            }
+        }
+        return ugly[n-1];
+    
+    }
+}
+```
 
 ####65. Valid Number
 是个比较常规的题，if-else和switch都可以。需要4个boolean来统计
