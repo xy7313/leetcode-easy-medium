@@ -32,6 +32,7 @@ public class Solution {
                     String str1rvs = new StringBuilder(str1).reverse().toString();
                     if (map.containsKey(str1rvs) && map.get(str1rvs) != i) { 
                         List<Integer> list = new ArrayList<Integer>();
+                        // order!
                         list.add(i);
                         list.add(map.get(str1rvs));
                         result.add(list);
@@ -43,14 +44,13 @@ public class Solution {
     }
 
     private boolean isPalindrome(String str) {
-        int left = 0;
-        int right = str.length() - 1;
-        while (left <= right) {
-            if (str.charAt(left) !=  str.charAt(right)){
-                return false;
-            } 
-            left++;
-            right--;
+        if(str==null) return false;
+        int l = 0;
+        int r = str.length()-1;
+        while(l<r){
+            if(str.charAt(l)!=str.charAt(r)) return false;
+            l++;
+            r--;
         }
         return true;
     }
