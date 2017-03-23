@@ -1,12 +1,18 @@
 BFS+Union-find+follow up
 
+
+##Union-find
+1. 
+2. 
+3. 
+
+
 ##(前四个都是BFS+Union-find)
 
 200. Number of Islands
 0. Number of Islands II
 1. Graph Valid Tree
 2. Connected Component in Undirected Graph
-
 
 >还有个    130. Surrounded Regions ，先拉黑
 
