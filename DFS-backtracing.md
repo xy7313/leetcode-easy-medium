@@ -1,4 +1,14 @@
 ##subset：dfs+backtracking系列
+78. Subset
+90. Subset2
+46. permutation
+00. permutation2
+39. combination sum
+40. Combination Sum II
+216. Combination Sum III
+79. Word Search
+212. Word Search II
+
 ####78. Subset
 DFS recursion 经典题，可以当做模板来背，画递归树或者按递归步骤推演程序运算过程很有利于理解
 tips: lintcode代码中必须加入排序提交才能通过
@@ -198,4 +208,35 @@ public class Solution {
 }
 ```
 
+####79. Word Search
+1. To save memory I decuded to apply bit mask for every visited cell.`board[x][y] ^= 256;` it is like setting `board[x][y] = '#'`. The range of char is between 0 - 255. By doing xor with 256, board[x][y] becomes a number >= 256 and thus is different from any character.
+```
+public class Solution {
+    public boolean exist(char[][] board, String word) {
+        for (int x=0; x<board.length; x++) {
+    	    for (int y=0; y<board[x].length; y++) {
+    		    if (dfsHelper(board, x, y , word, 0)) return true;
+    	    }
+        }
 
+        return false;
+    }
+    private boolean dfsHelper(char[][] board, int x, int y, String word, int i){
+        if (i == word.length()) return true;
+        // inBound
+	    if (y<0 || x<0 || x >= board.length || y >= board[x].length) return false;
+	    
+	    if (board[x][y] != word.charAt(i)) return false;
+	    //After board[y][x] ^= 256 the char became not a valid letter. After second board[y][x] ^= 256 it became a valid letter again.
+	    board[x][y] ^= 256;
+	    boolean exist = dfsHelper(board, x+1,y, word, i+1)
+		|| dfsHelper(board, x-1, y, word, i+1)
+		|| dfsHelper(board, x, y+1, word, i+1)
+		|| dfsHelper(board, x, y-1, word, i+1);
+	    board[x][y] ^= 256;
+	    return exist;
+    }
+}
+```
+
+####212. Word Search II
