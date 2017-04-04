@@ -166,6 +166,7 @@ return n == 0 ? "" : convertToTitle(--n / 26) + (char)('A' + (n % 26));
 刷过一边的题果然ac率大大大幅提升，用hashmap，value存index以便判断distance<k
 
 ####455 assign cookies
+Just assign the cookies starting from the child with less greediness to maximize the number of happy children .
 跟下面一题的思路一样，用while循环，把两个数组排序，第二个数组中对应元素不小于第一个数组中对应元素，output++，两个元素都向后移，如果第二个数组中元素比第一个数组中对应元素小，说明饼干不够，要往后找更多饼干，所以第二个数组j++
 
 ####350. Intersection of Two Arrays II
@@ -724,8 +725,36 @@ public int findMinArrowShots(int[][] points) {
 }
 ```
 
+#### 134. Gas station
+想不到能看懂得靠背的一道题：http://www.programcreek.com/2014/03/leetcode-gas-station-java/ 这里有例子，还不错
+
+1. track current remain: if current remain < 0, obviously, we can not start here
+2. track total remain from start index
+3. sum each current remain to get a total: after for-loop,  we know that we can start from index k and get gas[gas.length-1] from gas[k], then we need to know if we can get gas[k-1] from gas[0]. we use total 
 
 
+```
+public int canCompleteCircuit(int[] gas, int[] cost) {
+	int remain = 0; 
+	int total = 0; 
+	int start = 0; 
+ 
+	for (int i = 0; i < gas.length; i++) {
+		int curRemaining = gas[i] - cost[i];
+ 		if (remain >= 0) { 
+			remain += curRemaining;
+		} else {
+			remain = curRemaining;
+			start = i;
+		}
+		total += curRemaining;
+	}
+	if (total >= 0){
+		return start;
+	}
+	return -1;
+}
+```
 
 
 

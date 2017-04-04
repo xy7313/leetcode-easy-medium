@@ -2,6 +2,7 @@
 198. House Robber
 343. Integer break
 357. Count Numbers with Unique Digits
+ word break
 //回头一起看
 
 10. Regular Expression Matching
@@ -198,3 +199,24 @@ public boolean isMatch(String s, String p) {
 
 
 ####64. Minimum Path Sum 
+
+
+####  word break
+用题目给的例子试一下可以发现，内层循环中fj， fi这种方法，可以确保整个string都存在，不会少字母或什么的。注意substring是左闭右开区间，所以i<=s.length()
+```
+public boolean wordBreak(String s, Set<String> dict) {
+        boolean[] f = new boolean[s.length() + 1];
+        f[0] = true;
+        //discuss 区一个不错的dp方法
+        for(int i=1; i <= s.length(); i++){
+            for(int j=0; j < i; j++){
+                if(f[j] && dict.contains(s.substring(j, i))){
+                    f[i] = true;
+                    break;
+                }
+            }
+        }
+        
+        return f[s.length()];
+    }
+```

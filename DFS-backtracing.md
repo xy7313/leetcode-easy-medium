@@ -69,16 +69,23 @@ public class Solution {
 ```
 
 ####permutation2
-`if(i>0 &&nums[i-1]==nums[i] && !used[i-1]) continue; `这个判断判断主要是为了去除重复元素影响。
-
 比如，给出一个排好序的数组，[1,2,2]，那么第一个2和第二2如果在结果中互换位置，我们也认为是同一种方案，所以我们强制要求相同的数字，原来排在前面的，在结果当中也应该排在前面，这样就保证了唯一性。所以当前面的2还没有使用的时候，就不应该让后面的2使用。
 
 如果看不懂这句话，找一张大点的纸，按照程序写一下执行流程，执行到第二次放入第一个元素1的时候就明白了。
+
+区别：
+
+1. sort
+2. boolean[] used
+3. `if(used[i]) continue; `
+4. `if(i>0 && nums[i-1]==nums[i] && !used[i-1]) continue;`
+5. `used[i]=true;` before dfs
+6. `used[i]=fauls;` when backtracking
 ```
 public class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
         
-    List<List<Integer>> results = new ArrayList<>();
+        List<List<Integer>> results = new ArrayList<>();
         if(nums==null||nums.length==0) return results;
         Arrays.sort(nums);
         boolean[] used = new boolean[nums.length];
@@ -224,10 +231,9 @@ public class Solution {
     private boolean dfsHelper(char[][] board, int x, int y, String word, int i){
         if (i == word.length()) return true;
         // inBound
-	    if (y<0 || x<0 || x >= board.length || y >= board[x].length) return false;
-	    
+	    if (y<0 || x<0 || x >= board.length || y >= board[x].length) return false;   
 	    if (board[x][y] != word.charAt(i)) return false;
-	    //After board[y][x] ^= 256 the char became not a valid letter. After second board[y][x] ^= 256 it became a valid letter again.
+        
 	    board[x][y] ^= 256;
 	    boolean exist = dfsHelper(board, x+1,y, word, i+1)
 		|| dfsHelper(board, x-1, y, word, i+1)
