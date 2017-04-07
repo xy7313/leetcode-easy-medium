@@ -756,7 +756,52 @@ public int canCompleteCircuit(int[] gas, int[] cost) {
 }
 ```
 
+####56. Merge Intervals
+idea from: https://discuss.leetcode.com/topic/4319/a-simple-java-solution
 
+1. sort the intervals by their starting points
+2. save the start and end of the first interval
+3. loop through the list: merge or not, (we take the first interval and compare its end with the next intervals starts. As long as they overlap, we update the end to be the max end of the overlapping intervals)
+4. Once we find a non overlapping interval, we can add the previous "extended" interval and start over. We add intervals before update when do not merge, and add after for-loop, this helps us avoid add the beginning interval, which may be merged.
+5. Time complexity: Sorting takes O(n log(n)) and merging the intervals takes O(n). So, the resulting algorithm takes O(n log(n)).
+
+
+```
+ public List<Interval> merge(List<Interval> intervals) {
+    List<Interval> after = new ArrayList<Interval>();
+    if(intervals==null || intervals.size()==0) return after;
+
+    //sort interval
+    intervals.sort((o1,o2)->(o1.start-o2.start));
+    /*
+    before java8
+    Collections.sort(intervals, new Comparator<Interval>(){
+        @Override
+        public int compare(Interval obj0, Interval obj1) {
+            return obj0.start - obj1.start;
+        }
+    });
+    */
+    int curStart = intervals.get(0).start;
+    int curEnd = intervals.get(0).end;
+    for(Interval i : intervals){
+        if(i.start<=curEnd){
+            //intervals overlapped, update the end with the bigger end
+            //max,eg:[[1,4],[2,3]] output [1,4] not [1,3]
+            curEnd = Math.max(curEnd,i.end);
+        }else{
+            // Disjoint intervals, add the previous one and reset bounds
+            after.add(new Interval(curStart,curEnd));
+            curStart = i.start;
+            curEnd = i.end;
+        }
+    }
+    //如果add放在for-loop里最后一句，会重复添加第一个，这样用两次add可以解决这个问题
+    //add the last interval
+    after.add(new Interval(curStart,curEnd));
+    return after;
+}
+```
 
 
 
