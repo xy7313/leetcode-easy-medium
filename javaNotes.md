@@ -10,7 +10,7 @@
 
 
 
-###关于queue！
+### 关于queue！
 1. The java.util.Queue is a subtype of java.util.Collection interface. It is an ordered list of objects with its use limited to inserting elements at the end of list and deleting elements from the start of list i.e. it follows FIFO principle.
 2. 可以用priority queue和linked list实现
 1. 用priority queue实现时, add(E) might throw an exception while offer(E) will simply return false.(offer，add区别：一些队列有大小限制，因此如果想在一个满的队列中加入一个新项，多出的项就会被拒绝。这时新的 offer 方法就可以起作用了。它不是对调用 add() 方法抛出一个 unchecked 异常，而只是得到由 offer() 返回的 false。)

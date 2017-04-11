@@ -1,4 +1,4 @@
-##61B刚好看到LinkedList 所以把之前空的链表题都补一下，下面全部都是linked list相关
+## 61B刚好看到LinkedList 所以把之前空的链表题都补一下，下面全部都是linked list相关
 
 61. Rotate List
 206. Reverse LinkedList
@@ -23,7 +23,7 @@
 445. Add Two Numbers II
 
 
-####61. Rotate List
+#### 61. Rotate List
 这题看起来很简单，没查答案就开始写了，果然轻敌了。踩得坑见代码，叫什么呢，偷鸡不成，，，
 ```
 public class Solution {
@@ -61,7 +61,7 @@ public class Solution {
     }
 }
 ```
-####206. Reverse LinkedList
+#### 206. Reverse LinkedList
 没做过一上来感觉不太好想，有个视频，看到一半恍然大悟：https://www.youtube.com/watch?v=sYcOK51hl-A
 这类题都开始要求用iteration写一次再用recursive写一个
 ```
@@ -92,7 +92,7 @@ public class Solution {
 }
 ```
 
-####92. Reverse Linked List II
+#### 92. Reverse Linked List II
 For example:
 
 Given 1->2->3->4->5->NULL, m = 2 and n = 4,
@@ -145,7 +145,7 @@ public ListNode reverseBetween(ListNode head, int m, int n) {
 }
 ```
 
-####237. Delete Node in a Linked List
+#### 237. Delete Node in a Linked List
 代码很简单，道理也都懂，思路也没错，但居然写成了注释里那种形式，有一点被注释里的class definition 影响了，还有是对构造函数的不熟悉，总之这个主意吧。
 思路是最后一个node的值付给当前，当前的.next置成next.next
 ```
@@ -162,7 +162,7 @@ node.val=node.next.val;
 node.next=node.next.next;
 ```
 
-####203. Remove Linked List Elements
+#### 203. Remove Linked List Elements
 删除指定element，看起来很简单，写错了两点,第二个方法，dummy-哑节点，的使用多针对单链表没有向前指针的问题，保证链表的head不会在删除操作中丢失，或者用来删除head
 所以当链表head可能有变化时就用dummy，`ListNode dummy = New ListNode(0);dummy.next=head;`最后返回dummy.head
 ```
@@ -191,7 +191,7 @@ public ListNode removeElements(ListNode head, int val) {
 }
 ```
 
-####83. Remove Duplicates from Sorted List
+#### 83. Remove Duplicates from Sorted List
 还是一种iteration一种recursion,这个题可以不用dummy，删除第二个重复元素，确保head不会改动
 ```
 public class Solution {
@@ -219,7 +219,7 @@ public class Solution {
 }
 ```
 
-####82. Remove Duplicates from Sorted List II
+#### 82. Remove Duplicates from Sorted List II
 这个题不会做！！第一个方法还稍微好懂一点，拿[1,1,1,2,3]的例子来说，第一个内层while结束，slow.next=head=1, fast=最后一个1， 进入if(注意并不是比较val)，之后就，代码肯定能看懂，但是dummy.next的变化一直想不通，fast slow都满满指向最后面去了，dummy.next是怎么移动到2，又是怎么不移动了的。。。
 ```
 public ListNode deleteDuplicates(ListNode head) {
@@ -243,7 +243,7 @@ public ListNode deleteDuplicates(ListNode head) {
 }
 ```
 
-####19. Remove Nth Node From End of List
+#### 19. Remove Nth Node From End of List
 walker and runner, init walker,runner both as dummy, move runner n steps, so that the gap between runner and walker =n, then move runner and walker together, when runner get to the end of List, walker is before the nth from the end node, walker.next=walke.next.next， skip original walker.next
 ```
 public ListNode removeNthFromEnd(ListNode head, int n) {
@@ -264,7 +264,7 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 }
 ```
 
-####328. Odd Even Linked List
+#### 328. Odd Even Linked List
 拼接链表，可通过多个dummy实现，注意  和value无关，只和第几个node有关
 ```
 public ListNode oddEvenList(ListNode head) {
@@ -290,11 +290,11 @@ public ListNode oddEvenList(ListNode head) {
 }
 ```
 
-####86. Partition List
+#### 86. Partition List
 和上题类似的思路，大于x和小于x的部分分别用两个dummy连起来
 代码也基本和上面一样，就是isodd换成和x大小的比较。加深了对dummy的理解。一开始的odd，even初始化那里，意思是odd和odddummy， even和evendummy分别指向同一个node，所以odd，even next改变的时候对应的dummy.next也改变了，但之后odd，even指向下一个node了，不和dummy指向同一个node了，所以改变都不影响到dummy
 
-####24. Swap Nodes in Pairs
+#### 24. Swap Nodes in Pairs
 看起来很简单的题和思路，但是很容易想乱，比如哪个是真正的node，哪个是为了保存出来的node。这里current.next是1，current.next.next是2，这里要搞清楚。因为后面是要把1，2付给别人，所以，在复制之前不能改变他俩本身的值，，我也不知道我在说什么了，总之很容易乱，画个图就都清楚了
 ```
 public ListNode swapPairs(ListNode head) {
@@ -313,7 +313,7 @@ public ListNode swapPairs(ListNode head) {
 }
 ```
 
-####141. Linked List Cycle
+#### 141. Linked List Cycle
 用双指针的思路，walker moves step by step. runner moves two steps at time. if the Linked List has a cycle walker and runner will meet at some
 point. 
 
@@ -333,7 +333,7 @@ public boolean hasCycle(ListNode head) {
 }
 ```
 
-####142. Linked List Cycle2
+#### 142. Linked List Cycle2
 关于判定条件的一个问题上道题中解释了
 
 这个题目的思路不太好想，discuss中有一个很好的解释，贴过来，其中关键的两点是，walker走过的距离和cycle长度的关系，以及walker,runner相遇之后再通过head和walker一齐走，相遇点是cycle起点这层关系
@@ -371,7 +371,7 @@ public ListNode detectCycle(ListNode head) {
 }
 ```
 
-####234. Palindrome Linked List
+#### 234. Palindrome Linked List
 假设是odd长（even同理）
 
 一开始的思路是，分成前后相等两部分，中间点可以不管，把后半部分reverse一下，然后和前半部分比较看是否完全相同，看了好几个gitbook的实现都是这样的，有个[YouTube视频](https://www.youtube.com/watch?v=Os5FM4KQtxw&index=14&list=PLNmW52ef0uwsjnM06LweaYEZr-wjPKBnj)，讲这道题，用的是stack，个人觉得用在这里很适合，把前半部分压栈，过中点之后依次pop出来跟后半截比较。
@@ -437,7 +437,7 @@ private ListNode reverse(ListNode head){
 }
 ```
 
-####160. Intersection of Two Linked Lists
+#### 160. Intersection of Two Linked Lists
 1. 一个general的方法, 比较两个linked list的长度，把较长的一个链表后移几位，从长度和另一链表相等处开始比较node是否相同。
 一开始在想相交之后还会不会分开，比如一开始就相交，那长度不等情况下先向后移就说不过去了，但是这里应该是利用了链表特性，每个node都指向另一个node，所以相交之后就一定都一样了。
 2. 一个很机智的方法，感觉用到了类似single linked list中判断是否有cycle时候用的runner 和walker双指针的方法，这个题中的“双指针”总会在intersection处相遇或者没有intersection在最后的null相遇.
@@ -464,7 +464,7 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 }
 ``` 
 
-####148. Sort List
+#### 148. Sort List
 sortlist的题都很麻烦的样子，所以记得不要sortlist。。。
 
 这个题有特殊要求，O(1) space complexity。首先，strict O(1) auxiliary space complexity means the maximum number of memory used by the program, except the memory taken by the input data, doesn't change with the input size. 所以，strictly speaking, any solution that involves recursion can never have a strict O(1) auxiliary space complexity. Because the maximum recursion level depends on the the input size and each recursion call consumes memory on stack, thus the maximum number of memory used depends on the input size.
@@ -510,7 +510,7 @@ public class Solution {
 }
 ```
 
-####147. Insertion Sort List
+#### 147. Insertion Sort List
 目前看来打算写的最后一道linked list题
 看题的时候在discuss发现了很多有意思的东西，比如这个
 >Thoughts from google interviewer
@@ -556,7 +556,7 @@ public ListNode insertionSortList(ListNode head) {
 }
 ```
 
-####21. Merge Two Sorted Lists
+#### 21. Merge Two Sorted Lists
 还是iteration和recursion,iteration代码太长了，由此可见递归的好处，代码简介易懂
 
 iteration注意 l1,l2挨个merge的时候为了方便，l1,l2在merge后指向自己next，即后移，同时head即新链表的当前node也后移，另外这里也是head不确定的情况，所以用dummy
@@ -580,7 +580,7 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2){
 }
 ```
 
-####23. Merge k Sorted Lists
+#### 23. Merge k Sorted Lists
 根据priority queue的特性，我们可以通过重写compare方法利用priority queue实现，还有dummy，从后向前拼接。
 
 和下面sort里179一样，都重写了compare。一个是sort方法内，一个是priority queue
@@ -615,7 +615,7 @@ public ListNode mergeKLists(ListNode[] lists) {
 }
 ```
 
-####2. Add Two Numbers
+#### 2. Add Two Numbers
 简单版：
 
 Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
@@ -662,7 +662,7 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 }
 ```
 
-####445. Add Two Numbers II
+#### 445. Add Two Numbers II
 跟上面那题很类似，但是Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4) Output: 7 -> 8 -> 0 -> 7
 
 代码用stack实现，一开始是用了三个stack，后来发现可以通过改变新链表的拼接方式生一个stack

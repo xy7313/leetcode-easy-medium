@@ -1,4 +1,4 @@
-##PriorityQueue/Heap相关
+## PriorityQueue/Heap相关
 
 linked list 里 23. Merge k Sorted Lists
 
@@ -17,7 +17,7 @@ sort 里 215. Kth Largest Element in an Array
 3. peek，element区别：element() 和 peek() 用于在队列的头部查询元素。与 remove() 方法类似，在队列为空时， element() 抛出一个异常，而 peek() 返回 null
 4. *异常类型（不太重要）：add：如果队列已满，则抛出一个IIIegaISlabEepeplian异常；remove：如果队列为空，则抛出一个NoSuchElementException异常；element：如果队列为空，则抛出一个NoSuchElementException异常
 
-####347. Top K Frequent Elements
+#### 347. Top K Frequent Elements
 还有一个重写compare的题，当然这个题用hashmap也可以，复杂度不知道行不行,在discuss区看到的maxheap实现的方法，因为要topk，所以用maxheap重写compare改变排序规则就可以实现，大牛 代码居然可以缩减到7行，有点厉害的，注意Lambda箭头函数，PriorityQueue 的 addAll(), Map 的 map.getOrDefault(n,0),map.entrySet(),map.getValue(),map.getKey()这些方法的灵活使用，基本可以记得，要priority queue，compare(a,b){return a-b;}
 ```
 Map<Integer, Integer> map = new HashMap<>();
@@ -29,7 +29,7 @@ while(re.size()<k) re.add(maxHeap.poll().getKey());
 return re;
 ```
 
-####378. Kth Smallest Element in a Sorted Matrix
+#### 378. Kth Smallest Element in a Sorted Matrix
 第一眼看这个题的思路（注意错误思路，没做的话先看下面正确思路再看这个，以防记住了错误思路）：双层for循环遍历matrix，挨个存入priority queue，然后挨个poll找到kth smallest，错误原因，matrix中每个array是sorted，不代表整体也是sorted，比如matrix = [ [ 1,  5,  9],[10, 11, 15],[12, 13, 15] ],k = 8, return 13是正解，如果按照错误思路，都放入priority queue，得到queue：[1,5,9,10,11,12,13,15,15], k=8， return15 ,which is wrong answer
 
 正确答案：按目前的水平是并不能想到的，看了之后表示是可以理解的，画queue，画一遍就会发现，是一行一行放入queue的，防止出现了上面思路的问题

@@ -1,4 +1,4 @@
-##ALL ** numbers
+## ALL ** numbers
 single number * 3
 happy number
 missing number
@@ -11,12 +11,12 @@ additive number(dfs || iteration)
 palindrom number 在 palindrome，他们的处理方法比较相像
 Largest number 在 sort
 
-####136. single number
+#### 136. single number
 1. hashmap<Integer,Boolean>
 2. array 排序的方法：（排序时间复杂度nlogn）Arrays.sort(nums); 循环的时候，判断相邻两数差==0，i+=2
 3. notice:如果有多个singlenumber，题目中没有描述清楚，应该问清楚
 
-####137. Single Number II
+#### 137. Single Number II
 bit 操作的基本知识
 ```
 a = 0011 1100
@@ -148,7 +148,7 @@ class Solution {
     };
 ```
 
-####260. Single Number3
+#### 260. Single Number3
 1. 又是用了传统的hashmap方法，在以前代码的基础上，检测map中value==true的值部分做了很小的改动就可以了。思路还是把数组存入map，出现一次对应value=T，再出现的value=F，之后遍历map(`for(Integer a: m.keySet()){...}`)找value=true
 但隐约记得当年用go刷题的时候看到过牛逼的解法，所有数组元素进行一次位运算，得到singlenumber（只有一个的时候），或者得到两个singlenumber的位运算结果，然后再用一种黑科技把两个数分开。
 2. 当年笔记，其中一只不太懂的一点，如果是3^3 Vs. 3^2^1结果都是0，。。怎么区分
@@ -187,7 +187,7 @@ result[0] = num1;
 result[1] = num2;
 ```
 
-####202 Happy Number
+#### 202 Happy Number
 看起来很简单，写起来很麻烦
 1. 首先要确定需要两层循环，外层循环直到得到的 和<10，内层循环确保 每一位都平方并sum了，
 2. 1,7是happynumber
@@ -207,16 +207,16 @@ public boolean isHappy(int n) {
 }
 ```
 
-####268. Missing Number
+#### 268. Missing Number
 1. 方法1，排序，然后用数组中的元素跟索引比较，索引有，元素没有的（其实就是i!=nums[i]）直接返回i，复杂度略高
 2. 方法2，求和，已知我们有的是[0,n]之间distinct的数字，可以直接把[0,n]这些全部相加再-数组中所有元素和
     1. 即1+2+。。。+（index+1）（其实也就是length）与nums[0]+nums[1]+...的差值. (we are missing only one number in [0,n], we just need to look at the difference between the sum([0,n]) = n * (n+1) / 2 and the sum of nums in our array.)
 
-####263. Ugly Number
+#### 263. Ugly Number
 Ugly numbers are positive numbers whose prime factors only include 2, 3, 5。1 is ugly number
 所以就拿一个数，只要能被2整除就一直除以2，然后，只要能被3整除就一直除以3，然后，只要能被5整除就一直除以5，如果剩下的不是1，那就不是ugly number
 
-####264. Ugly Number II
+#### 264. Ugly Number II
 找nth ungy number，思路是，从1，2，3，4，5.。。这些ugly numbers，挨个分别*2，*3，*5，得到的都还是ugly number，所以哪个小那个排在前面，往list，array，queue里放，到第n个，返回。compute all the ugly numbers in sequence and count to the given number of k ugly numbers
 
 discuss有这三种数据结构的实现。
@@ -266,7 +266,7 @@ public int nthUglyNumber(int n) {
     return q.poll().intValue();
 }
 ```
-####313. Super Ugly Number
+#### 313. Super Ugly Number
 用了很类似上面的方法，稍微有一些变化，见代码注释
 ```
 public class Solution {
@@ -295,7 +295,7 @@ public class Solution {
 }
 ```
 
-####65. Valid Number
+#### 65. Valid Number
 是个比较常规的题，if-else和switch都可以。需要4个boolean来统计
 
 1. number出现了没
@@ -341,6 +341,6 @@ public boolean isNumber(String s) {
 }
 ```
 
-####306. Additive Number
+#### 306. Additive Number
 1. Generate the first and second of the sequence, check if the rest of the string match the sum recursively. i and j are length of the first and second number. i should in the range of [0, n/2]. The length of their sum should >= max(i,j)
 2. startwith（ string s, int offset）

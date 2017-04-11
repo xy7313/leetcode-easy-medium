@@ -1,5 +1,5 @@
 
-######有个总结贴
+#### ##有个总结贴
 http://www.sigmainfy.com/blog/summary-of-ksum-problems.html
 
 目录：
@@ -16,14 +16,14 @@ http://www.sigmainfy.com/blog/summary-of-ksum-problems.html
 
 
 
-####1. Two Sum
+#### 1. Two Sum
 这类题可以算是刷题的动力吧，看过一次下一次居然真的会了，改了一个；错误提交居然过了，hashmap，O(n)
 （后有改进版，arr in order，用hashmap太慢，用双指针，从前和从后同时查找，167题）
 
-####167. Two Sum II - Input array is sorted
+#### 167. Two Sum II - Input array is sorted
 1题改进版，双指针更快，从前和后同时查找，注意while判断条件，我写的l<=r考虑到会有【1，2，4】t=4就会需要2+2，另外遇到匹配项记得跳出循环。
 
-####15. 3Sum
+#### 15. 3Sum
 看起来很简单的题，思路也知道，然而就是写不对。。。本来想写个函数调用调2sum，但可能对list的处理还是不太好，后来重新写到一个方法里了。
 
 1. 思路 ：把题目要求的三个数和==0.转换成2sum=-第三个数. Note the triplets consists of real values in the input rather than the index of the input numbers
@@ -67,7 +67,7 @@ public List<List<Integer>> threeSum(int[] nums) {
     }
 ```
 
-####16. 3Sum Closest
+#### 16. 3Sum Closest
 大体思路跟上面差不多，这个题的target是明确的，不需要再变换target出来，但是需要额外的两个辅助变量，diff， closestSum。
 
 1. diff： 要最小diff，所以每次当前sum和target差值变小，都需要更新
@@ -89,7 +89,7 @@ while(l<r){
 }
 ```
 
-####18. 4Sum
+#### 18. 4Sum
 翻了翻，大部分都选择了转换成3sum再转换成2sum的方法，时间复杂度: O(n^3)
 ```
 public class Solution {

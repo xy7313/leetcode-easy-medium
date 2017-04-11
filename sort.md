@@ -1,4 +1,4 @@
-##sort相关(4 problems)
+## sort相关(4 problems)
 215. Kth Largest Element in an Array
 324. Wiggle Sort II
 179. Largest Number
@@ -6,7 +6,7 @@
 88. Merge Sorted Array
 
 
-####215. Kth Largest Element in an Array
+#### 215. Kth Largest Element in an Array
 用quicksort的思想，实现O(n)的算法。快排的思想是分治，divide and conqure。这里因为只需要找到某元素，所以分治之后的部分只有包含要查找元素的那部分需要处理，剩下的不需要处理，所以原本快排是nlogn的算法，这里不完全排序，可以达到linear。
 
 还有之所以看到了这题是因为下面的题用到了这个题目。
@@ -53,7 +53,7 @@ public int findKthLargest(int[] nums, int k) {
 }
 ```
 
-####324. Wiggle Sort II
+#### 324. Wiggle Sort II
 google面试题，到处都有跟这个题有关的讲解和介绍，我最初看的是九章的，比较好理解，后来discuss区也看到了高赞的答案，两个都写了，思路如下：
 
 1. 利用快速排序的思想找中位数的期望时间复杂度是O(N).为了防止相等的数放在一起，需要注意放置的顺序。
@@ -129,7 +129,7 @@ public void wiggleSort(int[] nums) {
 }
 ```
 
-####179. Largest Number
+#### 179. Largest Number
 Given a list of non negative integers, arrange them such that they form the largest number.
 
 For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
@@ -164,7 +164,7 @@ public String largestNumber(int[] nums) {
 }
 ```
 
-####451. Sort Characters By Frequency
+#### 451. Sort Characters By Frequency
 自从开是刷medium的题之后，每天都是炼狱模式，各种没见过的题型，要么就是想不出解法，要么就是想出的不符合要求，每次看答案都要看好久（生无可恋脸，这个题也是，要求O(n)，所以hashmap+排序value的方法是不满足要求的
 
 思路：
@@ -221,7 +221,7 @@ private List<Character>[] buildArray(Map<Character,Integer> map, int max){
 }
 ```
 
-####88. Merge Sorted Array
+#### 88. Merge Sorted Array
 看起来很简单的题，discuss里有很多3行代码1行代码什么的，我还是找了个最容易看懂的, 题目中有说明nums1的长度是存的下m+n的，既然是向nums1中插入，那为了避免懂前面已有元素，我们从后面操作，两个数组都是sort好的，所以秩序比较两个数组最右的元素，大的即为全场最大，可以直接放，后面也都是一样的思路，nums[n--]这种形式还玩不转，先不用
 ```
 while(n>0){

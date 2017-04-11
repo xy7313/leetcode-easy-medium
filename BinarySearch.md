@@ -1,4 +1,4 @@
-##binarySearch
+## binarySearch
 278. First Bad version
 374. Guess Number Higher or Lower
 475. Heaters
@@ -12,10 +12,10 @@
 74. Search a 2D Matrix
 240. Search a 2D Matrix II
 
-####notice!
+#### notice!
 binarySearch 常用 start/end，sort问题常用 left/right，two pointers问题常用 fast/slow，linked list + two pointers常用 walker/runner
 
-####278. First Bad version/
+#### 278. First Bad version/
 
 注意：和first position of target（两个题二分考点一毛一样），区别在于返回值，version或者说bad version是连续存在的，有3必有2，但target可能不存在，所以version直接返回start，target要考虑不存在的情况下返回-1，其他情况返回start
 
@@ -34,10 +34,10 @@ while(start<end){
 }
 ```
 
-####374. Guess Number Higher or Lower
+#### 374. Guess Number Higher or Lower
 跟上题一样，binary search 代码也几乎一样，==1说明更大，向后找，所以start=mid+1；==-1说明更小，向前找，返回start。可以背个模板了。
 
-####475. Heaters
+#### 475. Heaters
 还是tag：binary search, 看题并没有很好的思路，discuss
 ```
 public int findRadius(int[] houses, int[] heaters) {
@@ -59,7 +59,7 @@ public int findRadius(int[] houses, int[] heaters) {
 }
 ```
 
-####275. H-Index2
+#### 275. H-Index2
 given: sorted array, require O(lgn)，搞清楚要求的话很容易想到binary search。注意有一种特殊情况：input: [0,1,2,4,5,6]，output: 3，整个while循环都不能输出正确答案，所以需要return输出的帮助
 ```
 while(start<=end){
@@ -71,7 +71,7 @@ while(start<=end){
 return citations.length-start;
 ```
 
-####274. H-Index
+#### 274. H-Index
 new一个新array实现类似哈希表的思想，新array的下标对应input的element，新array长度比input长1，输入的数组中，比较大的数字都记在最后一位：
 
 比如input：[0,3，1，6，5] 
@@ -97,7 +97,7 @@ public int hIndex(int[] citations) {
 }
 ```
 
-####153. Find Minimum in Rotated Sorted Array
+#### 153. Find Minimum in Rotated Sorted Array
 binary search写了这么多，这个还是不会写，感觉没抓住要点，有模板也不行.
 
 这个题的要点，应该在if判断那里，discuss里的解析写的挺好的
@@ -121,7 +121,7 @@ public int findMin(int[] nums) {
 }
 ```
 
-####287. Find the Duplicate Number(bb)
+#### 287. Find the Duplicate Number(bb)
 这个题超智商了，后面两种方法均看不懂，我只能想到这一种，然而不满足题目要求，改变了数组，，gg，不如挑一个背吧┑(￣Д ￣)┍。。。
 ```
 public int findDuplicate(int[] nums) {
@@ -186,7 +186,7 @@ public int findDuplicate(int[] nums) {
 }
 ```
 
-####33. Search in Rotated Sorted Array
+#### 33. Search in Rotated Sorted Array
 这个是有点复杂的二分，不太好想。思路是分两种情况，一种是start-mid是不rotated的，那rotated部分肯定在mid-end，另一种相反。假设sratr-mid是不rotated，我们做正常二分，反之，我们在mid-end部分做二分
 ```
 while(start+1<end){
@@ -205,7 +205,7 @@ if(nums[end]==target) return end;
 return -1;
 ```
 
-####81. Search in Rotated Sorted Array II（33 follow up-with duplicates）
+#### 81. Search in Rotated Sorted Array II（33 follow up-with duplicates）
 九章给的这个解释很有道理。。
 ```
 public class Solution {
@@ -226,7 +226,7 @@ public class Solution {
 }
 ```
 
-####74. Search a 2D Matrix
+#### 74. Search a 2D Matrix
 binary search, convers the nth number to matrix[n/col][n%col]. Notice: we should check `if(matrix[0]==null||matrix[0].length==0) return false;` too.
 ```
 public boolean searchMatrix(int[][] matrix, int target) {
@@ -247,7 +247,7 @@ public boolean searchMatrix(int[][] matrix, int target) {
 }
 ```
 
-####240. Search a 2D Matrix II
+#### 240. Search a 2D Matrix II
 这个题的考点在思路上，想做到时间复杂度小于暴力解，就考虑每次不是一个一个排除，而是根据sort后的元素关系一列或一排的排除，此时选取最大值或最小值不合适，因为他们所在列还是行都肯定比最大最小，小/大，所以选择左下点和右上点，以左下点为例（代码是根据左下实现的），如果左下点<target 左下点所在的列都可以不看，因为左下点是此列最大值，此时左数第二列的最下面成为我们新的左下点，还是这样比较，如果==target，当前列和排都不看，如果>target，当前排不看。
 
 以上想清楚了，代码写起来很简单，注意（xy要搞清楚）

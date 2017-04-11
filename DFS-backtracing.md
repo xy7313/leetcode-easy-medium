@@ -1,4 +1,4 @@
-##subset：dfs+backtracking系列
+## subset：dfs+backtracking系列
 78. Subset
 90. Subset2
 46. permutation
@@ -9,7 +9,7 @@
 79. Word Search
 212. Word Search II
 
-####78. Subset
+#### 78. Subset
 DFS recursion 经典题，可以当做模板来背，画递归树或者按递归步骤推演程序运算过程很有利于理解
 tips: lintcode代码中必须加入排序提交才能通过
 ```
@@ -34,11 +34,11 @@ public class Solution {
 }
 ```
 
-####90. Subset2
+#### 90. Subset2
 跟上题基本一样，多了两步，1 是排序数组，为了把重复元素防止一起，2 是helper里， 如果i不是start(i>start)且nums[i]和左边相邻元素相等，helper不进行，continue进入下一次forloop
 代码标注在上面了。
 
-####46. permutation
+#### 46. permutation
 背会了subset也不会写permutation，好烦躁。这个题可以看出和subset的区别是 拼完之后才放入result中，所以就想helper之后再results.add，但走了条错路，正确的思路是，跟以前一样开始helper的时候result.add不同的是只有当subset==nums.length才添加这个subset. 又挣扎了一会儿发现就算写在后面也可以，写在后面跑一遍发现还是添加了subset那么多东西，就想到要要等三个了在加入results，再想到判断subset大小满足条件才添加，一样可以ac。。。一直觉得递归很难想可能就在于，我怎么都想不到在helper刚进入的时候添加上一次的subset，顶多能看懂，自己想总是把添加操作想在后面，sign。。
 
 这题的关键就在于helper中的 if(){...}
@@ -68,7 +68,7 @@ public class Solution {
 }
 ```
 
-####permutation2
+#### permutation2
 比如，给出一个排好序的数组，[1,2,2]，那么第一个2和第二2如果在结果中互换位置，我们也认为是同一种方案，所以我们强制要求相同的数字，原来排在前面的，在结果当中也应该排在前面，这样就保证了唯一性。所以当前面的2还没有使用的时候，就不应该让后面的2使用。
 
 如果看不懂这句话，找一张大点的纸，按照程序写一下执行流程，执行到第二次放入第一个元素1的时候就明白了。
@@ -111,7 +111,7 @@ public class Solution {
 }
 ```
 
-####39. combination sum
+#### 39. combination sum
 第二次遇到这个题，dfs可以独立写出来了，背的不错，需要注意的：
 
 1. 结果里每种combination都只能出现一次，又每个数字使用次数不限，所以需要去重，（如果不removeDuplicate，也可直接排序一下，不过remove Diplicates应该复杂度低一些）
@@ -163,8 +163,8 @@ public class Solution {
 }
 ```
 
-####40. Combination Sum II
-######这题和上题的题目区别在于
+#### 40. Combination Sum II
+#### ##这题和上题的题目区别在于
 
 Combination sum
 
@@ -180,14 +180,14 @@ Combination sum2
 2. 从下一个元素开始，发现又是1，因为刚才已经把包含1的组合都找过了（因为每个数只能用1次，所以可以和1组成combination的都用过了，所以第二个1没有数可以用了），所以这次不再找，continue；而且如果从这个1再找，可能就会找到跟之前那个1组成的一样的combination，但result里，combination不能重复的。总之就是要跳过了
 
 
-######两道题代码写法的区别有四点：
+#### ##两道题代码写法的区别有四点：
 
 1. 不需要removeDuplicate（如果原题不removeDuplicate，也可直接排序一下，不过remove Diplicates应该复杂度低一些）
 2. 需要sort（第二题这个是必须sort，没有别的选择）
 3. 每次dfs开始从i+1，不再是i
 4. 多一次去重`if(i!=startIdx && candidates[i]==candidates[i-1]) continue;`
 
-####216. Combination Sum III
+#### 216. Combination Sum III
 不给数组了，直接从1-9，比如：Input: k = 3, n = 7； Output: [[1,2,4]]。 需要注意的是：
 
 1. 从1-9，dfs第一次传入1，for循环<=9
@@ -215,7 +215,7 @@ public class Solution {
 }
 ```
 
-####79. Word Search
+#### 79. Word Search
 1. To save memory I decuded to apply bit mask for every visited cell.`board[x][y] ^= 256;` it is like setting `board[x][y] = '#'`. The range of char is between 0 - 255. By doing xor with 256, board[x][y] becomes a number >= 256 and thus is different from any character.
 ```
 public class Solution {
@@ -245,4 +245,4 @@ public class Solution {
 }
 ```
 
-####212. Word Search II
+#### 212. Word Search II

@@ -1,13 +1,13 @@
 BFS+Union-find+follow up
 
 
-##Union-find
+## Union-find
 1. 
 2. 
 3. 
 
 
-##(前四个都是BFS+Union-find)
+## (前四个都是BFS+Union-find)
 
 200. Number of Islands
 0. Number of Islands II
@@ -16,7 +16,7 @@ BFS+Union-find+follow up
 
 >还有个    130. Surrounded Regions ，先拉黑
 
-####200. Number of Islands
+#### 200. Number of Islands
 1. 选择方法BFS: 每次我遇到1，都bfs遍历所有他相邻的1，得到整个岛，把整个岛归零，岛的个数+1。实现：
     1. func1: go over the island; 遇到1就bfs所有相邻1，算作一个island
     1. func2: bfs each 1 in grid(use queue, coordinate arrys); 不需要size，但需要坐标函数，每个1找相邻上下左右四个方向的1，找到了把1换成0，
@@ -58,7 +58,7 @@ BFS+Union-find+follow up
     }
     ```
 
-####0. Number of Islands II
+#### 0. Number of Islands II
 1. union_find的步骤和代码基本跟上面一样，可以考虑当做模板，上面题的count是额外加的，所以这题 union find这个类里不需要count，但我们也需要计数
 2. 本题计数的逻辑是：每次有operator，count++，当判断当前的1和之前的1可以union成一个island，count--
 ```
@@ -162,7 +162,7 @@ public class Solution {
 }
 ```
 
-####1. Graph Valid Tree
+#### 1. Graph Valid Tree
 1. 题目分析，什么时候graph valid tree
     1. edges = nodes-1
     2.  n-1 edges connect the whole tree
@@ -174,7 +174,7 @@ public class Solution {
     2. compressed_find(int x) 这个方法，当x的parent不是x时，找x的parent，是第一个while； 找到后把之前所有跟x在同一set的parent都改成x现在的parent
 
 
-####2. Connected Component in Undirected Graph
+#### 2. Connected Component in Undirected Graph
 1. leetcode版本：求个数，number of Connected Component。其中n：n points = n islands = n trees = n roots.
 
 ```
@@ -209,7 +209,7 @@ public int find(int[] roots, int id) {
 
 ##单纯的BFS
 
-####127. Word Ladder
+#### 127. Word Ladder
 1. 题目解释和input：Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord。Notice ：
     1. Only one letter can be changed at a time.
     2. Each transformed word must exist in the word list.
@@ -220,17 +220,17 @@ public int find(int[] roots, int id) {
     3. validNext, replace all characters in a word one by one by replace the char from 'a' to 'z' `for(char c = 'a'; c<='z'; c++){...`  a special for loop,
     4. replace a letter
 
-####133. Clone Graph
+#### 133. Clone Graph
 1. get all nodes (by BFS)
 2. mapping old nodes to new
 3. set all neighbors, all nodes have been newed when constructed mapping, so all newNodes, newNighbors do not need to be redeclare again, just mapping.get(), we get the new node
 4. return mapping.get(node); 这个return看起来很正常，但是刚看到题的时候有点懵逼，不知道该返回什么
 
-####490. the maze
+#### 490. the maze
 给一个maze，从起点走到终点，注意一点是选定一个方向之后撞墙才停， 返回boolean判断能否到达destination。可以用bfs和dfs，这里选择bfs。因为是付费题，所以直接从discuss区拿了答案来。
 
 (topological sort)
-####207. Course Schedule
+#### 207. Course Schedule
 1. initialization
 ```
  //idx of edges: node, element(arraylist) of edges: node.neighbors
@@ -286,13 +286,13 @@ while(!queue.isEmpty()){
 return count == numCourses;
 ```
 
-####210. Course Schedule II
+#### 210. Course Schedule II
 跟上体基本一样，两点区别
 
 1. 需要一个array来存储每次count计数时对应的course
 2. return count == numCourses ? order: new int[]{};
 
-####310. Minimum Height Trees
+#### 310. Minimum Height Trees
 是个不会的题，找高度最小的树，返回这些树的root，一开始想的是从leaf开始bfs。后来看代码确实bfs思想，算了一遍可以理解代码，但不太理解思路
 ```
 public List<Integer> findMinHeightTrees(int n, int[][] edges) {
