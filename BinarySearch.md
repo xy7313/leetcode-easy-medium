@@ -9,6 +9,7 @@
 287. Find the Duplicate Number
 33. Search in Rotated Sorted Array
 81. Search in Rotated Sorted Array II（33 follow up-with duplicates）
+34. Search for a Range
 74. Search a 2D Matrix
 240. Search a 2D Matrix II
 
@@ -223,6 +224,28 @@ public class Solution {
         }
         return false;
     }
+}
+```
+
+#### 34. Search for a Range
+```
+public int[] searchRange(int[] nums, int target) {
+        if (nums.length == 0) return new int [] { -1, -1 };
+        int low = 0, high = nums.length - 1;
+        while (low + 1 < high) {
+            int mid = (low + high) >>> 1;
+            if (nums [mid] >= target) high = mid;
+            else low = mid;
+        }
+        int first = (nums [low] == target) ? low : (nums [high] == target ? high : -1);
+        low = 0; high = nums.length - 1;
+        while (low + 1 < high) {
+            int mid = (low + high) >>> 1;
+            if (nums [mid] > target) high = mid;
+            else low = mid;
+        }
+        int last = (nums [high] == target) ? high : (nums [low] == target ? low : -1);
+        return new int [] { first, last };
 }
 ```
 
