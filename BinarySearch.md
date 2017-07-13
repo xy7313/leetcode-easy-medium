@@ -1,4 +1,5 @@
 ## binarySearch
+```
 278. First Bad version
 374. Guess Number Higher or Lower
 475. Heaters
@@ -12,6 +13,7 @@
 34. Search for a Range
 74. Search a 2D Matrix
 240. Search a 2D Matrix II
+```
 
 #### notice!
 binarySearch 常用 start/end，sort问题常用 left/right，two pointers问题常用 fast/slow，linked list + two pointers常用 walker/runner
@@ -228,6 +230,10 @@ public class Solution {
 ```
 
 #### 34. Search for a Range
+For example,
+Given [5, 7, 7, 8, 8, 10] and target value 8,
+return [3, 4].
+Solution: search the left index, search the right index. 很像 Last Position of Target 和 First Position of Target 结合起来的方法。
 ```
 public int[] searchRange(int[] nums, int target) {
         if (nums.length == 0) return new int [] { -1, -1 };
