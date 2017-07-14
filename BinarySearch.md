@@ -13,6 +13,8 @@
 34. Search for a Range
 74. Search a 2D Matrix
 240. Search a 2D Matrix II
+35. Search Insert Position
+69. Sqrt(x)
 ```
 
 #### notice!
@@ -300,3 +302,16 @@ public boolean searchMatrix(int[][] matrix, int target) {
     return false;
 }
 ```
+
+35. Search Insert Position
+可以用二分的模板，返回值比较麻烦。有几个例子： [1,3],2 return 1; [1,3],0 return 0;[1,3],4 return 2; [1],1 return 0; 
+所以二分模板之后（`while(start+1<end)`）
+```
+if(target>nums[end]) return end+1;
+else if(target<=nums[start]) return start;
+else return start+1;
+//start+1 == end
+```
+
+69. Sqrt(x)
+用模板，注意：从1开始；返回较小的start；input x==0 单独算；
