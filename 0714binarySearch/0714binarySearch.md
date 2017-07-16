@@ -48,9 +48,9 @@ Notice: when do binary search in the rotated part, it should be smaller than or 
 For example,
 Given [5, 7, 7, 8, 8, 10] and target value 8,
 return [3, 4].
-Solution: search the left index, search the right index. 很像 Last Position of Target 和 First Position of Target 结合起来的方法。find the first position of target, marked as left_index
+Solution: search the left index, search the right index. 很像 Last Position of Target 和 First Position of Target 结合起来的方法。
+- find the first position of target, marked as left_index
 if cannot find, return new int[]{-1,-1}; find last position of target, marked as right\_index as well, return new int[]{left_index, right_index}; 
-
     ```
     public int[] searchRange(int[] nums, int target) {
         if(nums==null || nums.length==0) return new int[]{-1,-1};
@@ -77,7 +77,7 @@ if cannot find, return new int[]{-1,-1}; find last position of target, marked as
 
 ##### 35 Search Insert Position
 可以用二分的模板，返回值比较麻烦。有几个例子： [1,3],2 return 1; [1,3],0 return 0;[1,3],4 return 2; [1],1 return 0; 
-Notice: the last step, it should be target<=nums[start] based on the given example.
+- Notice: the last step, it should be target<=nums[start] based on the given example.
     ```
     public int searchInsert(int[] nums, int target) {
         if(nums==null || nums.length==0) return -1;
@@ -97,7 +97,7 @@ Notice: the last step, it should be target<=nums[start] based on the given examp
 
 ##### 69 Sqrt(x)
 用模板，注意：从1开始；返回较小的start；input x==0 单独算；
-Notice: it will have an error when we use int directly. Declare variables as long and cast the answer to int when return.
+- Notice: it will have an error when we use int directly. Declare variables as long and cast the answer to int when return.
     ```
     public int mySqrt(int x) {
         if(x==0) return 0;
@@ -122,7 +122,7 @@ This matrix has the following properties:
 - Integers in each row are sorted from left to right.
 - The first integer of each row is greater than the last integer of the previous row.
 
-Solution: binary search, convers the nth number to matrix[n/col][n%col]. Notice: we should check `if(matrix[0]==null||matrix[0].length==0) return false;` too.
+- Solution: binary search, convers the nth number to matrix[n/col][n%col]. Notice: we should check `if(matrix[0]==null||matrix[0].length==0) return false;` too.
     ```
       public boolean searchMatrix(int[][] matrix, int target) {
         if(matrix==null || matrix.length==0) return false;
