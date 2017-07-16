@@ -122,7 +122,8 @@ This matrix has the following properties:
 - Integers in each row are sorted from left to right.
 - The first integer of each row is greater than the last integer of the previous row.
 
-- Solution: binary search, convers the nth number to matrix[n/col][n%col]. Notice: we should check `if(matrix[0]==null||matrix[0].length==0) return false;` too.
+- Solution: binary search, convers the nth number to matrix[n/col][n%col]. check start and end together after binary search because we are just supposed to return a boolean.
+- Notice: we should check `if(matrix[0]==null||matrix[0].length==0) return false;` too.
     ```
       public boolean searchMatrix(int[][] matrix, int target) {
         if(matrix==null || matrix.length==0) return false;
@@ -242,9 +243,28 @@ This matrix has the following properties:
 
 
 ##### 153 Find Minimum in Rotated Sorted Array
+easy~
+    ```
+       public int findMin(int[] nums) {
+        if (nums == null || nums.length==0) return -1;
+        int start = 0;
+        int end = nums.length-1;
+        while(start+1<end){
+            int mid = start+(end-start)/2;
+            if(nums[mid]<nums[mid-1]){
+                return nums[mid];
+            }else if (nums[mid]>nums[start] && nums[mid]>nums[end]){
+                start = mid;
+            }else{
+                end = mid;
+            }
+        }  
+        return nums[start]<nums[end]?nums[start]:nums[end];
+    }
+    ```
 
 ##### 154 Find Minimum in Rotated Sorted Array II
-    divide conquer: determine if this part is an ascending sequence
+divide conquer: determine if this part is an ascending sequence
     ```
     public class Solution {
         public int findMin(int[] nums) {
