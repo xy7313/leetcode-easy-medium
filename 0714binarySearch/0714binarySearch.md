@@ -97,7 +97,7 @@ if cannot find, return new int[]{-1,-1}; find last position of target, marked as
 
 ##### 69 Sqrt(x)
 用模板，注意：从1开始；返回较小的start；input x==0 单独算；
-- Notice: it will have an error when we use int directly. Declare variables as long and cast the answer to int when return.
+- Notice: it will have an error when we use int directly. Declare variables as long and cast the answer to int when return. Return start because we always want a the smaller result.
     ```
     public int mySqrt(int x) {
         if(x==0) return 0;
@@ -238,11 +238,12 @@ This matrix has the following properties:
             return nums[s] == t || nums[e] == t;
         }
     }
-        ```
+    ```
 
-    ##### 153 Find Minimum in Rotated Sorted Array
 
-    ##### 154 Find Minimum in Rotated Sorted Array II
+##### 153 Find Minimum in Rotated Sorted Array
+
+##### 154 Find Minimum in Rotated Sorted Array II
     divide conquer: determine if this part is an ascending sequence
     ```
     public class Solution {
