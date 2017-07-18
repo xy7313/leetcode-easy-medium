@@ -153,30 +153,36 @@ This matrix has the following properties:
 - as long as mid != end, not worst case. If worst case like: 00010000, we want to find 1, the time complexity will be O(n)
 - binary search(this problem also can be solved using Divide conquer)
     ```
-     public boolean search(int[] nums, int target) {
-        if(nums==null||nums.length==0)return false;
-        int start = 0, end = nums.length-1;     
-        while(start+1<end){
-            int mid = start+(end-start)/2;
-            if(nums[mid]==target) return true;
-            if(nums[start]<nums[mid]){
-                if(nums[start]<=target&&target<=nums[mid]) end = mid;
-                else start = mid;
-            }else if (nums[start]>nums[mid]){
-                //if(nums[end] >= target && target >= nums[mid]) start = mid;
-                //else end = mid;
-                if(target>=nums[start] || target<=nums[mid]) end = mid;
-                else start = mid;
-            }else{
+    public boolean search(int[] nums, int target) {
+        int start = 0, end = nums.length - 1, mid = -1;
+        while(start <= end) {
+            mid = (start + end) / 2;
+            if (nums[mid] == target) {
+                return true;
+            }
+            //right side is sorted or left is rotated  
+            if (nums[mid] < nums[end] || nums[mid] < nums[start]) {
+                if (target > nums[mid] && target <= nums[end]) {
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+            //left side is sorted or right is unsorted
+            } else if (nums[mid] > nums[start] || nums[mid] > nums[end]) {
+                if (target < nums[mid] && target >= nums[start]) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            //nums[start] == nums[mid] == nums[end], then shifting out any of the two sides won't change the result but can help remove duplicate 
+            } else {
+                // end--;
                 start++;
             }
         }
-        if(nums[start]==target || nums[end]==target) return true;
-        
         return false;
-    
-    }
-    //or just go through the array,O(n), have the same worst case time complexity     
+        }
+        //or just go through the array,O(n), have the same worst case time complexity     
     ```
 
 
@@ -189,7 +195,7 @@ public int findMin(int[] nums) {
     int start = 0;
     int end = nums.length-1;
     while(start+1<end){
-        int mid = start+(end-start)/2;
+        int mid = (end+start)/2;
         if(nums[mid]<nums[mid-1]){
             return nums[mid];
         }else if (nums[mid]>nums[start] && nums[mid]>nums[end]){
@@ -236,6 +242,28 @@ public class Solution {
         return Math.min(left, right);
     } 
 }
+```
+Binary search:
+```
+public int findMin(int[] nums) {
+        if(nums==null || nums.length==0){
+            return -1;
+        }
+        int start = 0;
+        int end = nums.length-1;
+        while(start+1<end){
+            int mid = (end+start)/2;
+            if (nums[mid]>nums[end]){
+                start = mid;
+            }else if(nums[mid]<nums[end]){
+                end = mid;
+            }else{
+            //always use end/or start in this if else
+                end--;
+            }
+        }  
+        return nums[start]<nums[end]?nums[start]:nums[end];
+    }
 ```
 
 ##### 240 Search a 2D Matrix II
