@@ -151,7 +151,7 @@ This matrix has the following properties:
 
 ##### 81 Search in Rotated Sorted Array II
 - as long as mid != end, not worst case. If worst case like: 00010000, we want to find 1, the time complexity will be O(n)
-- binary search
+- binary search(this problem also can be solved using Divide conquer)
     ```
      public boolean search(int[] nums, int target) {
         if(nums==null||nums.length==0)return false;
@@ -178,68 +178,7 @@ This matrix has the following properties:
     }
     //or just go through the array,O(n), have the same worst case time complexity     
     ```
-- Divide conquer
-    ```
-        public class Solution {
-            public boolean search(int[] nums, int t) {
-                if (nums == null || nums.length == 0) {
-                    return false;
-                }
-                return divideConquer(nums, t, 0, nums.length - 1);
-            }
 
-            public boolean divideConquer(int[] nums, int t, int s, int e) {
-
-                if (s > e) {
-                    return false;
-                }
-                if (s == e) {
-                    return nums[s] == t;
-                }
-                int m = s + (e - s) / 2;
-                if ( t == nums[m]) {
-                    return true;
-                }
-                if (nums[s] < nums[e]) {
-                    return binarySearch(nums, t, s, e);
-                }
-                if (nums[m] < nums[e]) {
-                    // right is ascending
-                    return binarySearch(nums, t, m + 1, e) || divideConquer(nums, t, s, m - 1);
-                } else if (nums[m] > nums[s]) {
-                    // left is asending
-                    return binarySearch(nums, t, s, m - 1) || divideConquer(nums, t, m + 1, e);
-                } else {
-                    return divideConquer(nums, t, s, m - 1) || divideConquer(nums, t, m + 1, e);
-                }        
-            }
-
-            public boolean binarySearch(int[] nums, int t, int s, int e) {
-                // System.out.println(s + " " + e);
-                if (s == e) {
-                    return nums[s] == t;
-                }
-                if (s > e) {
-                    return false;
-                }
-                if (t < nums[s] || t > nums[e]) {
-                    return false;
-                }
-
-                while (s + 1 < e) {
-                    int m = s + (e - s) / 2;
-                    if (t < nums[m]) {
-                        e = m;
-                    } else if (t > nums[m]) {
-                        s = m;
-                    } else {
-                        return true;
-                    }
-                }
-                return nums[s] == t || nums[e] == t;
-            }
-        }
-    ```
 
 
 ##### 153 Find Minimum in Rotated Sorted Array
