@@ -98,24 +98,24 @@ public int searchInsert(int[] nums, int target) {
 用模板，注意：从1开始；返回较小的start；input x==0 单独算；
 
 Notice: it will have an error when we use int directly. Declare variables as long and cast the answer to int when return. Return start because we always want a the smaller result.
-    ```
-    public int mySqrt(int x) {
-        if(x==0) return 0;
-        long start = 1;
-        long end = x;
-        while(start+1<end){
-            long mid = start+(end-start)/2;
-            if(mid*mid==x){
-                return (int) mid;
-            } else if(mid*mid>=x){
-                end = mid;
-            } else {
-                start = mid;
-            }            
-        }
-        return (int)start;
+```
+public int mySqrt(int x) {
+    if(x==0) return 0;
+    long start = 1;
+    long end = x;
+    while(start+1<end){
+        long mid = start+(end-start)/2;
+        if(mid*mid==x){
+            return (int) mid;
+        } else if(mid*mid>=x){
+            end = mid;
+        } else {
+            start = mid;
+        }            
     }
-    ```
+    return (int)start;
+}
+```
 
 ##### 74 Search a 2D Matrix
 This matrix has the following properties:
