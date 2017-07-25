@@ -113,6 +113,16 @@ public boolean isValidBST(TreeNode root, long minVal, long maxVal) {
 }
 ```
 
+99 Recover Binary Search Tree
+100 Same Tree
+101 Symmetric Tree
+102 Binary Tree Level Order Traversal
+103 Binary Tree Zigzag Level Order Traversal
+104 Maximum Depth of Binary Tree
+105 Construct Binary Tree from Preorder and Inorder Traversal
+106 Construct Binary Tree from Inorder and Postorder Traversal
+
+
 ##### 107 Binary Tree Level Order Traversal II
 just like level order traversal, the original version. We reverse each level, then add it to the result.
 ```
