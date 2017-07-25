@@ -147,4 +147,328 @@ just like level order traversal, the original version. We reverse each level, th
 ```
 
 ##### 108. Convert Sorted Array to Binary Search Tree
-find root, divide array into two part
+find root(mid of array), divide array into two part, find next root in left and right.
+```
+public TreeNode sortedArrayToBST(int[] nums) {
+        if(nums.length==0) return null;
+  TreeNode head = helper(nums,0,nums.length-1);
+  return head;
+}
+TreeNode helper(int[] nums, int start, int end){
+  if(start>end) return null;
+  int mid = (start+end)/2;
+  //mid==>root/parent
+  TreeNode cur = new TreeNode(nums[mid]);
+  cur.left = helper(nums,start,mid-1);
+  cur.right = helper(nums,mid+1,end);
+  return cur;
+}
+```
+
+##### 109. Convert Sorted List to Binary Search Tree
+very similar to the problem above, just using different way to find mid of linked list
+```
+public TreeNode sortedListToBST(ListNode head) {
+  if(head==null) return null;
+  return toBST(head,null);
+
+}
+TreeNode toBST(ListNode head, ListNode tail){
+  if(head==tail) return null;
+  ListNode runner = head;
+  ListNode walker = head;
+  //go through all nodes between start and tail
+  while(runner!=tail && runner.next!=tail){
+      runner = runner.next.next;
+      walker = walker.next;
+  }
+  //ListNode==>TreeNode
+  TreeNode cur = new TreeNode(walker.val);
+  cur.left = toBST(head,walker);
+  cur.right = toBST(walker.next,tail);
+  return cur;
+}
+```
+
+
+##### 110 Balanced Binary Tree
+1) Left subtree of T is balanced
+2) Right subtree of T is balanced
+3) The difference between heights of left subtree and right subtree is not more than 1.(we use -1)
+
+```
+public boolean isBalanced(TreeNode root) {
+ return  maxDep(root)!=-1;
+}
+public int maxDep(TreeNode root){
+  if(root==null) return 0;
+  int left = maxDep(root.left);
+  int right = maxDep(root.right);
+  //one child -1, always -1
+  if(left==-1 || right==-1 || Math.abs(right-left)>1){
+      return -1;
+  }
+  return Math.max(left,right)+1;
+}
+```
+
+##### 111 Minimum Depth of Binary Tree
+can not return min in left and right directly like we did in computing max dep.
+```
+public int minDepth(TreeNode root) {
+        if(root==null) return 0;
+        int left = minDepth(root.left);
+        int right = minDepth(root.right);
+        //if right or left == 0 means only one child, we can not choose min because the min will be 0,
+        //we can also write if,else if here to state more clearer.
+        return (left == 0 || right == 0) ? left + right + 1: Math.min(left, right)+1;
+    }
+```
+
+##### 112 Path Sum
+
+```
+public boolean hasPathSum(TreeNode root, int sum) {
+  if(root==null) {
+      return false;
+  }
+  if(root.left==null && root.right==null && root.val==sum){
+      return true;
+  } 
+  //递归参数==stack个数
+  return hasPathSum(root.left,sum-root.val) || hasPathSum(root.right,sum-root.val);
+}
+```
+
+##### 113 Path Sum II
+want the exact path not just if this path exist or not.
+
+backtracking
+```
+public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if(root==null) return result;
+        List<Integer> path = new ArrayList<>();
+        helper(root,path,result,sum);
+        return result;
+    }
+    void helper(TreeNode root,List<Integer> path, List<List<Integer>> result,int sum){
+        if(root==null) return;
+        path.add(new Integer(root.val));
+        
+        if (root.left == null && root.right == null && sum == root.val) {
+		    result.add(new LinkedList(path));
+	    } else {
+		    helper(root.left, path, result, sum - root.val);
+		    helper(root.right, path, result, sum - root.val);
+	    }
+	    path.remove(path.size() - 1);
+        return;
+
+
+    }
+```
+
+##### 114 Flatten Binary Tree to Linked List
+node.left=null, node,right=
+```
+public class Solution {
+// method 1: iteration
+//    public void flatten(TreeNode root) {
+//         if(root==null) return;
+
+//         Stack<TreeNode> s = new Stack<>();
+//         s.push(root);
+        
+//         while(!s.empty()){
+//             TreeNode cur = s.pop();
+//             if(cur.right!=null){
+//                 s.push(cur.right);
+//             }
+//             if(cur.left!=null){
+//                 s.push(cur.left);
+//             }
+//             cur.left=null;
+//             if(s.empty()){
+//                 cur.right=null;
+//             }else{
+//                 cur.right = s.peek();
+//             }
+//         }
+//     }
+//method 2 recursion 
+private TreeNode lastNode;
+    public void flatten(TreeNode root) {
+        if(root==null) return;
+        
+        if(lastNode !=null){
+            lastNode.left = null;
+            lastNode.right = root;
+        }
+        
+        lastNode = root;
+    // why can not use flatten(root.rifht) directly 
+        TreeNode right = root.right;
+        flatten(root.left);
+        flatten(right);
+    
+    }
+}
+```
+
+116 Populating Next Right Pointers in Each Node
+117 Populating Next Right Pointers in Each Node II
+
+##### 124 Binary Tree Maximum Path Sum
+we need to keep a global variable to record the max path
+```
+public class Solution {
+    int maxV;
+    public int maxPathSum(TreeNode root) {
+        maxV = Integer.MIN_VALUE;
+        maxPath(root); 
+        return maxV;
+    }
+    int maxPath(TreeNode node){
+        if(node==null) return 0;
+        int left = Math.max(0,maxPath(node.left));
+        int right = Math.max(0,maxPath(node.right));
+        int cur = left+right+node.val;
+        maxV = Math.max(maxV, cur);
+        //path
+        return Math.max(left,right)+node.val;
+    }
+}
+```
+##### 129 Sum Root to Leaf Numbers
+sum
+```
+public int sumNumbers(TreeNode root) {
+	return sum(root, 0);
+}
+
+public int sum(TreeNode n, int subsum){
+	if (n == null) return 0;
+	if (n.right == null && n.left == null) return subsum*10 + n.val;
+	return sum(n.left, subsum*10 + n.val) + sum(n.right, subsum*10 + n.val);
+}
+```
+
+##### 144 Binary Tree Preorder Traversal
+root->left->right
+```
+public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> preorder = new ArrayList<>();
+        if(root == null){
+            return preorder;
+        }   
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        
+        while(!stack.isEmpty()){
+            TreeNode cur = stack.pop();
+            preorder.add(cur.val);
+            if(cur.right!=null){
+                stack.push(cur.right);
+            }
+            if(cur.left!=null){
+                 stack.push(cur.left);
+            }
+        }
+        return preorder;
+    }
+```
+
+##### 145 Binary Tree Postorder Traversal
+```
+public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> postorder = new ArrayList<>();
+        if(root==null) return postorder;
+        Stack<Object> stack = new Stack<Object>();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            Object cur = stack.pop();
+            if(cur instanceof TreeNode){
+                TreeNode curNode = (TreeNode) cur;
+                stack.push(curNode.val);
+                if(curNode.right != null){
+                    stack.push(curNode.right);
+                }
+                if(curNode.left != null){
+                    stack.push(curNode.left);
+                }
+                
+            }else{
+                postorder.add((Integer)cur);
+            }
+        }
+        return postorder;
+    }
+```
+
+##### 173 Binary Search Tree Iterator
+
+
+##### 199 Binary Tree Right Side View
+BFS, only record the right side nodes
+```
+public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList<Integer>();
+        if (root == null) {
+            return result;
+        }
+        
+        Queue<TreeNode> queue = new LinkedList();        
+        queue.offer(root);
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i=0; i<size; i++) {
+                TreeNode cur = queue.poll();
+                if (i == 0) {
+                    result.add(cur.val);
+                }
+                if (cur.right != null) {
+                    queue.offer(cur.right);
+                }
+                if (cur.left != null) {
+                    queue.offer(cur.left);
+                }
+            }
+            
+        }
+        return result;
+    }
+```
+
+##### 199 Binary Tree Right Side View
+##### 222 Count Complete Tree Nodes
+##### 226 Invert Binary Tree
+##### 230 Kth Smallest Element in a BST
+we need a counter, and it's BST, it's easier to count
+```
+public int kthSmallest(TreeNode root, int k) {
+        if(root==null) return 0;
+        //inorder
+        Stack<TreeNode> stack = new Stack<>();
+        int count = 0;
+        TreeNode cur = root;
+        while( cur!=null || !stack.isEmpty()){
+            while(cur!=null){
+                stack.push(cur);
+                cur=cur.left;                
+            }
+            cur = stack.pop();
+            count++;
+            if(count==k) return cur.val;
+            cur = cur.right;            
+        }   
+           return 0; 
+    }
+```
+
+235 Lowest Common Ancestor of a Binary Search Tree
+236 Lowest Common Ancestor of a Binary Tree
+##### 257 Binary Tree Paths
+##### 297 Serialize and Deserialize Binary Tree
+
