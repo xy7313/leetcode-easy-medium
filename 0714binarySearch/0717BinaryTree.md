@@ -316,8 +316,9 @@ private TreeNode lastNode;
 }
 ```
 
-116 Populating Next Right Pointers in Each Node
-117 Populating Next Right Pointers in Each Node II
+##### 116 Populating Next Right Pointers in Each Node
+
+##### 117 Populating Next Right Pointers in Each Node II
 
 ##### 124 Binary Tree Maximum Path Sum
 we need to keep a global variable to record the max path
@@ -441,9 +442,64 @@ public List<Integer> rightSideView(TreeNode root) {
     }
 ```
 
-##### 199 Binary Tree Right Side View
 ##### 222 Count Complete Tree Nodes
+we trace the depth to calculate left tree nodes and right tree nodes, then sum them.
+```
+ public int countNodes(TreeNode root) {
+        if(root==null) return 0;
+        int leftDepth = leftDepth(root);
+	    int rightDepth = rightDepth(root);
+        if(leftDepth == rightDepth){
+            return (1 << leftDepth) - 1;
+        }else{
+            return 1+countNodes(root.left) + countNodes(root.right);
+        }
+    }
+    int leftDepth(TreeNode root){
+        int dep = 0;
+	    while (root != null) {
+		    root = root.left;
+		    dep++;
+	    }
+	    return dep;
+    }
+    int rightDepth(TreeNode root){
+        int dep = 0;
+	    while (root != null) {
+		    root = root.right;
+		    dep++;
+	    }
+	    return dep;
+    }
+```
+
 ##### 226 Invert Binary Tree
+BFS + we need a temp node for node exchange.
+```
+public TreeNode invertTree(TreeNode root) {        
+        if (root == null) {
+            return null;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while(!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if(node.right != null) {
+                queue.offer(node.right);
+            }
+            if(node.left != null) {
+                queue.offer(node.left);
+            }
+            TreeNode left = node.left;
+            node.left = node.right;
+            node.right = left;
+        }
+        return root;
+    }
+```
+
 ##### 230 Kth Smallest Element in a BST
 we need a counter, and it's BST, it's easier to count
 ```
@@ -467,8 +523,114 @@ public int kthSmallest(TreeNode root, int k) {
     }
 ```
 
-235 Lowest Common Ancestor of a Binary Search Tree
-236 Lowest Common Ancestor of a Binary Tree
-##### 257 Binary Tree Paths
-##### 297 Serialize and Deserialize Binary Tree
+##### 235 Lowest Common Ancestor of a Binary Search Tree
+##### 236 Lowest Common Ancestor of a Binary Tree
 
+##### 257 Binary Tree Paths
+left, right, merge result: 95 unique path, 110 balanced BT, 111 min depth, 112 path sum, 124 path sum, 129 sum of leaf, 222 count complete tree nodes, 
+```
+public List<String> binaryTreePaths(TreeNode root) {
+        List<String> paths = new ArrayList<>();
+        if (root==null) return paths;
+        if(root.left==null && root.right==null){
+            paths.add(root.val+"");
+            return paths;
+        }
+        List<String> left =binaryTreePaths(root.left);
+        List<String> right =binaryTreePaths(root.right);
+        
+        for(String l : left){
+            paths.add(root.val+"->"+l);
+        }
+        for(String r : right){
+            paths.add(root.val+"->"+r);
+        }
+        return paths;
+        
+    }
+```
+
+##### 297 Serialize and Deserialize Binary Tree
+tree-->string, string-->tree
+```
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if(root==null){
+            return "{}";
+        }
+        
+        ArrayList<TreeNode> list = new ArrayList<>();
+        list.add(root);
+        for(int i = 0; i<list.size(); i++){
+            TreeNode cur = list.get(i);
+            if(cur==null){
+                continue;
+            }
+            list.add(cur.left);
+            list.add(cur.right);
+        }
+        
+        while(list.get(list.size()-1)==null){
+            list.remove(list.size()-1);
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append(list.get(0).val);
+        for(int i = 1; i<list.size(); i++){
+            if(list.get(i)==null){
+                sb.append(",#");
+            }else{
+                sb.append(",");
+                sb.append(list.get(i).val);
+            }
+        }  
+        sb.append("}");
+        return sb.toString();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if(data.equals("{}")){
+            return null;
+        }
+        String[] nodes = data.substring(1,data.length()-1).split(",");
+        ArrayList<TreeNode> list = new ArrayList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(nodes[0]));
+        list.add(root);
+        int index = 0;
+        boolean isLeftChild = true;
+        for(int i = 1; i<nodes.length; i++){
+            if(!nodes[i].equals("#")){
+                TreeNode node = new TreeNode(Integer.parseInt(nodes[i]));
+                if(isLeftChild){
+                    list.get(index).left = node;
+                }else{
+                    list.get(index).right = node;
+                }
+                list.add(node);
+            }
+            if(!isLeftChild){
+                index++;
+            }
+            isLeftChild = !isLeftChild;
+        }
+        return root;
+    }
+}
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.deserialize(codec.serialize(root));
+```
