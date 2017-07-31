@@ -327,8 +327,101 @@ private TreeNode lastNode;
 ```
 
 ##### 116 Populating Next Right Pointers in Each Node
+bfs can solve the this problem with both complete tree or uncomplete tree, but need extra space.
+```
+ public void connect(TreeLinkNode root) {
+            if(root==null) return;
+        
+            Queue<TreeLinkNode> queue = new LinkedList<>();
+            //add()/remove() throw an exception, offer()/poll() return false
+            queue.offer(root);
+            TreeLinkNode head = root;
+            while(!queue.isEmpty()){
+                int size = queue.size();
+                for(int i = 0; i<size; i++){
+                    TreeLinkNode node = queue.poll();
+                    if(i!=0){
+                        head.next=node;
+                        head=head.next;
+                    }  
+                    if(node.left!=null) queue.offer(node.left);
+                    if(node.right!=null) queue.offer(node.right);
+                }
+                head.next = null;
+                head = queue.peek();
+            }
+
+        }
+```
+without extra space
+```
+public void connect(TreeLinkNode root) {
+        if(root==null) return;
+        TreeLinkNode levelStart = root;
+        
+        //each level
+        while(levelStart!=null){
+            TreeLinkNode cur = levelStart;
+            //each node in one level
+            while(cur!=null){
+                if(cur.left!=null){
+                    cur.left.next = cur.right;
+                }
+                if(cur.right!=null && cur.next!=null){
+                    cur.right.next = cur.next.left;
+                }    
+                cur = cur.next;
+            }
+            //what if levelStart.left==null?
+            levelStart = levelStart.left;
+        }
+    }
+```
 
 ##### 117 Populating Next Right Pointers in Each Node II
+(bfs using extra space, the same as above)
+
+bfs, O(1) space O(n) complexity Iterative Solution
+```
+public void connect(TreeLinkNode root) {
+
+        TreeLinkNode head = null; //head of the next level
+        TreeLinkNode prev = null; //prev node on the next level
+        TreeLinkNode cur = root;  
+
+        while (cur != null) {
+            //level traverse
+            while (cur != null) { 
+                if (cur.left != null) {
+                    //head/prev both work here, because they are set as null at the same time.
+                    if (head != null) {
+                        prev.next = cur.left;
+                    } else {
+                        head = cur.left;
+                    }
+                    prev = cur.left;
+                }
+                if (cur.right != null) {
+                    if (prev != null) {
+                        prev.next = cur.right;
+                    } else {
+                        head = cur.right;
+                    }
+                    prev = cur.right;
+                }
+                //move to next node
+                cur = cur.next;
+            }
+            
+            //move to next level
+            cur = head;
+            head = null;
+            prev = null;
+        }
+        
+    }
+```
+
 
 ##### 124 Binary Tree Maximum Path Sum
 we need to keep a global variable to record the max path
@@ -351,6 +444,7 @@ public class Solution {
     }
 }
 ```
+
 ##### 129 Sum Root to Leaf Numbers
 sum
 ```
