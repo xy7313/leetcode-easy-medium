@@ -534,7 +534,49 @@ public int kthSmallest(TreeNode root, int k) {
 ```
 
 ##### 235 Lowest Common Ancestor of a Binary Search Tree
+Based on BST's attributes, we have this solution:
+
+- if the root is smaller than both, go right
+- if the root is bigger than both, go left
+- others the root right now is the LCA
+
+```
+public class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(p.val<root.val && q.val<root.val){
+            //return!
+             return lowestCommonAncestor(root.left,p,q);
+        }else if(p.val>root.val && q.val>root.val){
+             return lowestCommonAncestor(root.right,p,q);           
+        }else{
+            return root;
+        }
+    }
+}
+//O(h)
+```
+
 ##### 236 Lowest Common Ancestor of a Binary Tree
+
+find LCA here means we are looking for a node from which the path diverge for two target nodes. 
+- a solution: traverse the tree from root till the 2 nodes was found, and see the common node between them
+- a better solution: no extra space and linear time, as follows:
+
+```
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root==null) return null;
+        if(root==p || root==q) return root;
+        TreeNode left = lowestCommonAncestor(root.left,p,q);
+        TreeNode right = lowestCommonAncestor(root.right,p,q);
+        if(left!=null && right!=null) return root;
+        if(left==null && right==null) return null;
+        if(left!=null){
+            return left;
+        }else{
+            return right;
+        }
+    }
+```
 
 ##### 257 Binary Tree Paths
 left, right, merge result: 95 unique path, 110 balanced BT, 111 min depth, 112 path sum, 124 path sum, 129 sum of leaf, 222 count complete tree nodes, 
