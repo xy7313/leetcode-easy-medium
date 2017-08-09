@@ -516,7 +516,7 @@ public int maxSubArray(int[] A) {
 }
 ```
 
-3. perfix 表示不懂+1
+3. prefix 表示不懂+1
 ```
 public int maxSubArray(int[] A) {
     if (A == null || A.length == 0){
