@@ -264,6 +264,51 @@ public int numDistinct(String s, String t) {
     }
 ```
 
+#### 139. Word Break
+Using substring to check if all subsquences is in word dict.
+```
+public boolean wordBreak(String s, List<String> wordDict) {
+        if(s==null || s.length()==0){
+            return false;
+        }
+        int l = s.length();
+        boolean[] dp = new boolean[l+1];
+        dp[0] = true;
+        //break, out of current for, which is inner for
+        for(int i = 1; i<=l; i++){
+            for(int j = 0; j<i; j++){
+                dp[i] = dp[j] && wordDict.contains(s.substring(j,i));
+                System.out.println(s.substring(j,i));
+                if (dp[i]) {
+                    break;//贪心
+                }
+            }
+
+        }
+        return dp[l];
+    }
+```
+
+#### 152. Maximum Product Subarray
+Be careful when dealing with the negatives.
+```
+public int maxProduct(int[] nums) {
+        if(nums==null || nums.length==0){
+            return 0;
+        } 
+        int max = nums[0], min = nums[0], result = nums[0];
+        for(int i = 1; i<nums.length; i++){
+            int tmp = max;
+            max = Math.max(nums[i], Math.max(max*nums[i],min*nums[i]));
+            min = Math.min(nums[i], Math.min(min*nums[i],tmp*nums[i]));
+            if(max>result){
+                result = max;
+            }
+        }
+        return result;
+    }
+```
+
 #### 343. Integer break
 1. 根据regularity
 >n % 3 == 0 时，分为n个3的乘积
