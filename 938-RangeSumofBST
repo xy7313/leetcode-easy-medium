@@ -1,0 +1,84 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+/*
+1. recursive
+  - create a traverse function will be easier to think of,
+  - this^ function is created to solve the smallest problem
+  - most of time is checking null and return, as all other cases can be handled in the recursive function
+  - see how the function can call this function
+  - ALTERNATIVE: use the funcion itself as the recursive function
+2. iterate with stack
+  - say 7 in the second example,[6,10], within the while, how to do the ifs is crucial. 
+ 
+*/
+    // int s = 0;
+    // void traverse(TreeNode current, int L, int R){
+    //     if(current == null) return;
+    //     if(current.val>=L && current.val<=R) {
+    //         s+=current.val;
+    //         traverse(current.left,L,R);
+    //         traverse(current.right,L,R);
+    //     }
+    //     if(current.val<L){
+    //         traverse(current.right,L,R);
+    //     }
+    //     if(current.val>R){
+    //         traverse(current.left,L,R);
+    //     }
+    // }
+    // public int rangeSumBST(TreeNode root, int L, int R) {
+    //     traverse(root.left,L,R);
+    //     return s;
+    // }
+    
+    // public int rangeSumBST(TreeNode root, int L, int R) {
+    //     //dfs, as bfs will go through all
+    //     int sum = 0;
+    //     if(root == null) return 0;
+    //     if(root.val>=L && root.val<=R) {
+    //         sum+=root.val;
+    //         sum+=rangeSumBST(root.left,L,R);
+    //         sum+=rangeSumBST(root.right,L,R);
+    //     }
+    //     if(root.val<L){
+    //         sum+=rangeSumBST(root.right,L,R);
+    //     }
+    //     if(root.val>R){
+    //         sum+=rangeSumBST(root.left,L,R);
+    //     }
+    //     return sum;
+    // }
+    
+    public int rangeSumBST(TreeNode root, int L, int R) {
+        int sum=0;
+        Stack<TreeNode> stack = new Stack();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode cur = stack.pop();
+            if(cur!=null){
+                if(cur.val>=L && cur.val<=R){
+                    sum+=cur.val;
+                }
+                if(cur.val>L){
+                    stack.push(cur.left);
+                }
+                if(cur.val<R){
+                    stack.push(cur.right);
+                }
+            }
+            
+        }
+        return sum;
+        
+    }
+    
+}
+
