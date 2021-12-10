@@ -244,7 +244,7 @@ public ListNode deleteDuplicates(ListNode head) {
 ```
 
 #### 19. Remove Nth Node From End of List
-walker and runner, init walker,runner both as dummy, move runner n steps, so that the gap between runner and walker =n, then move runner and walker together, when runner get to the end of List, walker is before the nth from the end node, walker.next=walke.next.next， skip original walker.next
+walker and runner, init walker,runner both as dummy, move runner n steps, so that the gap between runner and walker =n, then move runner and walker together, when runner get to the end of List, walker is before the nth from the end node, walker.next=walke.next.next， skip original walker.next. Use dummy node to deal with removing head.
 ```
 public ListNode removeNthFromEnd(ListNode head, int n) {
     ListNode dummy = new ListNode(0);
